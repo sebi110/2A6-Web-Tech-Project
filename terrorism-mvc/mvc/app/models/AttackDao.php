@@ -80,12 +80,29 @@ class AttackDao {
 
     }
 
-    function findByYear($year, $count = 10){
+    function findByYearAndTarget($year, $target, $count = 1){
 
         include 'database.php';
         require_once 'Attack.php';
 
-        $filter = [ 'iyear' => $year ]; 
+        // security
+        $year = (string)$year;
+        $count = (string)$count;
+        $target = (string)$target;
+
+        $filter = [];
+        $keys = array('iyear', 'targtype1_txt');
+
+        $numargs = func_num_args();
+        $arg_list = func_get_args();
+        for ($i = 0; $i < $numargs - 1; $i++) {
+
+            if($arg_list[$i] != 'all'){
+                $filter[$keys[$i]] = $arg_list[$i];
+            }
+        }
+
+        //$filter = [ 'iyear' => $year, 'targtype1_txt' => $target ]; 
         $query = new MongoDB\Driver\Query($filter);     
     
         $rows = $mng->executeQuery("Terrorism.terror", $query);
@@ -125,6 +142,9 @@ class AttackDao {
         include 'database.php';
         require_once 'Attack.php';
 
+        //security
+        $count = (string)$count;
+
         $query = new MongoDB\Driver\Query([]); 
      
         $rows = $mng->executeQuery("Terrorism.terror", $query);
@@ -143,5 +163,18 @@ class AttackDao {
         }   
 
         return $attacks;
+    }
+
+    function getAllTargets(){
+        include 'database.php';
+
+        $cmd = new MongoDB\Driver\Command([
+            'distinct' => 'terror',
+            'key' => 'targtype1_txt'
+        ]);
+        $cursor = $mng->executeCommand('Terrorism', $cmd);
+        $targets = current($cursor->toArray())->values;
+
+        return $targets;
     }
 }

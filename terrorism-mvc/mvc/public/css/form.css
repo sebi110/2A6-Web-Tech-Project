@@ -1,0 +1,191 @@
+button, input, select, textarea {
+    font-family: inherit;
+    font-size: 100%;
+}
+
+h1 {
+    margin-top: 0;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+body {
+    font  : 1.3rem sans-serif;
+    padding : 0.5em;
+    margin  : 0;
+    background : pink;
+}
+  
+form {
+    position : relative;
+    width  : 740px;
+    margin : 0 auto;
+    padding: 1em;
+    box-sizing: border-box;
+    background : #FFF;
+    border: 1px solid #CCC;
+    border-radius: 1em;
+}
+
+div+div {
+    margin-top: 1em;
+}
+
+label span {
+    display: inline-block;
+    width: 120px;
+    text-align: right;
+}
+
+input, textarea {
+    font: 1em sans-serif;
+    width: 250px;
+    box-sizing: border-box;
+    border: 1px solid #999;
+    box-shadow: inset 1px 1px 3px #ccc;
+}
+
+input[type=checkbox], input[type=radio] {
+    width: auto;
+    border: none;
+}
+
+input[type="range"] {
+    appearance: none;
+    -webkit-appearance: none;
+    background: red;
+    height: 2px;
+    padding: 0;
+    outline: 1px solid transparent;
+  }
+
+input[type="search"] {
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+input[type="color"] {
+    border: 0;
+    padding: 0;
+}
+
+input[type="radio"]::before {
+    display: block;
+    content: " ";
+    width: 10px;
+    height: 10px;
+    border-radius: 6px;
+    background-color: red;
+    font-size: 1.2em;
+    transform: translate(3px, 3px) scale(0);
+    transform-origin: center;
+    transition: all 0.3s ease-in;
+}
+  
+input[type="radio"]:checked::before {
+    transform: translate(3px, 3px) scale(1);
+    transition: all 0.3s cubic-bezier(0.25, 0.25, 0.56, 2);
+}
+
+input:focus, textarea:focus {
+    background   : rgba(0,0,0,.1);
+    border-radius: 5px;
+    border-color: #000;
+}
+
+input:required {
+    border: 1px solid black;
+}
+  
+input:optional {
+    border: 1px solid silver;
+}
+
+input:invalid {
+    border: 2px solid red;
+  }
+  
+input:invalid + span::before {
+    content: '✖';
+    color: red;
+}
+  
+input:valid + span::before {
+    content: '✓';
+    color: green;
+}
+
+input:required + span::after {
+    color: white;
+    background-color: black;
+    content: "Required";
+    left: -70px;
+}
+  
+input:out-of-range + span::after {
+    color: white;
+    background-color: red;
+    width: 155px;
+    content: "Outside allowable value range";
+    left: -182px;
+}
+
+textarea {
+    vertical-align: top;
+    height: 5em;
+    resize: vertical;
+}
+
+fieldset {
+    width: 250px;
+    box-sizing: border-box;
+    margin-left: 136px;
+    border: 1px solid #999;
+}
+
+
+button {
+    margin-top: 2em;
+    margin-bottom: 2em;
+    padding      : 5px;
+    font         : bold .6em sans-serif;
+    border       : 2px solid #333;
+    border-radius: 5px;
+    background   : none;
+    cursor       : pointer;
+    transform    : rotate(-1.5deg);
+}
+  
+button:after {
+    content      : " >>>";
+}
+  
+button:hover, button:focus {
+    outline     : none;
+    background  : #000;
+    color       : #FFF;
+}
+
+label {
+  position: relative;
+}
+
+label em {
+  position: absolute;
+  right: 5px;
+  top: 20px;
+}
+
+fieldset {
+    position: relative;
+}
+  
+legend {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}

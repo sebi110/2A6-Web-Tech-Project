@@ -7,9 +7,18 @@
     </head>
     <body>
         <p>
-            <strong>Welcome to the home/attackinfoYear/year/count view</strong>
+            <strong>Filters applied:</strong>
         </p>
-        <p>List of <?=$data['count']?> attacks from Year <?=$data['year']?></p>
+        <?php foreach($data as $key => $value) : ?>
+            <?php if ($key != 'attacks') : ?>
+                <p> <?php echo $key; ?> = <?php echo $value; ?> </p>   
+            <?php endif; ?>    
+        <?php endforeach; ?>
+        <?php if(empty($data['attacks'])) : ?>
+            <p>No attacks were found.</p>
+
+        <?php else: ?>
+
         <?php foreach($data['attacks'] as $attack) : ?>
 			
 			<h3><?php echo $attack->_id; ?></h3>
@@ -30,5 +39,7 @@
 			<p>The no of people slain: <?php echo $attack->nkill; ?></p>	
 			
 		<?php endforeach; ?>
+        <?php endif; ?>
+
     </body>
 </html>

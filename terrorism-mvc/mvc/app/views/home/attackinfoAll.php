@@ -7,7 +7,7 @@
     </head>
     <body>
         <p>
-            <strong>Welcome to the home/attackinfoAll/count view</strong>
+            <strong>Welcome to the home/attackInfoAll/count view</strong>
         </p>
         <p>List of <?=$data['count']?> attacks</p>
         <?php foreach($data['attacks'] as $attack) : ?>
