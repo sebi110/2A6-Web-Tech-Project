@@ -7,9 +7,18 @@ class Home extends Controller{
 
     public function index($params){
 
-        if($params != [])
-        $params['targtype1_txt'] = str_replace("and", "&", $params['targtype1_txt']);
+        unset($params['prg']);
+        unset($params['uniqid']);
+        unset($params['start_prg']);
 
+        if($params != []){
+            if(!isset($params['targtype'])){
+                $params['targtype'] = 'all';
+            }else{
+            $params['targtype'] = str_replace("and", "&", $params['targtype']);
+            }
+            
+        }
         $this->view('home/index', [
             'targets' => $this->model('AttackDao')->getAllTargets(),
             'params' => $params,
@@ -21,10 +30,10 @@ class Home extends Controller{
 
         // to do: special views for errors
         if(empty($params)){
-            echo "params iyear targtype1_txt count";
+            echo "params iyear targtype count";
         }else{
 
-            $params['targtype1_txt'] = str_replace("and", "&", $params['targtype1_txt']);
+            $params['targtype'] = str_replace("and", "&", $params['targtype']);
             
             $this->view('home/attackInfo', [
                 'params' => $params,

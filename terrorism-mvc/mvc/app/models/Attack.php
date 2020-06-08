@@ -8,8 +8,8 @@ class Attack {
     public function __construct(){
 
         $keys = array('_id', 'iyear', 'imonth', 'iday', 'country', 'region', 
-            'provstate', 'city', 'latitude', 'longitude', 'success', 'attacktype1',
-            'targtype1', 'targtype1_txt', 'gname', 'motive', 'weaptype1', 'nkill'
+            'provstate', 'city', 'latitude', 'longitude', 'success', 'attacktype',
+            'targtype', 'gname', 'motive', 'weaptype', 'weapdetail', 'nkill'
             );
 
         $this->details = array_fill_keys($keys, 0);

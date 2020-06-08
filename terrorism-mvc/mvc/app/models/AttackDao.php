@@ -21,17 +21,19 @@ class AttackDao {
 
     function setup(){
 
+        $this->cleanup();
+
         include 'database.php';
         
         $bulk = new MongoDB\Driver\BulkWrite;        
 
-        $row = 1;
+        $row = 0;
         if (($handle = fopen(__DIR__ . '/../misc/resources/globalterrorismdb.csv', "r")) !== FALSE) {
             while (($data = fgetcsv($handle, 10000, ",")) !== FALSE) {
 
                 $num = count($data);
                 $row++;             
-                if($row == 2){
+                if($row == 1){
                     continue;
                 }
 
@@ -47,12 +49,12 @@ class AttackDao {
                     'latitude' => 0,
                     'longitude' => 0,
                     'success' => 0,
-                    'attacktype1' => 0,
-                    'targtype1' => 0,
-                    'targtype1_txt' => 0,
+                    'attacktype' => 0,
+                    'targtype' => 0,
                     'gname' => 0,
                     'motive' => 0,
-                    'weaptype1' => 0,
+                    'weaptype' => 0,
+                    'weapdetail' => 0,
                     'nkill' => 0
                 ];
 
@@ -155,7 +157,7 @@ class AttackDao {
 
         $cmd = new MongoDB\Driver\Command([
             'distinct' => 'terror',
-            'key' => 'targtype1_txt'
+            'key' => 'targtype'
         ]);
         $cursor = $mng->executeCommand('Terrorism', $cmd);
         $targets = current($cursor->toArray())->values;

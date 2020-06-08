@@ -1,44 +1,76 @@
+<?php    
 
-<?php
-    session_start();
-    
-    $targets = $data['targets'];
+    function simple_prg ($start_prg = false, $targets = null){
 
-    if(isset($_SESSION['error'])){
+        if(isset($_SESSION['error'])){
  
-        echo $_SESSION['error'] , "<br>";
+            echo $_SESSION['error'] , "<br>";
+            
+            session_unset();
+            session_destroy();
         
-        session_unset();
-        session_destroy();
+        }
+
+        // check to see if we should start prg
+        if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+
+            if(!in_array($_POST['targtype'], $targets) && !empty($_POST['targtype']) ){
+
+                print_r($targets);
+                
+                $_SESSION['error'] = 'Select something from the datalist or nothing!';
+                header("location: home/index?start_prg=1");
     
+            }
+            else {
+
+                $uniqid = uniqid();
+
+                (empty($_POST['targtype']) == true) ? $target = 'all' : $target = $_POST['targtype'];
+
+                // for Airports & Aircraft goddamn
+                $target = str_replace("&", "and", $target);
+                
+                $_SESSION = array('post' => array($uniqid => array(
+                    'iyear' => $_POST['iyear'],
+                    'targtype' => $target,
+                    'count' => $_POST['count']
+                )));
+
+                header("HTTP/1.1 303 See Other");
+
+                $query = http_build_query($_SESSION['post'][$uniqid]);
+            
+                header("location: home/index" . '?prg=1&uniqid=' . $uniqid . '&' . $query);
+
+            }
+            die;
+        }
+    
+        if ($start_prg){        
+            echo "start on";
+            echo "<br><br>";
+            
+            @$_SESSION['post'] = '';
+        } else {
+            echo "start off";
+            echo "<br><br>";
+
+            if (isset($_GET['prg'])){
+
+                $uniqid = $_GET['uniqid'];
+                $_POST = @$_SESSION['post'][$uniqid];
+
+            } 
+        } 
     }
 
-	if($_SERVER["REQUEST_METHOD"] == "POST"){
+    session_start();
 
-        if(!in_array($_POST['targtype1_txt'], $targets) && !empty($_POST['targtype1_txt']) ){
-                
-            $_SESSION['error'] = 'Select something from the datalist or nothing!';
-            header("location: home/index");
-
-        }
-        
-        else{
-            
-            $year  = $_POST['iyear'];
-            (empty($_POST['targtype1_txt']) == true) ? $target = 'all' : $target = $_POST['targtype1_txt'];
-            $count = $_POST['count'];
-
-            // for Airports & Aircraft goddamn
-            $target = str_replace("&", "and", $target);
-
-            $ary = array('iyear' => $year, 'targtype1_txt' => $target, 'count' => $count);
-        
-            $query = http_build_query($ary);
-           
-            header("location: home/index" . "?" . $query);
-
-        }  
-       
+    if (isset($_GET['start_prg'])){
+        simple_prg(true, $data['targets']);
+    } else {
+        simple_prg(null, $data['targets']);
     }
 ?>
 
@@ -57,6 +89,8 @@
                 
             <section>
                 <h2>Attack details</h2>
+
+                <input type="hidden" id="start_prg" name="start_prg" value="1">
                 
                 <p>
                     <label for="year">Year(1970:2017)</label>
@@ -70,10 +104,11 @@
                 </p>
 
                 <p>
+                    <!--cant use the value thing with POST cause of 'all'-->
                     <label for="target">Target</label>
-                    <input type="text" name="targtype1_txt" value="<?=@$_POST['targtype1_txt']?>" id="targtype1_txt" list="targetList">
+                    <input type="text" name="targtype" id="targtype" list="targetList">
                     <datalist id="targetList">
-                    <?php foreach($targets as $target) : ?>
+                    <?php foreach($data['targets'] as $target) : ?>
 			            <option><?php echo $target; ?></option>			
                     <?php endforeach; ?>
                     </datalist>
@@ -83,6 +118,7 @@
     
             <p>
                 <button type="submit" name="submit">SUBMIT</button>
+                <!--currently reset ain't workin-->
                 <button type="reset" name="reset">RESET</button>
             </p>
     
@@ -120,7 +156,7 @@
                 <p>Was it successful? R: <?php echo $attack->get()->success; ?></p>
                 <p>The attack type: <?php echo $attack->get()->attacktype1; ?></p>
                 <p>The target type: <?php echo $attack->get()->targtype1; ?></p>
-                <p>The target type in txt: <?php echo $attack->get()->targtype1_txt; ?></p>
+                <p>The target type in txt: <?php echo $attack->get()->targtype; ?></p>
                 <p>The gname: <?php echo $attack->get()->gname; ?></p>
                 <p>The motive: <?php echo $attack->get()->motive; ?></p>
                 <p>The weapon type:  <?php echo $attack->get()->weaptype1; ?></p>
