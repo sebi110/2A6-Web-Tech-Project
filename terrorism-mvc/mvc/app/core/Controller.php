@@ -2,15 +2,11 @@
 
 class Controller{
 
-    public function model($model, $p1 = -1, $p2 = -1){
+    public function model($model){
 
         require_once '../app/models/' . $model . '.php';
 
-        if($model == 'AttackDao' || $model == 'Attack'){
-            return new $model();
-        }
-
-        return new $model($p1, $p2);
+        return new $model();
         
     }
 

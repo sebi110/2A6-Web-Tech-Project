@@ -30,12 +30,7 @@ class AttackDao {
             while (($data = fgetcsv($handle, 10000, ",")) !== FALSE) {
 
                 $num = count($data);
-
-                //echo "<p> $num fields in line $row: <br /></p>\n";
-                $row++;                
-
-               
-                
+                $row++;             
                 if($row == 2){
                     continue;
                 }
@@ -80,30 +75,24 @@ class AttackDao {
 
     }
 
-    function findByYearAndTarget($year, $target, $count = 1){
+    function find($params){
 
         include 'database.php';
         require_once 'Attack.php';
 
         // security
-        $year = (string)$year;
-        $count = (string)$count;
-        $target = (string)$target;
-
-        $filter = [];
-        $keys = array('iyear', 'targtype1_txt');
-
-        $numargs = func_num_args();
-        $arg_list = func_get_args();
-        for ($i = 0; $i < $numargs - 1; $i++) {
-
-            if($arg_list[$i] != 'all'){
-                $filter[$keys[$i]] = $arg_list[$i];
-            }
+        
+        foreach($params as $key => $value){
+            $params[$key] = (string)$value;
         }
 
-        //$filter = [ 'iyear' => $year, 'targtype1_txt' => $target ]; 
-        $query = new MongoDB\Driver\Query($filter);     
+        if (($key = array_search('all', $params)) !== false) {
+            unset($params[$key]);
+        }
+        $count = $params['count'];
+        unset($params['count']);
+        
+        $query = new MongoDB\Driver\Query($params);     
     
         $rows = $mng->executeQuery("Terrorism.terror", $query);
 
@@ -116,15 +105,12 @@ class AttackDao {
             $a = new Attack();
             $a->set($row);
             $attacks[] = $a;
-            //echo "$row->iyear : $row->city : $row->weaptype1<br>";
             $i++;
         }       
 
         return $attacks;
 
     }
-
-    //function update($user);
 
     function delete($attack){
         include 'database.php';
@@ -158,7 +144,6 @@ class AttackDao {
             $a = new Attack();
             $a->set($row);
             $attacks[] = $a;
-            //echo "$row->iyear : $row->city : $row->weaptype1<br>";
             $i++;
         }   
 

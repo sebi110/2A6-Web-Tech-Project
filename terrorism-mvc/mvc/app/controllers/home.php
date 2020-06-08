@@ -3,34 +3,45 @@
 
 class Home extends Controller{
 
-    public function index(){
+    //to do: model param validation
 
-        $this->view('home/index',
-            $this->model('AttackDao')->getAllTargets()
-        );
+    public function index($params){
+
+        if($params != [])
+        $params['targtype1_txt'] = str_replace("and", "&", $params['targtype1_txt']);
+
+        $this->view('home/index', [
+            'targets' => $this->model('AttackDao')->getAllTargets(),
+            'params' => $params,
+            'attacks' => $params == [] ? [] : $this->model('AttackDao')->find($params)
+        ]);
     }
 
-    public function attackInfo($year = -1, $target = -1, $count = -1){
+    public function attackInfo($params){
 
-        // to do: restrict access from .htaccess
-        // should be called only through the form
-        if($year == -1 || $target == -1 || $count == -1){
-            echo 'attackInfo/year/target/count' . "<br>";
-        }
-        else{
-            $target = str_replace("and", " & ", $target);
+        // to do: special views for errors
+        if(empty($params)){
+            echo "params iyear targtype1_txt count";
+        }else{
+
+            $params['targtype1_txt'] = str_replace("and", "&", $params['targtype1_txt']);
             
             $this->view('home/attackInfo', [
-                'year' => $year,
-                'target' => $target,
-                'count' => $count,
-                'attacks' => $this->model('AttackDao')->findByYearAndTarget($year, $target, $count)
-            ]);
+                'params' => $params,
+                'attacks' => $this->model('AttackDao')->find($params)
+            ]);        
         }        
                 
     }
 
-    public function attackInfoAll($count = 10){
+    public function attackInfoAll($params){
+
+        if(empty($params)){
+            $count = 10;
+        }
+        else{
+            $count = $params['count'];
+        }
 
         $this->view('home/attackInfoAll', [
             'year' => -1,
@@ -48,14 +59,12 @@ class Home extends Controller{
 
     public function cleanup(){
 
-        // to do: restrict access from .htaccess
         $this->model('AttackDao')->cleanup();
         echo "Cleanup successful";
     }
 
     public function setup(){
 
-        // to do: restrict access from .htaccess
         $this->model('AttackDao')->setup();
         echo "Setup successful";
     }
