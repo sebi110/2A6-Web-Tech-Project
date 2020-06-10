@@ -103,11 +103,13 @@ class AttackDao {
         if (($key = array_search('all', $params)) !== false) {
             unset($params[$key]);
         }
-        $count = $params['count'];
-        unset($params['count']);
-        
+        if(isset($params['count'])){
+            $count = $params['count'];
+            unset($params['count']);
+        }
+        else $count = 10000;
         $query = new MongoDB\Driver\Query($params);     
-    
+
         $rows = $mng->executeQuery("Terrorism.terror", $query);
 
         $attacks = [];
@@ -117,11 +119,10 @@ class AttackDao {
                 break;
             }
             $a = new Attack();
-            $a->set($row);
+            $a->setKeys($row);
             $attacks[] = $a;
             $i++;
-        }       
-
+        }           
         return $attacks;
 
     }
@@ -178,9 +179,5 @@ class AttackDao {
         $targets = current($cursor->toArray())->values;
 
         return $targets;
-    }
-
-    function sayHi(){
-        echo 'Hi';
     }
 }

@@ -15,13 +15,19 @@ class Attack {
         $this->details = array_fill_keys($keys, 0);
     }
 
-    public function set($row){
+    public function setKey($key,$value){
+        if(isset($this->details[$key])){
+            $this->details[$key]=$value;
+        }
+    }
 
-        $this->details = $row;
+    public function setKeys($arr){
+        foreach($arr as $key => $val){
+            $this->setKey($key,$val);
+        }
     }
 
     public function get(){
-
         return $this->details;
     }
 
