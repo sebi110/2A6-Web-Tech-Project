@@ -120,6 +120,56 @@
 				}
 			echo '</div>';
 		}
-	}
+    }
+
+    // FORM
+    
+    function attack_form($data){
+
+        if(!in_array($_GET['targtype'], $data['targets']) && !empty($_GET['targtype']) ){
+
+            array_push($_SESSION['errors'], "Choose a target from the list or no target at all!");
+        }
+
+        if (empty($_SESSION['errors'])) {
+
+            (empty($_GET['targtype']) == true) ? $target = 'all' : $target = $_GET['targtype'];
+
+            // for Airports & Aircraft goddamn
+            $target = str_replace("&", "and", $target);
+                
+            $_SESSION['attack_form'] = array(
+                'iyear' => $_GET['iyear'],
+                'targtype' => $target,
+                'count' => $_GET['count']
+            );
+
+            $query = http_build_query($_SESSION['attack_form']);
+            
+            header("location: form?" . $query);
+
+        }
+ 
+    }
+
+    // DB
+
+    function cleanup(){
+        require_once '../app/models/AttackDao.php';
+
+        (new AttackDao())->cleanup();
+        
+        echo "Cleanup successful";
+    }
+
+    function setup(){
+
+        require_once '../app/models/AttackDao.php';
+
+        (new AttackDao())->setup();
+        
+        echo "Setup successful";
+    }
+
 
 ?>

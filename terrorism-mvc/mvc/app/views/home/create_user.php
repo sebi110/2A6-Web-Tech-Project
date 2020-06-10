@@ -1,10 +1,8 @@
 <?php 
-
-    include('functions.php');
     
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     
-        register($data, $errors);
+        register($data);
 
     }
 
@@ -13,17 +11,23 @@
 <!DOCTYPE html>
 <html lang="en-US">
 <head>
-	<title>Registration - Create user</title>
+	<title>Terrorism</title>
 	<meta charset="utf-8">
-    <link href="../../public/css/form.css" rel="stylesheet">
+    <link href="../../public/css/styles.css" rel="stylesheet">
 </head>
 <body>
+	<div class="page-wrapper">
+
+	<div class="container">
+        <h2 class="tag">Admin -Create User Page</h2>
+        <p>As an admin, you can create an account for another admin or another user.</p>
+    </div>
 
 	<form method="POST" action="create_user" enctype="multipart/form-data">
 
 		<?php echo display_error(); ?>
 
-        <h2>Admin - create user</h2>
+        <h2 class="tag">Create User</h2>
 
 		<p>
 			<label>Username</label>
@@ -55,7 +59,7 @@
             <span></span>
 		</p>
 		<p>
-			<button type="submit" class="btn" name="register_btn"> + Create user</button>
+			<button type="submit" name="register_btn"> + Create user</button>
 		</p>
 	</form>
 </body>

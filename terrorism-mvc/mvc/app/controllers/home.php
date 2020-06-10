@@ -3,8 +3,6 @@
 
 class Home extends Controller{
 
-    //to do: model param validation
-
     public function form($params){
 
         if($params != []){
@@ -55,20 +53,5 @@ class Home extends Controller{
         $this->view('home/admin');
     }
 
-    public function cleanup(){
-
-        //to do: special view for this
-
-        $this->model('AttackDao')->cleanup();
-        echo "Cleanup successful";
-    }
-
-    public function setup(){
-
-        //to do: special view for this
-
-        $this->model('AttackDao')->setup();
-        echo "Setup successful";
-    }
 
 }

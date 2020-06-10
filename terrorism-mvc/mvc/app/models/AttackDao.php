@@ -179,4 +179,8 @@ class AttackDao {
 
         return $targets;
     }
+
+    function sayHi(){
+        echo 'Hi';
+    }
 }

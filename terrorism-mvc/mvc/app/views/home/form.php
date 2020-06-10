@@ -1,37 +1,5 @@
 <?php    
-
-    include('functions.php');
-
-    function attack_form($data){
-
-        if(!in_array($_GET['targtype'], $data['targets']) && !empty($_GET['targtype']) ){
-
-            print_r($data['targets']);                
-            array_push($_SESSION['errors'], "Choose a target from the list or no target at all!");
-        }
-
-        if (empty($_SESSION['errors'])) {
-
-            (empty($_GET['targtype']) == true) ? $target = 'all' : $target = $_GET['targtype'];
-
-            // for Airports & Aircraft goddamn
-            $target = str_replace("&", "and", $target);
-                
-            $_SESSION['attack_form'] = array(
-                'iyear' => $_GET['iyear'],
-                'targtype' => $target,
-                'count' => $_GET['count']
-            );
-
-            $query = http_build_query($_SESSION['attack_form']);
-            
-            header("location: form?" . $query);
-
-        }
- 
-    }
-
-    echo $_SESSION['user'];
+    //echo $_SESSION['user'];
 
     if (!isLoggedIn()) {
         $_SESSION['msg'] = "You must log in first";
@@ -49,21 +17,22 @@
 <html lang="en-US">
     <head> 
         <meta charset="utf-8">
-        <link href="../../public/css/form.css" rel="stylesheet">
+        <link href="../../public/css/styles.css" rel="stylesheet">
         <title>Terrorism</title>
         
     </head>
     <body>
+    <div class="page-wrapper">
+    <div class="container">
+		<h2 class="tag">Search for attacks</h2>
+		<p>Choose the filters you want to apply and submit the form below.</p>
+	</div>
+        
         <form method="GET" action="form" enctype="multipart/form-data">
 
         <?php echo display_error(); ?>
 
-            <h2>Attack details</h2>
-
-            <p>
-                <input type="hidden" id="start_prg" name="start_prg" value="1">
-                   <span></span>
-            </p>
+            <h2 class="tag">Filter attacks after:</h2>
                
             <p>
                 <label for="year">Year(1970:2017)</label>
@@ -92,19 +61,16 @@
             <p>
                 <button type="submit" name="submit">SUBMIT</button>
                 <button type="reset" name="reset">RESET</button>
+                <p>	<a class="button" href="index">BACK</a></p>
             </p>
     
         </form>
 
-        <?php if(empty($data['params'])) : ?>
-            <p>Submit the form!</p>
+        <div class="container">
 
-        <?php else: ?>
+        <?php if(!empty($data['params'])) : ?>
 
-
-            <p>
-                <strong>Filters applied:</strong>
-            </p>
+            <h2 class="tag">Filters applied:</h2>
             <?php foreach($data['params'] as $key => $value) : ?>
             
                 <p> <?php echo $key; ?> = <?php echo $value; ?> </p>   
@@ -114,10 +80,11 @@
                 <p>No attacks were found.</p>
 
             <?php else: ?>
+                <h2 class="tag">The attacks that were found:</h2>
 
             <?php foreach($data['attacks'] as $attack) : ?>
                 
-                <h3><?php echo $attack->get()->_id; ?></h3>
+                <!--h3><?php echo $attack->get()->_id; ?></h3>
                 <p>The attack took place on 
                 <?php echo $attack->get()->iday; ?>/<?php echo $attack->get()->imonth; ?>
                 /<?php echo $attack->get()->iyear; ?>
@@ -132,15 +99,16 @@
                 <p>The gname: <?php echo $attack->get()->gname; ?></p>
                 <p>The motive: <?php echo $attack->get()->motive; ?></p>
                 <p>The weapon type:  <?php echo $attack->get()->weaptype; ?></p>
-                <p>The no of people slain: <?php echo $attack->get()->nkill; ?></p>	
+                <p>The no of people slain: <?php echo $attack->get()->nkill; ?></p-->	
                 
-                <p>And the JSON:</p><br>
-                <?php echo $attack->toJson(); ?>
+                <p> <?php echo $attack->toJson(); ?> </p>
 
             <?php endforeach; ?>
 
             
             <?php endif; ?>
         <?php endif; ?>
+            </div>
+            </div>
     </body>
 </html>

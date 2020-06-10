@@ -67,7 +67,7 @@ class UserDao {
             $users[] = $user;
         }         
 
-        return $users[0];
+        return $users == [] ? [] : $users[0];
 
     }
 
@@ -95,7 +95,7 @@ class UserDao {
             $users[] = $user;
         }         
 
-        return $users[0];
+        return $users == [] ? [] : $users[0];
 
     }
 

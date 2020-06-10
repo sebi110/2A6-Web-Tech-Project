@@ -10,6 +10,8 @@ require_once INC_ROOT . '/app/core/Controller.php';
 // Require database component
 require_once INC_ROOT . '/app/database.php';
 
+include_once INC_ROOT . '/app/inc/functions.php';
+
 //Root URL 
 define('HTTP_ROOT',
     'http://'.$_SERVER['HTTP_HOST'].

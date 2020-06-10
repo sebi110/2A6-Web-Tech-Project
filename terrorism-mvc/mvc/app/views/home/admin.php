@@ -1,5 +1,5 @@
 <?php 
-    include('functions.php');
+
 
     if (!isAdmin()) {
         $_SESSION['msg'] = "You must log in first";
@@ -12,30 +12,32 @@
         unset($_SESSION['user']);
         header("location: login");
 	}
+
+	// pls do not remove the comment! not yet at least
 	if (isset($_GET['cleanup'])) {
-        
-        //header("location: cleanup");
+		//cleanup();
 	}
 	if (isset($_GET['setup'])) {
-        
-        //header("location: setup");
+        //setup();
     }
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en-US">
 <head>
-    <title>Home</title>
+    <title>Terrorism</title>
     <meta charset="utf-8">
-    <link href="../../public/css/form.css" rel="stylesheet">
+    <link href="../../public/css/styles.css" rel="stylesheet">
 
 </head>
 <body>
-	<div class="header">
-		<h2>Admin - Home Page</h2>
+	<div class="page-wrapper">
+
+	<div class="container">
+		<h2 class="tag">Admin - Home Page</h2>
+		<p>Now that you are logged in as an admin, you can create new users or modify your database.</p>
 	</div>
-	<div class="content">
-		<!-- notification message -->
+	<!--
 		<?php if (isset($_SESSION['success'])) : ?>
 			<div class="error success" >
 				<h3>
@@ -46,23 +48,24 @@
 				</h3>
 			</div>
 		<?php endif ?>
+		-->
 
-		<!-- logged in user information -->
-		<div class="profile_info">
+		<div class="container">
+		<h2 class="tag">User Profile</h2>
+		<?php  if (isset($_SESSION['user'])) : ?>
 			
-			<?php  if (isset($_SESSION['user'])) : ?>
-			<strong><?php echo $_SESSION['user']; ?></strong>
+			<p>Username: <?php echo json_decode($_SESSION['user'])->{'username'}; ?></p>
+			<p>Email: <?php echo json_decode($_SESSION['user'])->{'email'}; ?></p>
+			<p>User type: <?php echo json_decode($_SESSION['user'])->{'user_type'}; ?></p>
+			<p>Password: <?php echo json_decode($_SESSION['user'])->{'password'}; ?></p>
+				
+	        <p><a class="button" href="admin?logout='1'">Logout</a>
+            <p><a class="button" href="create_user"> + Add user</a></p>
+			<p><a class="button" href="admin?cleanup='1'">Cleanup database</a></p>
+			<p><a class="button" href="admin?setup='1'">Setup database</a></p>
 
-			<small>
-				<br>
-				<a href="admin?logout='1'">logout</a>
-                &nbsp; <a href="create_user"> + add user</a><br>
-				<a href="admin?cleanup='1'">cleanup db</a><br>
-				<a href="admin?setup='1'">setup db</a><br>
-			</small>
-
-			<?php endif ?>
-			
+		<?php endif ?>
+		
 		</div>
 	</div>
 </body>
