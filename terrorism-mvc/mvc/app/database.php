@@ -2,9 +2,8 @@
    
     try{
         $mng = new MongoDB\Driver\Manager(
-            
-            // Clusters -> CONNECT -> Connect your app -> PHP...
-            
+        
+            "mongodb+srv://some_user:some_password@cluster0-k9i77.mongodb.net/test?retryWrites=true&w=majority"
         );
 
 

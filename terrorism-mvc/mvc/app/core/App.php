@@ -13,12 +13,21 @@ class App{
 
         $url = $this->parseUrl();
 
-        if(file_exists('../app/controllers/' . $url[0] . '.php')){
+        /*echo '<br><br>';
+        print_r($url);
+        echo '<br><br>';*/
+
+
+        if(file_exists('../app/controllers/' . ucfirst($url[0]) . '.php')){
             $this->controller = $url[0];
             unset($url[0]);
         }
 
         require_once '../app/controllers/' . $this->controller . '.php';
+
+        //echo $this->controller;
+        //echo '<br><br>';
+
 
         $this->controller = new $this->controller;
 
@@ -28,6 +37,9 @@ class App{
                 unset($url[1]);
             }
         }
+
+        //echo $this->method;
+        //echo '<br><br>';
 
         $this->params = [];
 
@@ -44,6 +56,7 @@ class App{
     }
 
     public function parseUrl(){
+        print_r($_GET);
         if(isset($_GET['url'])){
             return $url = explode('/', filter_var(rtrim($_GET['url'], '/'), FILTER_SANITIZE_URL));
         }        

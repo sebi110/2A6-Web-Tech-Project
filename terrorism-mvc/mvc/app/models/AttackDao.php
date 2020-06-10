@@ -8,8 +8,9 @@ class AttackDao {
     }
 
     function cleanup(){
-        include 'database.php';
+        //include 'database.php';
 
+        global $mng;
         $bulk = new MongoDB\Driver\BulkWrite;
         for($i=0; $i<=12; $i++){
             $bulk->delete(['imonth' => "$i"], ['limit' => FALSE]);
@@ -21,10 +22,13 @@ class AttackDao {
 
     function setup(){
 
+        // ~MYSTERY~ x2
+
         $this->cleanup();
 
-        include 'database.php';
-        
+        //include 'database.php';
+        global $mng;
+
         $bulk = new MongoDB\Driver\BulkWrite;        
 
         $row = 0;
@@ -58,6 +62,8 @@ class AttackDao {
                     'nkill' => 0
                 ];
 
+                
+
                 $c=0;
                 $array_keys = array_keys($doc);
                 foreach ($array_keys as $array_key) {
@@ -70,6 +76,11 @@ class AttackDao {
     
                 $bulk->insert($doc);
 
+                echo '<br>';
+                echo $row;
+                //echo '<br>';
+                //print_r($doc);
+
             }
             $mng->executeBulkWrite('Terrorism.terror', $bulk);
             fclose($handle);
@@ -79,9 +90,10 @@ class AttackDao {
 
     function find($params){
 
-        include 'database.php';
+        //include 'database.php';
         require_once 'Attack.php';
 
+        global $mng;
         // security
         
         foreach($params as $key => $value){
@@ -115,7 +127,8 @@ class AttackDao {
     }
 
     function delete($attack){
-        include 'database.php';
+        //include 'database.php';
+        global $mng;
         require_once 'Attack.php';
 
         $bulk = new MongoDB\Driver\BulkWrite;
@@ -127,7 +140,8 @@ class AttackDao {
     }
 
     function getAll($count = 10){
-        include 'database.php';
+        //include 'database.php';
+        global $mng;
         require_once 'Attack.php';
 
         //security
@@ -153,8 +167,9 @@ class AttackDao {
     }
 
     function getAllTargets(){
-        include 'database.php';
+        //include 'database.php';
 
+        global $mng;
         $cmd = new MongoDB\Driver\Command([
             'distinct' => 'terror',
             'key' => 'targtype'
