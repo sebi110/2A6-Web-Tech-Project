@@ -107,7 +107,11 @@
 		else
 		    return false;
         
-	}
+    }
+    
+    function fromJson($object, $field){
+        return json_decode($object)->{$field};
+    }
 
 	function display_error() {
 

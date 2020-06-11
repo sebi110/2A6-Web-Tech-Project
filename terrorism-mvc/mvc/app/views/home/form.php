@@ -186,28 +186,28 @@
                 <p>No attacks were found.</p>
 
             <?php else: ?>
-                <h2 class="tag">The attacks that were found:</h2>
+                <h2 class="tag">The first <=10 attacks that were found:</h2>
 
-            <?php foreach($data['attacks'] as $attack) : ?>
+            <?php foreach(array_slice($data['attacks'], 0, 10) as $attack) : ?>
                 
-                <!--h3><?php echo $attack->get()->_id; ?></h3>
+                <p><?php print_r(fromJson($attack->toJson(), '_id')); ?></p>
                 <p>The attack took place on 
-                <?php echo $attack->get()->iday; ?>/<?php echo $attack->get()->imonth; ?>
-                /<?php echo $attack->get()->iyear; ?>
-                in the country <?php echo $attack->get()->country; ?>
-                within the region <?php echo $attack->get()->region; ?> in the province
-                <?php echo $attack->get()->provstate; ?>, city <?php echo $attack->get()->city; ?>(lat = <?php echo $attack->get()->latitude; ?>, long = <?php echo $attack->get()->longitude; ?>)</p>
+                <?php echo fromJson($attack->toJson(), 'iday'); ?>/<?php echo fromJson($attack->toJson(), 'imonth'); ?>
+                <?php echo fromJson($attack->toJson(), 'iyear'); ?>
+                in the country <?php echo fromJson($attack->toJson(), 'country'); ?>
+                within the region <?php echo fromJson($attack->toJson(), 'region'); ?>, in the city <?php echo fromJson($attack->toJson(), 'city'); ?>(lat = <?php echo fromJson($attack->toJson(), 'latitude'); ?>, long = <?php echo fromJson($attack->toJson(), 'longitude'); ?>)</p>
 
-                <p>Was it successful? R: <?php echo $attack->get()->success; ?></p>
-                <p>The attack type: <?php echo $attack->get()->attacktype; ?></p>
-                <p>The target type: <?php echo $attack->get()->targtype; ?></p>
+                <p>Was it successful? R: <?php echo fromJson($attack->toJson(), 'success'); ?></p>
+                <p>The attack type: <?php echo fromJson($attack->toJson(), 'attacktype'); ?></p>
+                <p>The target type: <?php echo fromJson($attack->toJson(), 'targtype'); ?></p>
                 
-                <p>The gname: <?php echo $attack->get()->gname; ?></p>
-                <p>The motive: <?php echo $attack->get()->motive; ?></p>
-                <p>The weapon type:  <?php echo $attack->get()->weaptype; ?></p>
-                <p>The no of people slain: <?php echo $attack->get()->nkill; ?></p-->	
+                <p>The group's name: <?php echo fromJson($attack->toJson(), 'gname'); ?></p>
+                <p>The motive: <?php echo fromJson($attack->toJson(), 'motive'); ?></p>
+                <p>The weapon type:  <?php echo fromJson($attack->toJson(), 'weaptype'); ?></p>
+                <p>Details about the weapon:  <?php echo fromJson($attack->toJson(), 'weapdetail'); ?></p>
+                <p>The no of people slain: <?php echo fromJson($attack->toJson(), 'nkill'); ?></p-->	
                 
-                <p> <?php echo $attack->toJson(); ?> </p>
+                <!--p> <?php echo $attack->toJson(); ?> </p-->
 
             <?php endforeach; ?>
 
