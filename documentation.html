@@ -1,0 +1,189 @@
+<html lang="en-GB">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+	<title> TeVi Project Documentation</title>
+</head>
+<body prefix="schema: http://schema.org/ xsd: http://www.w3.org/2001/XMLSchema# sa: https://ns.science.ai/">
+<body>
+	<header>
+		<title>TeVi Project Documentation</title>
+		<subtitle>Grupa 2A6</subtitle>
+	</header>
+	<article resource="#" typeof="schema:ScholarlyArticle">
+	<h1>TeVi Documentation </h1>
+	
+	<section typeof="sa:AuthorsList">
+	<h2>Authors</h2>
+	 <ul>
+    <li typeof="sa:ContributorRole" property="schema:author">
+      <span typeof="schema:Person">
+        <meta property="schema:givenName" content="Sebastian">
+        <meta property="schema:familyName" content="Ciobanu">
+        <span property="schema:name">Sebastian Ciobanu</span>
+      </span>
+    </li>
+	<li typeof="sa:ContributorRole" property="schema:author">
+      <span typeof="schema:Person">
+        <meta property="schema:givenName" content="Daria">
+        <meta property="schema:familyName" content="Popovici">
+        <span property="schema:name">Daria Popovici</span>
+      </span>
+    </li>
+	<li typeof="sa:ContributorRole" property="schema:author">
+      <span typeof="schema:Person">
+        <meta property="schema:givenName" content="Codrin">
+        <meta property="schema:additionalName" content="Mihai">
+        <meta property="schema:familyName" content="Robotă">
+        <span property="schema:name">Mihai-Codrin Robotă</span>
+      </span>
+    </li>
+  </ul>
+	</section>
+	
+	
+	<section typeof="sa:Affiliations">
+	<h2>Affiliations</h2>
+	<ul>
+		<li id="sa">
+		<span typeof="schema:Organization" resource="https://www.info.uaic.ro/">
+			<span property="schema:name">Facultatea de Informatică</span>,
+			<span property="schema:parentOrganization">
+			<span typeof="schema:Organization">
+				<span property="schema:name">Universitatea Alexandru Ioan Cuza</span>
+            —
+				<span property="schema:location" typeof="schema:Place">
+				<span property="schema:address" typeof="schema:PostalAddress">
+					<span property="schema:addressLocality">Iași</span>,
+					<span property="schema:addressRegion">Iași</span>,
+					<span property="schema:addressCountry">România</span>
+				</span>
+				</span>
+			</span>
+			</span>
+		</span>
+		</li>
+	</ul>
+	</section>
+	
+	<section typeof="sa:abstract">
+	<h2>Abstract</h2>
+	<p>
+	TeVi is a website created as the product of a university project for the Web Technologies course that is part of the FII curriculum for year 2. The initials stand for "Terrorism Viewer", and the website deals with using a broad database of terrorist attacks in order to display their geographical locations on a map, or perform analytics operations on them by organizing charts. This document describes how the website functions, how to use it, and other implementation details.
+	</p>
+	</section>
+	
+	<section typeof="sa:MaterialsAndMethods">
+	<h2>Technologies</h2>
+	<p>
+	The technologies used for this project are as follows: the html/css, javascript, PHP languages, and the Leaflet, Leaftlet EasyPrint and Google Charts javascript libraries, and the MongoDB database solution.
+	</p>
+	<p>
+	Html/css was used for the website's appearance, while Js and PHP handle most of the website functionality. PHP is responsible with communication between components, as well as with the database, while Js is responsible for running the libraries that provide the core website functions.
+	</p>
+	<p>
+	Leaflet is an open-source mapping library for javascript, and it is used to generate the terrorism viewer map, as well as populate it with tokens marking the attacks. Leaftlet EasyPrint is a pure-Js plugin that allows the exporting of the map in .png format.
+	</p>
+	<p>
+	Google Charts is another open-source library for javascript, utilized for generating the charts that display the data detailing the terrorist attacks. 
+	</p>
+	<p>
+	MongoDB is the project's chosen database solution due to its combination of efficiency and ease-of-use, as well as the fact the team was already familiar with it.
+	</p>
+	</section>
+	
+	<section typeof="sa:MaterialsAndMethods">
+	<h2>Implementation Details</h2>
+	<p>
+	The main functionalities offered by the website are the terrorism charts (implemented by Sebastian Ciobanu) and the terrorism map (implemented by Codrin Robotă), both of which make use of the database connection (implemented by Daria Popovici). The project follows mvc architecture, the implementation of which was primarily overseen by Daria Popovici.
+	</p>
+	<p>
+	Both charts and map function through the usage of a form detailing what sorting options to apply, and is filled out by the user then sent to the server via GET functionality. GET is used as opposed to POST because the data being sent is not sensitive, and benefits from being turned into link parameters that can be remembered. The server then turns the sent form data into MongoDB query parameters, and fetches the requested entries, handing them to the script that will then deal with the generation of either the map or the charts, using json format. The scripts will then iterate through the json entries and generate the chart or map from them. 
+	</p>
+	<p>
+	Additionaly, the map also has an export functionality that is handled by the EasyPrint library, and allows the user to download a .png version of the map currently rendered with all the markers on it.
+	</p>
+	</section>
+	
+	<section typeof="sa:MaterialsAndMethods">
+	<h2> Use Cases</h2>
+	<p>
+	The normal usage case is for a user to access the site (via the homepage, or with a direct link to a subpage), navigate to the map/charts page, fill out the form with the desired data and submit it. Then, the server will return the requested map/chart, populated with the relevant information; this might take some time if the volume requested is particularly large.
+	</p>
+	<p>
+	Another normal usage case is for the user to click the export button present in the upper left side of the map, which will prompt the browser to download the .png version of the map.
+	</p>
+	<p>
+	The most common abnormal use case would be that in which the form is filled with wrong data, in which case the database query will not find any matching data, and the resulting map or chart will be empty.
+	</p>
+	</section>
+	
+	<section typeof="sa:Results">
+	<h2>Conclusion</h2>
+	The website provides an adequate representation of the terrorist attack data that a user might be interested in, as the map and charts can be easily understood and navigated. Further development of this application would entail broadening the chart types and map types further, as well as possibly offering some analytics functionalities such as calculating the median of a value, the average, and so on.
+	</section>
+	
+	<section>
+	<h2>References</h2>
+	<li typeof="schema:WebPage" role="doc-biblioentry"
+		resource="https://leafletjs.com/"
+		property="schema:citation" id="leaflet">
+	<cite property="schema:name">
+	<a href="https://leafletjs.com/">Leaftlet 1.6.0 Library</a>
+	</cite>
+	</li>
+	<li typeof="schema:WebPage" role="doc-biblioentry"
+		resource="https://developers.google.com/chart"
+		property="schema:citation" id="gcharts">
+	<cite property="schema:name">
+	<a href="https://developers.google.com/chart">Google Charts Library</a>
+	</cite>
+	</li>
+	<li typeof="schema:WebPage" role="doc-biblioentry"
+		resource="https://github.com/rowanwins/leaflet-easyPrint"
+		property="schema:citation" id="ezprint">
+	<cite property="schema:name">
+	<a href="https://github.com/rowanwins/leaflet-easyPrint">Leaflet EasyPrint Plugin</a>
+	</cite>
+	</li>
+		<li typeof="schema:WebPage" role="doc-biblioentry"
+		resource="https://www.mongodb.com"
+		property="schema:citation" id="mongo">
+	<cite property="schema:name">
+	<a href="https://www.mongodb.com">MongoDB</a>
+	</cite>
+	</li>
+	</li>
+		<li typeof="schema:WebPage" role="doc-biblioentry"
+		resource="https://profs.info.uaic.ro/~busaco/teach/courses/web/"
+		property="schema:citation" id="courseMat">
+	<cite property="schema:name">
+	<a href="https://profs.info.uaic.ro/~busaco/teach/courses/web/">Web Technologies Course</a>
+	</cite>
+	by <span property="schema:author" typeof="schema:Person">
+		<span property="schema:givenName">Sabin-Corneliu</span>
+		<span property="schema:familyName">Buraga</span>
+	</li>
+	</li>
+		<li typeof="schema:WebPage" role="doc-biblioentry"
+		resource="https://profs.info.uaic.ro/~andrei.panu/"
+		property="schema:citation" id="courseMat">
+	<cite property="schema:name">
+	<a href="https://profs.info.uaic.ro/~andrei.panu/">Web Technologies Seminary</a>
+	</cite>
+	by <span property="schema:author" typeof="schema:Person">
+		<span property="schema:givenName">Andrei</span>
+		<span property="schema:familyName">Panu</span>
+	</li>
+	</section>
+	
+	<section typeof="sa:keywords">
+	<h2> Keywords</h2>
+	<ul>
+		<li proprety="schema:keywords">project</li>
+		<li proprety="schema:keywords">infoiasi</li>
+		<li proprety="schema:keywords">web</li>
+	</ul>
+	</section>
+	
+	</article>
