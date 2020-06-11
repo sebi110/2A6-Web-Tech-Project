@@ -6,13 +6,13 @@
 
         $possibleInputKeys=array('_id', 'iyear', 'imonth', 'iday', 'country', 'region', 
         'provstate', 'city', 'latitude', 'longitude', 'success', 'attacktype',
-        'targtype', 'gname', 'motive', 'weaptype', 'weapdetail', 'nkill','count'
+        'targtype', 'gname', 'motive', 'weaptype', 'weapdetail', 'nkill','count','frequency'
         );
         $possibleInputs=array_fill_keys($possibleInputKeys,0);
 
 
         $params=array();
-        $out=0;$correct=1;$mode='PieChart';
+        $out=0;$correct=1;$mode='PieChart';$wichFrequency='iyear';
         foreach($_GET as $key=>$val)
         {
             if($key=="output"){
@@ -29,11 +29,17 @@
                 $mode=$val;
                 continue;
             }
+            if($key=='frequency')
+            {
+                if($val=='day' || $val=='month' || $val=='year')
+                    $val='i'.$val;
+                $wichFrequency=$val;
+                continue;
+            }
             if($val=='all')continue;
             if($val!=NULL && isset($possibleInputs[$key]))
                 $params[$key]=$val;
         }
-        
         if($out==0)
             echo "var modout = \"div\" " . ";\n";
 
@@ -60,7 +66,8 @@
         
         for(var i = 0; i<json_array.length; i++)
         {
-            var elem = json_array[i].imonth;
+            <?php echo "var elem = json_array[i]." .$wichFrequency .";\n"?>
+            //var elem = json_array[i].wichFrequency;
             freq[elem] = freq[elem] ? freq[elem]+1 : 1;
         }
         //document.getElementById("test").innerHTML = freq[1970];

@@ -11,11 +11,13 @@
     } 
 
     $data['mode']=array('map','PieChart','BarChart');
+    $data['frequency']=array('year', 'month', 'day', 'country', 'region', 
+                        'provstate', 'city', 'latitude', 'longitude', 'success', 'attacktype',
+                        'targtype', 'gname', 'motive', 'weaptype', 'weapdetail', 'nkill'
+                        );
     
 ?>
 
-<script src="../../app/misc/libraries/leaflet-easyPrint-2/dist/leaflet.easyPrint.js"></script>  <!-- Leaflet EasyPrint js file-->
-<script src="../../app/misc/libraries/leaflet-easyPrint-2/dist/bundle.js"></script>
 
 <!doctype html>
 <html lang="en-US">
@@ -26,10 +28,12 @@
         
     </head>
     <body>
+            <script src="../misc/libraries/leaflet-easyPrint-2/dist/bundle.js"></script>
     <div class="page-wrapper">
     <div class="container">
 		<h2 class="tag">Search for attacks</h2>
 		<p>Choose the filters you want to apply and submit the form below.</p>
+        <p>The "Frequency of" field is used only for PieChart/BarChart.</p>
 	</div>
         
         <form method="GET" action="form">
@@ -46,7 +50,17 @@
                 <?php endforeach; ?>
                 </datalist>
                 <span></span>
-            </p>   
+            </p> 
+            <p>
+                <label for="frequency">Frequency Of</label>
+                <input type="text" name="frequency" id="frequency" list="frequencyList">
+                <datalist id="frequencyList">
+                <?php foreach($data['frequency'] as $frequency) : ?>
+			        <option><?php echo $frequency; ?></option>			
+                <?php endforeach; ?>
+                </datalist>
+                <span></span>
+            </p>  
             <p>
                 <label for="year">Year(1970:2017)</label>
                 <input type="number" name="iyear" id="iyear" min="1970" max="2017" step="1">
@@ -118,7 +132,7 @@
 
             <p>
                 <label for="success">Was it a succes?(0=false,1=true)</label>
-                <input type="number" name="success" id="success" min="0" max="1" step="1" value="1">
+                <input type="number" name="success" id="success" min="0" max="1" step="1">
                 <span></span>
             </p>
 

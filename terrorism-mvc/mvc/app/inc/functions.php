@@ -137,7 +137,7 @@
         );
         foreach($_GET as $key=>$value)
         {
-            if($key=="submit" || $key=="url")continue;
+            if($key=='submit' || $key=='url')continue;
             if(empty(e($_GET[$key])))
             {
                 if($key=='mode')
