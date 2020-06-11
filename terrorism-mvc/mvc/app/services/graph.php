@@ -4,9 +4,15 @@
         require_once "../database.php";
         require_once "../models/AttackDao.php";
 
+        $possibleInputKeys=array('_id', 'iyear', 'imonth', 'iday', 'country', 'region', 
+        'provstate', 'city', 'latitude', 'longitude', 'success', 'attacktype',
+        'targtype', 'gname', 'motive', 'weaptype', 'weapdetail', 'nkill','count'
+        );
+        $possibleInputs=array_fill_keys($possibleInputKeys,0);
+
 
         $params=array();
-        $out=0;
+        $out=0;$correct=1;$mode='PieChart';
         foreach($_GET as $key=>$val)
         {
             if($key=="output"){
@@ -14,7 +20,17 @@
                 $out=1;
                 continue;
             }
-            if($val!=NULL)
+            if($key=='correctForm' && $val==0)
+            {
+                $correct=0;
+                continue;
+            }
+            if($key=='mode'){
+                $mode=$val;
+                continue;
+            }
+            if($val=='all')continue;
+            if($val!=NULL && isset($possibleInputs[$key]))
                 $params[$key]=$val;
         }
         
@@ -26,14 +42,19 @@
         }else{
         $params['targtype'] = str_replace("and", "&", $params['targtype']);
         }
-        $db=new AttackDao();
-        $db_data=$db->find($params);
-        $RawRows=array();
-        foreach($db_data as $row)
-        {
-            $RawRows[]=$row->get();
+        if($correct==1){
+            $db=new AttackDao();
+            $db_data=$db->find($params);
+            $RawRows=array();
+            foreach($db_data as $row)
+            {
+                $RawRows[]=$row->get();
+            }
+            echo "var json_array = " . json_encode($RawRows) . ";\n";
         }
-        echo "var json_array = " . json_encode($RawRows) . ";\n";
+        else
+            echo "var json_array = " . json_encode(array()) . ";\n";
+        echo "var mode = '" . $mode . "';\n";
     ?>
         var freq = {};
         
@@ -57,14 +78,15 @@
                     keys[i],freq[keys[i]]
                 ])
             }
-
+            
         var options = {
-            sliceVisibilityThreshold: .001,
-            title: 'Piechart'
+            title: mode
         };
-
-        var chart = new google.visualization.PieChart(document.getElementById('graph_chart'));
-
+        var chart;
+        if(mode=='BarChart')
+            chart = new google.visualization.BarChart(document.getElementById('graph_chart'));
+        else
+            chart = new google.visualization.PieChart(document.getElementById('graph_chart'));
         if(modout!="div"){
             var chart_div = document.getElementById('graph_chart');
             google.visualization.events.addListener(chart, 'ready', function () {

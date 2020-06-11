@@ -97,14 +97,14 @@ class AttackDao {
             $params[$key] = (string)$value;
         }
 
-        if (($key = array_search('all', $params)) !== false) {
+        while (($key = array_search('all', $params)) !== false) {
             unset($params[$key]);
         }
         if(isset($params['count'])){
             $count = $params['count'];
             unset($params['count']);
         }
-        else $count = 10000;
+        else $count = 1000;
         $query = new MongoDB\Driver\Query($params);     
 
         $rows = $mng->executeQuery("Terrorism.terror", $query);
