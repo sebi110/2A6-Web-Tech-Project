@@ -12,7 +12,7 @@
 
 
         $params=array();
-        $out=0;$correct=1;$mode='PieChart';$wichFrequency='iyear';
+        $out=0;$correct=1;$mode='PieChart';$wichFrequency='imonth';
         foreach($_GET as $key=>$val)
         {
             if($key=="output"){
@@ -33,6 +33,8 @@
             {
                 if($val=='day' || $val=='month' || $val=='year')
                     $val='i'.$val;
+                if($val=='all')
+                    $val='imonth';
                 $wichFrequency=$val;
                 continue;
             }

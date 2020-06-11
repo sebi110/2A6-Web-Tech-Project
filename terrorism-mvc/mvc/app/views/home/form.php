@@ -15,6 +15,13 @@
                         'provstate', 'city', 'latitude', 'longitude', 'success', 'attacktype',
                         'targtype', 'gname', 'motive', 'weaptype', 'weapdetail', 'nkill'
                         );
+    $data['countable'] = array(
+        'iyear'   => array('Year',1970,2017),
+        'imonth'  => array('Month',0,12),
+        'iday'    => array('Day',0,31),
+        'count'   => array('Count',1,1000),
+        'success' => array('Was it a succes?(0=false,1=true)',0,1)
+    )
     
 ?>
 
@@ -28,7 +35,7 @@
         
     </head>
     <body>
-            <script src="../misc/libraries/leaflet-easyPrint-2/dist/bundle.js"></script>
+            <script src="../../misc/libraries/leaflet-easyPrint-2/dist/bundle.js"></script>
     <div class="page-wrapper">
     <div class="container">
 		<h2 class="tag">Search for attacks</h2>
@@ -61,30 +68,19 @@
                 </datalist>
                 <span></span>
             </p>  
-            <p>
-                <label for="year">Year(1970:2017)</label>
-                <input type="number" name="iyear" id="iyear" min="1970" max="2017" step="1">
-                <span></span>
-            </p>
-
-            <p>
-                <label for="month">Month(0:12)</label>
-                <input type="number" name="imonth" id="imonth" min="0" max="12" step="1">
-                <span></span>
-            </p>
-
-            <p>
-                <label for="day">Day(0:31)</label>
-                <input type="number" name="iday" id="iday" min="0" max="31" step="1">
-                <span></span>
-            </p>
-
-
-            <p>
-                <label for="count">Count(1:1000)</label>
-                <input type="number" name="count" id="count" min="1" max="1000" step="1" value="100" required>
-                <span></span>
-            </p>
+            <?php
+                foreach($data['countable'] as $key=>$val)
+                {
+                    echo "<p>";
+                    echo "<label for=".$key.">" .$val[0] . "(" . $val[1]. ":" . $val[2] . ")</label>";
+                    echo "<input type=\"number\" name=\"" .$key . "\" id= \"" .$key. "\" min=\"" .$val[1] ."\" max=\"" .$val[2] ."\" step=\"1\" ";
+                    if($key=='count') 
+                        echo "value=\"100\" required";
+                    echo ">";
+                    echo "<span></span>";
+                    echo "</p>";
+                }
+            ?>
 
             <p>
                     <!--cant use the value thing with POST cause of 'all'-->
@@ -127,12 +123,6 @@
 			        <option><?php echo $target; ?></option>			
                 <?php endforeach; ?>
                 </datalist>-->
-                <span></span>
-            </p>
-
-            <p>
-                <label for="success">Was it a succes?(0=false,1=true)</label>
-                <input type="number" name="success" id="success" min="0" max="1" step="1">
                 <span></span>
             </p>
 
@@ -194,6 +184,7 @@
                 if ($codHTTP == 200) {
                     echo "<div id=\"chart\">";
                     echo $res;
+                    if($_GET['mode']=='map') echo "<a class=\"button\" href=\"".$URL."\">View Full Map</a>";
                 } 
                 else {
                     http_response_code ($codHTTP);
