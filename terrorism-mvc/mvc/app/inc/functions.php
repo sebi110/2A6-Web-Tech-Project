@@ -17,7 +17,11 @@
         $password_2  =  e($_POST['password_2']);
     
         if ($password_1 != $password_2) {
-            array_push($_SESSION['errors'], "The two passwords do not match");
+            array_push($_SESSION['errors'], "The two passwords do not match!");
+        }
+
+        if(!empty($userDao->findByUsername($username))){
+            array_push($_SESSION['errors'], "There is another user with the same username! Please choose another username!");
         }
     
         // register user if there are no errors in the form
@@ -127,15 +131,6 @@
     // FORM
     
     function attack_form($data){
-        $_SESSION['attack_form'] = array(
-            'correctForm' => 0,
-        );
-        foreach($_GET as $key=>$value)
-        {
-            if($key=="submit")continue;
-            if(empty(e($_GET[$key])))$_SESSION['attack_form'][$key]='all';
-            else $_SESSION['attack_form'][$key]=$value;
-        }
 
         if(!in_array(e($_GET['targtype']), $data['targets']) && !empty(e($_GET['targtype'])) ){
 
@@ -144,18 +139,22 @@
 
         if (empty($_SESSION['errors'])) {
 
-
             (empty(e($_GET['targtype'])) == true) ? $target = 'all' : $target = e($_GET['targtype']);
 
             // for Airports & Aircraft goddamn
             $target = str_replace("&", "and", $target);
                 
-            $_SESSION['attack_form']['targtype'] = $target;
-            $_SESSION['attack_form']['correctForm']=1;
-        }
+            $_SESSION['attack_form'] = array(
+                'iyear' => e($_GET['iyear']),
+                'targtype' => $target,
+                'count' => e($_GET['count'])
+            );
 
-        $query = http_build_query($_SESSION['attack_form']);
-        header("location: form?" . $query);
+            $query = http_build_query($_SESSION['attack_form']);
+            
+            header("location: form?" . $query);
+
+        }
  
     }
 

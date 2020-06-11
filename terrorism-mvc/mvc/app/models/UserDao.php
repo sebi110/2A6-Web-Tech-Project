@@ -68,6 +68,27 @@ class UserDao {
 
     }
 
+    function findByUsername($username){
+
+        global $mng;
+        require_once 'User.php';
+        
+        $filters = ['username' => $username];
+        $query = new MongoDB\Driver\Query($filters);     
+    
+        $rows = $mng->executeQuery("Terrorism.users", $query);
+
+        $users = [];
+        foreach ($rows as $row) {
+            $user = new User();
+            $user->set($row);
+            $users[] = $user;
+        }         
+
+        return $users == [] ? [] : $users[0];
+
+    }
+
     function findLog($username, $password){
 
         global $mng;
