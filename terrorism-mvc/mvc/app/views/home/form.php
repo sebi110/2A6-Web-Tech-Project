@@ -28,7 +28,7 @@
 		<p>Choose the filters you want to apply and submit the form below.</p>
 	</div>
         
-        <form method="GET" action="form" enctype="multipart/form-data">
+        <form method="GET" action="form">
 
         <?php echo display_error(); ?>
 

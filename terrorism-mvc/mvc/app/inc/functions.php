@@ -1,7 +1,5 @@
 <?php 
     session_start();
-    
-    //this should be moved from views
 
 	$_SESSION['errors'] = array(); 
 
@@ -13,10 +11,10 @@
         $user = $data['user'];
         $userDao = $data['userDao'];
     
-        $username    =  htmlEntities($_POST['username'], ENT_QUOTES);
-        $email       =  htmlEntities($_POST['email'], ENT_QUOTES);
-        $password_1  =  htmlEntities($_POST['password_1'], ENT_QUOTES);
-        $password_2  =  htmlEntities($_POST['password_2'], ENT_QUOTES);
+        $username    =  e($_POST['username']);
+        $email       =  filter_var(e($_POST['email']), FILTER_SANITIZE_EMAIL);
+        $password_1  =  e($_POST['password_1']);
+        $password_2  =  e($_POST['password_2']);
     
         if ($password_1 != $password_2) {
             array_push($_SESSION['errors'], "The two passwords do not match");
@@ -27,7 +25,7 @@
             $password = md5($password_1);//encrypt the password before saving in the database
     
             if (isset($_POST['user_type'])) {
-                $user_type = htmlEntities($_POST['user_type'], ENT_QUOTES);
+                $user_type = e($_POST['user_type']);
                                
                 $user->set(array(
                     '_id' => 0,
@@ -62,8 +60,8 @@
 
 	function login($data){
         
-        $username = $_POST['username'];
-        $password = $_POST['password'];
+        $username = e($_POST['username']);
+        $password = e($_POST['password']);
 
         $user = $data['user'];
         $userDao = $data['userDao'];
@@ -126,22 +124,22 @@
     
     function attack_form($data){
 
-        if(!in_array($_GET['targtype'], $data['targets']) && !empty($_GET['targtype']) ){
+        if(!in_array(e($_GET['targtype']), $data['targets']) && !empty(e($_GET['targtype'])) ){
 
             array_push($_SESSION['errors'], "Choose a target from the list or no target at all!");
         }
 
         if (empty($_SESSION['errors'])) {
 
-            (empty($_GET['targtype']) == true) ? $target = 'all' : $target = $_GET['targtype'];
+            (empty(e($_GET['targtype'])) == true) ? $target = 'all' : $target = e($_GET['targtype']);
 
             // for Airports & Aircraft goddamn
             $target = str_replace("&", "and", $target);
                 
             $_SESSION['attack_form'] = array(
-                'iyear' => $_GET['iyear'],
+                'iyear' => e($_GET['iyear']),
                 'targtype' => $target,
-                'count' => $_GET['count']
+                'count' => e($_GET['count'])
             );
 
             $query = http_build_query($_SESSION['attack_form']);
@@ -169,6 +167,10 @@
         (new AttackDao())->setup();
         
         echo "Setup successful";
+    }
+
+    function e($x){
+        return htmlEntities($x, ENT_QUOTES);
     }
 
 

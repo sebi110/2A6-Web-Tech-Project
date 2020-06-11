@@ -5,6 +5,6 @@
  * the project folder, redirect to the public directory.
  */
 
-header('Location: public/');
+header('Location: public/home/login');
 
 die();

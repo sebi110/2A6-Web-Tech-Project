@@ -57,7 +57,7 @@
 			<p>Username: <?php echo json_decode($_SESSION['user'])->{'username'}; ?></p>
 			<p>Email: <?php echo json_decode($_SESSION['user'])->{'email'}; ?></p>
 			<p>User type: <?php echo json_decode($_SESSION['user'])->{'user_type'}; ?></p>
-			<p>Password: <?php echo json_decode($_SESSION['user'])->{'password'}; ?></p>
+			<!--p>Password: <?php echo json_decode($_SESSION['user'])->{'password'}; ?></p-->
 				
 	        <p><a class="button" href="admin?logout='1'">Logout</a>
             <p><a class="button" href="create_user"> + Add user</a></p>

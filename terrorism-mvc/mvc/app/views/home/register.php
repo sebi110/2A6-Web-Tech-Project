@@ -1,7 +1,5 @@
 <?php 
 
-    include('functions.php');
-
     if (isset($_POST['register_btn'])){
         
         register($data);
@@ -24,7 +22,7 @@
             <p>In order to login, you must create an account first.</p>
         </div>
 
-        <form method="POST" action="register" enctype="multipart/form-data">
+        <form method="POST" action="register">
             
             <?php echo display_error(); ?>
 

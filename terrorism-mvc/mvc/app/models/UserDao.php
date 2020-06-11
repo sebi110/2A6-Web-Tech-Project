@@ -8,7 +8,6 @@ class UserDao {
     }
 
     function cleanup(){
-        //include 'database.php';
         global $mng;
 
         $bulk = new MongoDB\Driver\BulkWrite;
@@ -21,7 +20,6 @@ class UserDao {
 
     function insert($user){
 
-        //include 'database.php';
         global $mng;
         require_once 'User.php';
         
@@ -47,7 +45,6 @@ class UserDao {
 
     function find($id){
 
-        //include 'database.php';
         global $mng;
         require_once 'User.php';
 
@@ -73,7 +70,6 @@ class UserDao {
 
     function findLog($username, $password){
 
-        //include 'database.php';
         global $mng;
         require_once 'User.php';
 

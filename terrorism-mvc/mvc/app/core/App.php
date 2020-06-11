@@ -5,7 +5,7 @@ class App{
 
     protected $controller = 'home';
 
-    protected $method = 'index';
+    protected $method = 'login';
 
     protected $params = [];
 
@@ -17,19 +17,23 @@ class App{
         print_r($url);
         echo '<br><br>';*/
 
+        if(empty($url[0])){
+            header('location: home/login');
+        }
+
 
         if(file_exists('../app/controllers/' . ucfirst($url[0]) . '.php')){
             $this->controller = $url[0];
             unset($url[0]);
         }
 
-        require_once '../app/controllers/' . $this->controller . '.php';
+        require_once '../app/controllers/' . ucfirst($this->controller) . '.php';
 
         //echo $this->controller;
         //echo '<br><br>';
 
 
-        $this->controller = new $this->controller;
+        $this->controller = new $this->controller();
 
         if(isset($url[1])){
             if(method_exists($this->controller, $url[1])){

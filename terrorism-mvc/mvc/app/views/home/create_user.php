@@ -23,7 +23,7 @@
         <p>As an admin, you can create an account for another admin or another user.</p>
     </div>
 
-	<form method="POST" action="create_user" enctype="multipart/form-data">
+	<form method="POST" action="create_user">
 
 		<?php echo display_error(); ?>
 

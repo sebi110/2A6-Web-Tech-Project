@@ -8,7 +8,6 @@ class AttackDao {
     }
 
     function cleanup(){
-        //include 'database.php';
 
         global $mng;
         $bulk = new MongoDB\Driver\BulkWrite;
@@ -26,7 +25,6 @@ class AttackDao {
 
         $this->cleanup();
 
-        //include 'database.php';
         global $mng;
 
         $bulk = new MongoDB\Driver\BulkWrite;        
@@ -90,7 +88,6 @@ class AttackDao {
 
     function find($params){
 
-        //include 'database.php';
         require_once 'Attack.php';
 
         global $mng;
@@ -128,7 +125,7 @@ class AttackDao {
     }
 
     function delete($attack){
-        //include 'database.php';
+        
         global $mng;
         require_once 'Attack.php';
 
@@ -141,7 +138,6 @@ class AttackDao {
     }
 
     function getAll($count = 10){
-        //include 'database.php';
         global $mng;
         require_once 'Attack.php';
 
@@ -168,7 +164,6 @@ class AttackDao {
     }
 
     function getAllTargets(){
-        //include 'database.php';
 
         global $mng;
         $cmd = new MongoDB\Driver\Command([

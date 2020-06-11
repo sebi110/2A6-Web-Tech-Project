@@ -49,7 +49,7 @@
         <p>Username: <?php echo json_decode($_SESSION['user'])->{'username'}; ?></p>
         <p>Email: <?php echo json_decode($_SESSION['user'])->{'email'}; ?></p>
         <p>User type: <?php echo json_decode($_SESSION['user'])->{'user_type'}; ?></p>
-        <p>Password: <?php echo json_decode($_SESSION['user'])->{'password'}; ?></p>
+        <!--p>Password: <?php echo json_decode($_SESSION['user'])->{'password'}; ?></p-->
             
         <p>	<a class="button" href="index?logout='1'">Logout</a></p>
             

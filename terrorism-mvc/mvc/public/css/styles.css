@@ -20,18 +20,13 @@ p {
     text-align: center;
 }
 
-.chart{
-    width: 100%;
-    height: 100%;
-    align-items: center;
-}
+
 button, a.button{
     border       : 2px solid #333;
     padding      : 5px;
     border-radius: 5px;
     background   : none;
     cursor       : pointer;
-    /*transform    : rotate(-1.5deg);*/
 }
   
 button:after, a.button:after {
@@ -45,29 +40,12 @@ button:hover, button:focus, a.button:hover, a.button:focus {
 }
 
 a.button{
-    /*border       : 2px solid #333;
-    padding      : 5px;
-    border-radius: 5px;
-    background   : none;
-    cursor       : pointer;
-    transform    : rotate(-1.5deg);*/
     text-decoration: none;
     color: initial;
 }
-  
-/*a.button:after {
-    content      : " >>>";
-}
-  
-a.button:hover, a.button:focus {
-    outline     : none;
-    background  : #000;
-    color       : #FFF;
-}*/
 
 .page-wrapper { 
     margin: 0; 
-    position: relative;
     padding-left: 20px;
     padding-right: 20px;
     padding-bottom:20px;
@@ -75,22 +53,14 @@ a.button:hover, a.button:focus {
 
 }
 
-/*.page-wrapper:before, .page-wrapper:after{
-    content: "";
-    display: table;
-	clear: both;	
-}*/
-
 .tag{
     background-color:black;
     color:pink;
-    /*display: inline-block;*/
     padding-left: 8px;
     padding-right: 8px;
     text-align: center;
     letter-spacing: 4px;
     justify-content: center;
-    display: block;
     margin-left: auto;
     margin-right: auto;
     width: 80%;
@@ -99,35 +69,23 @@ a.button:hover, a.button:focus {
     padding-bottom: 20px;
 }
 
-/*.center {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: -webkit-fill-available;
-}*/
-
 button, input, select, textarea {
     font-family: inherit;
     font-size: 100%;
 }
 
 form, .container {
-    position : relative;
     width  : 60%;
     padding: 1em;
     background : #FFF;
     border: 1px solid #CCC;
     border-radius: 1em;
-    justify-content: center;
-    display: block;
+    
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 20px;
 }
 
-/*div+div {
-    margin-top: 1em;
-}*/
 
 label span {
     display: inline-block;
@@ -152,10 +110,7 @@ input:focus, textarea:focus {
 input:required {
     border: 1px solid black;
 }
-  
-/*input:optional {
-    border: 1px solid silver;
-}*/
+
 
 input:invalid {
     border: 2px solid red;
@@ -186,38 +141,6 @@ input:out-of-range + span::after {
     left: -182px;
 }
 
-/*textarea {
-    vertical-align: top;
-    height: 5em;
-    resize: vertical;
-    min-height: 20rem;
-    width: 80%;
-}
-
-fieldset {
-    width: 250px;
-    box-sizing: border-box;
-    margin-left: 136px;
-    border: 1px solid #999;
-}*/
-
-
-
-label {
-  position: relative;
-}
-
-label em {
-  position: absolute;
-  right: 5px;
-  top: 20px;
-}
-
-
-/*fieldset {
-    position: relative;
-}*/
-
 @media (max-width: 700px){
 
     
@@ -228,7 +151,6 @@ label em {
         border: 1px solid #CCC;
         border-radius: 1em;
         justify-content: center;
-        display: block;
         margin-left: auto;
         margin-right: auto;
         margin-bottom: 20px;
