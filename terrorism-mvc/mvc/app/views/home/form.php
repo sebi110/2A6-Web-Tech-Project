@@ -10,7 +10,7 @@
         attack_form($data);
     } 
 
-    $data['mode']=array('map','PieChart','BarChart');
+    $data['mode']=array('map','PieChart','BarChart','LineChart');
     $data['frequency']=array('year', 'month', 'day', 'country', 'region', 
                         'provstate', 'city', 'latitude', 'longitude', 'success', 'attacktype',
                         'targtype', 'gname', 'motive', 'weaptype', 'weapdetail', 'nkill'
@@ -202,7 +202,6 @@
     
             <?php endforeach; ?>
             <?php if(empty($data['attacks'])) : ?>
-                <p>No attacks were found.</p>
 
             <?php else: ?>
                 <h2 class="tag">The first <=10 attacks that were found:</h2>
