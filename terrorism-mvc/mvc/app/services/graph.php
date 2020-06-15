@@ -1,7 +1,6 @@
 <head>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
-    var asd=0;
     <?php
         require_once "../database.php";
         require_once "../models/AttackDao.php";
@@ -12,7 +11,6 @@
         );
         $possibleInputs=array_fill_keys($possibleInputKeys,0);
 
-        echo "Asdad";
         $params=array();
         $out=0;$correct=1;$mode='PieChart';$wichFrequency='imonth';$idmax=0;
         foreach($_GET as $key=>$val)
@@ -54,6 +52,8 @@
                     $idmax=$id;
             }
         }
+        for($id=0;$id<$idmax;$id++)
+            $params[$id]['count']=$_GET['count'];
         if($out==0)
             echo "var modout = \"div\" " . ";\n";
 
@@ -65,18 +65,18 @@
         if($correct==1){
             $fullQuery=array();
             $db=new AttackDao();
-            $idmax=1;
             for($id=0;$id<$idmax;$id++)
             {
-                $db_data=$db->find($params);
+                $db_data=$db->find($params[$id]);
                 $RawRows=array();
+                $id2=0;
                 foreach($db_data as $row)
                 {
+                    $fullQuery[$id][$id2]=$row->get();
+                    $id2++;
                     $RawRows[]=$row->get();
-                    break;
                 }
                 $fullQuery[]=$RawRows;
-                break;
             }
             echo "var json_array = " . json_encode($fullQuery) . ";\n";
         }
@@ -85,38 +85,40 @@
         echo "var mode = '" . $mode . "';\n";
         echo "var nrQuery = " .$idmax .";\n";
     ?>
+        
         var freq = {};
-        for(var i = 0; i<json_array.lenght; i++)
-            for(var j = 0; j<json_array.length; j++)
+        var keysJSON = {};
+        for(var i = 0; i<json_array.length; i++)
+            for(var j = 0; j<json_array[i].length; j++)
             {
                 <?php echo "var elem = json_array[i][j]." .$wichFrequency .";\n"?>
+                keysJSON[elem] = keysJSON[elem] ? keysJSON[elem] : elem;
+                if(!freq[elem])
+                    freq[elem]= {};
                 freq[elem][i] = freq[elem][i] ? freq[elem][i]+1 : 1;
             }
         google.charts.load('current', {'packages':['corechart']});
         google.charts.setOnLoadCallback(drawChart);
         
         function drawChart() {
-            const params = new URLSearchParams(window.location.search)
             var data = new google.visualization.DataTable();
-            data.addColumn('string','month');
+            data.addColumn('string','data');
             <?php 
-            for($idd=0;$idd<$idmax;$id++)
+            for($id=0;$id<$idmax;$id++)
             {
-                echo 'data.addColumn(\'number\',\'set' . $idd.'\');\n';
+                echo "data.addColumn('number','set" . $id."');\n";
             }
             ?>
-
-            for (var i = 0, keys = Object.keys(freq); i < keys.length; i++) {
+            var element = document.getElementById("test");
+            for (var i = 0,keys=Object.keys(keysJSON); i < keys.length; i++) {
                 data.addRow([
-                    keys[i],freq[keys[i][0]]
+                    keys[i]
                     <?php
-                    $idmax=1;
                     for($id=0;$id<$idmax;$id++)
                         echo ",freq[keys[i]][".$id."]";
                     ?>    
                 ]);
             }
-            
         var options = {
             title: mode
         };
@@ -141,5 +143,10 @@
     </script>
 </head>
 <body>
+    <div id="test"></div>
     <div id="graph_chart"></div>
+    <script>
+        // var element = document.getElementById("test");
+        // element.innerHTML = freq[0][0];
+    </script>
 </body>
