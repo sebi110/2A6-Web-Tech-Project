@@ -65,25 +65,39 @@
         if($correct==1){
             $fullQuery=array();
             $db=new AttackDao();
-            for($id=0;$id<$idmax;$id++)
+            if($mode=='PieChart')
             {
-                $db_data=$db->find($params[$id]);
-                $RawRows=array();
-                $id2=0;
+                $idmax=1;
+            }
+            if($mode=='map')
+            {
+                $db_data=$db->find($params[0]);
                 foreach($db_data as $row)
                 {
-                    $fullQuery[$id][$id2]=$row->get();
-                    $id2++;
-                    $RawRows[]=$row->get();
+                    $fullQuery[]=$row->get();
                 }
-                $fullQuery[]=$RawRows;
+            }
+            else
+            {
+                for($id=0;$id<$idmax;$id++)
+                {
+                    $db_data=$db->find($params[$id]);
+                    $RawRows=array();
+                    $id2=0;
+                    foreach($db_data as $row)
+                    {
+                        $fullQuery[$id][$id2]=$row->get();
+                        $id2++;
+                        $RawRows[]=$row->get();
+                    }
+                    $fullQuery[]=$RawRows;
+                }
             }
             echo "var json_array = " . json_encode($fullQuery) . ";\n";
         }
         else
             echo "var json_array = " . json_encode(array()) . ";\n";
         echo "var mode = '" . $mode . "';\n";
-        echo "var nrQuery = " .$idmax .";\n";
     ?>
         
         var freq = {};

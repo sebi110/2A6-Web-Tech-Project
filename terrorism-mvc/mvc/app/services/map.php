@@ -24,61 +24,103 @@
 		}).addTo(map);
 
 		<?php
-			require_once "../database.php";
-			require_once "../models/AttackDao.php";
+        require_once "../database.php";
+        require_once "../models/AttackDao.php";
 
-			$possibleInputKeys=array('_id', 'iyear', 'imonth', 'iday', 'country', 'region', 
-			'provstate', 'city', 'latitude', 'longitude', 'success', 'attacktype',
-			'targtype', 'gname', 'motive', 'weaptype', 'weapdetail', 'nkill','count'
-			);
-			$possibleInputs=array_fill_keys($possibleInputKeys,0);
+        $possibleInputKeys=array('_id', 'iyear', 'imonth', 'iday', 'country', 'region', 
+        'provstate', 'city', 'latitude', 'longitude', 'success', 'attacktype',
+        'targtype', 'gname', 'motive', 'weaptype', 'weapdetail', 'nkill','count'
+        );
+        $possibleInputs=array_fill_keys($possibleInputKeys,0);
 
+        $params=array();
+        $out=0;$correct=1;$mode='PieChart';$wichFrequency='imonth';$idmax=0;
+        foreach($_GET as $key=>$val)
+        {
+            if($key=="output"){
+                echo "var modout = \"" . $val . "\"" . ";\n";
+                $out=1;
+                continue;
+            }
+            if($key=='correctForm' && $val==0)
+            {
+                $correct=0;
+                continue;
+            }
+            if($key=='mode'){
+                $mode=$val;
+                continue;
+            }
+            if($key=='frequency')
+            {
+                if($val=='day' || $val=='month' || $val=='year')
+                    $val='i'.$val;
+                if($val=='all')
+                    $val='imonth';
+                $wichFrequency=$val;
+                continue;
+            }
+            if($val=='all')continue;
+            if($val!=NULL && isset($possibleInputs[$key]))
+            {
+                $aux=explode(';',$val);
+                $id=0;
+                foreach($aux as $value)
+                {
+                    $params[$id][$key]=$value;
+                    $id=$id+1;
+                }
+                if($id>$idmax)
+                    $idmax=$id;
+            }
+        }
+        for($id=0;$id<$idmax;$id++)
+            $params[$id]['count']=$_GET['count'];
+        if($out==0)
+            echo "var modout = \"div\" " . ";\n";
 
-			$params=array();
-			$out=0;$correct=1;$mode='PieChart';
-			foreach($_GET as $key=>$val)
-			{
-				if($key=="output"){
-					echo "var modout = \"" . $val . "\"" . ";\n";
-					$out=1;
-					continue;
-				}
-				if($key=='correctForm' && $val==0)
-				{
-					$correct=0;
-					continue;
-				}
-				if($key=='mode'){
-					$mode=$val;
-					continue;
-				}
-				if($val=='all')continue;
-				if($val!=NULL && isset($possibleInputs[$key]))
-					$params[$key]=$val;
-			}
-			
-			if($out==0)
-				echo "var modout = \"div\" " . ";\n";
-
-			if(!isset($params['targtype'])){
-				$params['targtype'] = 'all';
-			}else{
-			$params['targtype'] = str_replace("and", "&", $params['targtype']);
-			}
-			if($correct==1){
-				$db=new AttackDao();
-				$db_data=$db->find($params);
-				$RawRows=array();
-				foreach($db_data as $row)
-				{
-					$RawRows[]=$row->get();
-				}
-				echo "var json_array = " . json_encode($RawRows) . ";\n";
-			}
-			else
-				echo "var json_array = " . json_encode(array()) . ";\n";
-			echo "var mode = '" . $mode . "';\n";
-    	?>
+        // if(!isset($params['targtype'])){   /// sper ca nu e gresit ca comentez aceste linii...
+        //     $params['targtype'] = 'all';
+        // }else{
+        // $params['targtype'] = str_replace("and", "&", $params['targtype']);
+        // }
+        if($correct==1){
+            $fullQuery=array();
+            $db=new AttackDao();
+            if($mode=='PieChart')
+            {
+                $idmax=1;
+            }
+            if($mode=='map')
+            {
+                $db_data=$db->find($params[0]);
+                foreach($db_data as $row)
+                {
+                    $fullQuery[]=$row->get();
+                }
+            }
+            else
+            {
+                for($id=0;$id<$idmax;$id++)
+                {
+                    $db_data=$db->find($params[$id]);
+                    $RawRows=array();
+                    $id2=0;
+                    foreach($db_data as $row)
+                    {
+                        $fullQuery[$id][$id2]=$row->get();
+                        $id2++;
+                        $RawRows[]=$row->get();
+                    }
+                    $fullQuery[]=$RawRows;
+                }
+            }
+            echo "var json_array = " . json_encode($fullQuery) . ";\n";
+        }
+        else
+            echo "var json_array = " . json_encode(array()) . ";\n";
+        echo "var mode = '" . $mode . "';\n";
+    ?>
 	
 		for(var i=0;i<json_array.length;i++)
         {
