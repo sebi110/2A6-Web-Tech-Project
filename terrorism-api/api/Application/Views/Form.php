@@ -12,7 +12,11 @@
 
     if (isset($_GET['back'])) {
         $this->response->redirect('/terrorism-api/api/home/index');
-	}
+    }
+    
+    if (isset($_GET['map'])) {
+        $this->response->redirect('/terrorism-api/api/home/map');
+    }
     
 ?>
 
@@ -152,38 +156,7 @@
 
         <?php if(!empty($_SESSION['attacks'])) : ?>
         <div class="container">
-            <?php 
-                $URL = '';
-                if(isset($_POST['mode']) && $_POST['mode']=='map')
-                    $URL = 's';//http://localhost/terrorism-api/api/Application/services/map.php?' . parse_url($_SERVER["REQUEST_URI"],PHP_URL_QUERY);
-                else
-                    $URL = 's';//http://localhost/terrorism-api/api/Application/services/graph.php?' . parse_url($_SERVER["REQUEST_URI"],PHP_URL_QUERY);
-                
-                $c = curl_init ($URL); 
-                $opt = [CURLOPT_RETURNTRANSFER => TRUE,
-                        CURLOPT_SSL_VERIFYPEER => FALSE,
-                        CURLOPT_CONNECTTIMEOUT => 10,
-                        CURLOPT_FAILONERROR    => TRUE
-                    ];
-
-                curl_setopt_array ($c, $opt);        
-                $res = curl_exec ($c);
-
-                $codHTTP = curl_getinfo ($c, CURLINFO_RESPONSE_CODE);
-
-                if ($codHTTP == 200) {
-                    echo "<div id=\"chart\">";
-                    echo $res;
-                    if($_POST['mode']=='map') echo "<a class=\"button\" href=\"".$URL."\">View Full Map</a>";
-                } 
-                else {
-                    http_response_code ($codHTTP);
-                    echo 'Status code: ' . $codHTTP;
-                
-                }
-
-                curl_close ($c);
-            ?>
+            <p><a class="button" href="form?map='1'">Map</a></p>
         </div>
         <?php endif; ?>
 
@@ -191,9 +164,9 @@
 
         <?php if(!empty($_SESSION['attacks'])) : ?>
 
-            <?php foreach($_SESSION['attacks'] as $attack) : ?>
+            <?php foreach($_SESSION['attacks'] as $key => $val) : ?>
                 
-                <p><?php echo json_encode($attack); ?></p>
+                <p><?php echo json_encode($val); ?></p>
 
             <?php endforeach; ?>
 

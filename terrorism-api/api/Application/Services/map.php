@@ -1,3 +1,20 @@
+<?php
+
+    session_start();
+
+    foreach($_SESSION['attacks'] as $key => $val){
+        $_SESSION[$key] = json_encode($val);
+    }
+    $mode = 'map';
+
+    print_r($_SESSION['attacks']);
+                    
+    echo 'wtf1<br>';
+    echo "var json_array = " . json_encode($_SESSION['attacks']) . ";\n";
+    echo 'wtf2<br>';
+    echo "var mode = '" . $mode . "';\n";
+
+?>
 <html>
 <head>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
@@ -23,106 +40,16 @@
 
 		<?php
 
+            session_start();
 
-            $possibleInputKeys=array('_id', 'iyear', 'imonth', 'iday', 'country', 'region', 
-            'provstate', 'city', 'latitude', 'longitude', 'success', 'attacktype',
-            'targtype', 'gname', 'motive', 'weaptype', 'weapdetail', 'nkill','count'
-            );
-            $possibleInputs=array_fill_keys($possibleInputKeys,0);
-
-            $params=array();
-            $out=0;$correct=1;$mode='PieChart';$wichFrequency='imonth';$idmax=0;
-            
-            foreach($_GET as $key=>$val)
-            {
-                if($key=="output"){
-                    echo "var modout = \"" . $val . "\"" . ";\n";
-                    $out=1;
-                    continue;
-                }
-                if($key=='correctForm' && $val==0)
-                {
-                    $correct=0;
-                    continue;
-                }
-                if($key=='mode'){
-                    $mode=$val;
-                    continue;
-                }
-                
-                if($val=='all')continue;
-                if($val!=NULL && isset($possibleInputs[$key]))
-                {
-                    $aux=explode(';',$val);
-                    $id=0;
-                    foreach($aux as $value)
-                    {
-                        $params[$id][$key]=$value;
-                        $id=$id+1;
-                    }
-                    if($id>$idmax)
-                        $idmax=$id;
-                }
+            foreach($_SESSION['attacks'] as $key => $val){
+                $_SESSION[$key] = json_encode($val);
             }
-
-            for($id=0; $id<$idmax; $id++)
-                $params[$id]['count']=$_GET['count'];
-            if($out==0)
-                echo "var modout = \"div\" " . ";\n";
-
-            if($correct==1){
-                $fullQuery=array();
-                ///$db=new AttackDao();
-                if($mode=='PieChart')
-                {
-                    $idmax=1;
-                }
-                if($mode=='map')
-                {
-                    $count = $params[0]['count'];
-                    unset($params[0]['count']);
-
-                    $db_data=$this->model('attack')->find($params[0]);
-                    foreach($db_data as $row)
-                    {
-                        $fullQuery[]=$row;//->get();
-                        
-                        if(count($fullQuery) == $count){
-                        break;
-                        }
-                    }
-                }
-                else
-                {
-                    for($id=0;$id<$idmax;$id++)
-                    {
-                        $count = $params[$id]['count'];
-                        unset($params[$id]['count']);
-                        $db_data=$this->model('attack')->find($params[$id]);//s[$id]);
-                        $RawRows=array();
-                        $id2=0;
-                        foreach($db_data as $row)
-                        {
-                            $fullQuery[$id][$id2]=$row;//->get();
-                            $id2++;
-                            $RawRows[]=$row;//->get();
-                            if(count($RawRows) == $count){
-                            break;
-                            }
-                        }
-                        $fullQuery[]=$RawRows;
-                    }
-                }
-                
-                echo "var json_array = " . json_encode($fullQuery) . ";\n";
-
-            }
-            else
-                echo "var json_array = " . json_encode(array()) . ";\n";
-            echo "var mode = '" . $mode . "';\n";
+                    
+            echo "var json_array = " . $_SESSION['attacks'] . ";\n";
         ?>
-	
-		for(var i=0;i<json_array.length;i++)
+
+		for(var i=0; i<json_array.length; i++)
         {
 			var tempAttackInfo = "<ul>" + "<li> Date: " + json_array[i].iyear + "." +json_array[i].imonth + "." +json_array[i].iday + "</li>" + "<li> Type: " + json_array[i].attacktype+ "</li>" + "<li> Victims: " + json_array[i].nkill+ "</li>"+"</ul>";
 			L.marker({lon: json_array[i].longitude, lat: json_array[i].latitude}).bindPopup(tempAttackInfo).addTo(map);
