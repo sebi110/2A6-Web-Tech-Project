@@ -1,14 +1,9 @@
 <?php    
-    //echo $_SESSION['user'];
-
-    /*if (!isLoggedIn()) {
+    
+    if (!isLoggedIn()) {
         $_SESSION['msg'] = "You must log in first";
-        header('location: login');
+        $this->response->redirect('/terrorism-api/api/home/login');
     }
-
-    if (isset($_GET['submit'])){
-        attack_form($data);
-    }*/ 
 
     if (isset($_GET['back'])) {
         $this->response->redirect('/terrorism-api/api/home/index');
@@ -47,13 +42,14 @@
             <h2 class="tag">Filter attacks after:</h2>
             <p>
                 <label for="mode">Mode</label>
-                <input type="text" name="mode" id="mode" list="modeList">
+                <input type="text" name="mode" id="mode" list="modeList" required>
+                <span></span>
                 <datalist id="modeList">
                 <?php foreach($data['mode'] as $mode) : ?>
 			        <option><?php echo $mode; ?></option>			
                 <?php endforeach; ?>
                 </datalist>
-                <span></span>
+                
             </p> 
             <p>
                 <label for="frequency">Frequency Of</label>

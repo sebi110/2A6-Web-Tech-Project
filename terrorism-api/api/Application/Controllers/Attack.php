@@ -96,7 +96,6 @@ class ControllersAttack extends Controller {
         }
         
         else{
-            // issue
             $this->send(404, array("message" => "No attacks found."));
             
         }

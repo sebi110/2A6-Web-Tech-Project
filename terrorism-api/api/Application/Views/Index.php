@@ -1,10 +1,10 @@
 <?php 
 
     //session_start();
-    /*if (!isLoggedIn()) {
+    if (!isLoggedIn()) {
         $_SESSION['msg'] = "You must log in first";
-        header('location: login');
-    }*/
+        $this->response->redirect('/terrorism-api/api/home/login');
+    }
 
     // log user out if logout button clicked
     if (isset($_GET['logout'])) {

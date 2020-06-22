@@ -1,5 +1,10 @@
 <?php
 
+    // for naughty children
+    if(!isset($_POST['form'])){
+        // maybe a msg or sth..
+        $this->response->redirect('/terrorism-api/api/home/form');
+    }
     session_start();
 
     foreach($_SESSION['attacks'] as $key => $val){

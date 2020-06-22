@@ -5,13 +5,6 @@
         $_SESSION['user'] = array();
         $_SESSION['errors'] = array();
     }
-    //$_SESSION['errors'] = array(); 
-    //$_SESSION['user'] = array();
-
-    /*if (isset($_POST['register_btn'])){
-        
-        register($data);
-    }*/
 
     if (isset($_GET['signin'])) {
         session_destroy();

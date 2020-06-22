@@ -6,9 +6,6 @@
         $_SESSION['errors'] = array();
     }
 
-    /*if (isset($_POST['login_btn'])) {
-        login($data);
-    }*/
 
     if (isset($_GET['signup'])) {
         session_destroy();
@@ -38,7 +35,8 @@
 	
 	<form method="POST" action="/terrorism-api/api/user/find">
 
-		<?php echo display_error(); ?>
+		<p><?php echo display_error(); ?></p>
+		<p><?php echo display_msg(); ?></p>
 
         <h2 class="tag">Login</h2>
 
