@@ -1,0 +1,172 @@
+html {
+	margin: 0;
+	padding: 0;
+}
+
+body{
+    font-size:large;
+	line-height:1.5;
+    height: 100%;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-weight: bold;
+    background-color:pink;
+    padding:20px; 
+    margin:0;
+    color:black;
+}
+
+p {
+    padding: 20px;
+    text-align: center;
+}
+
+
+button, a.button{
+    border       : 2px solid #333;
+    padding      : 5px;
+    border-radius: 5px;
+    background   : none;
+    cursor       : pointer;
+}
+  
+button:after, a.button:after {
+    content      : " >>>";
+}
+  
+button:hover, button:focus, a.button:hover, a.button:focus {
+    outline     : none;
+    background  : #000;
+    color       : #FFF;
+}
+
+a.button{
+    text-decoration: none;
+    color: initial;
+}
+
+.page-wrapper { 
+    margin: 0; 
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom:20px;
+    padding-top: 20px;
+
+}
+
+.tag{
+    background-color:black;
+    color:pink;
+    padding-left: 8px;
+    padding-right: 8px;
+    text-align: center;
+    letter-spacing: 4px;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+  
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+button, input, select, textarea {
+    font-family: inherit;
+    font-size: 100%;
+}
+
+form, .container {
+    width  : 60%;
+    padding: 1em;
+    background : #FFF;
+    border: 1px solid #CCC;
+    border-radius: 1em;
+    
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+}
+
+
+label span {
+    display: inline-block;
+    width: 120px;
+    text-align: right;
+}
+
+input, textarea {
+    font: 1em sans-serif;
+    width: 250px;
+    border: 1px solid #999;
+    box-shadow: inset 1px 1px 3px #ccc;
+}
+
+input:focus, textarea:focus {
+    background   : rgba(0,0,0,.1);
+    border-radius: 5px;
+    border-color: #000;
+}
+
+input:required {
+    border: 1px solid black;
+}
+
+
+input:invalid {
+    border: 2px solid red;
+  }
+  
+input:invalid + span::before {
+    content: '✖';
+    color: red;
+}
+  
+input:valid + span::before {
+    content: '✓';
+    color: green;
+}
+
+input:required + span::after {
+    color: white;
+    background-color: black;
+    content: "Required";
+    left: -70px;
+}
+  
+input:out-of-range + span::after {
+    color: white;
+    background-color: red;
+    width: 155px;
+    content: "Outside allowable value range";
+    left: -182px;
+}
+
+@media (max-width: 700px){
+
+    
+    form, .container {
+        position : relative;
+        padding: 1em;
+        background : #FFF;
+        border: 1px solid #CCC;
+        border-radius: 1em;
+        justify-content: center;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 20px;
+    }
+
+    
+    body{
+        font-size: 1.5em;
+        line-height:1.5;
+        height: 100%;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        font-weight: bold;
+        background-color:pink;
+        padding:20px; 
+        margin:0;
+        color:black;
+    }
+
+
+}
