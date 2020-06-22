@@ -1,11 +1,14 @@
 <?php
 
     // for naughty children
-    if(!isset($_POST['form'])){
+    if(empty($_SESSION['attacks'])){
         // maybe a msg or sth..
         $this->response->redirect('/terrorism-api/api/home/form');
+        die();
     }
-    session_start();
+    // to check the values:
+
+    /*session_start();
 
     foreach($_SESSION['attacks'] as $key => $val){
         $_SESSION[$key] = json_encode($val);
@@ -17,7 +20,7 @@
     echo 'wtf1<br>';
     echo "var json_array = " . json_encode($_SESSION['attacks']) . ";\n";
     echo 'wtf2<br>';
-    echo "var mode = '" . $mode . "';\n";
+    echo "var mode = '" . $mode . "';\n";*/
 
 ?>
 <html>
