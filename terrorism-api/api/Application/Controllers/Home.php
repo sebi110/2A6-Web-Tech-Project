@@ -65,10 +65,12 @@ class ControllersHome extends Controller {
         ]);
     }
     
-    // I don't even know what I'm doing at this point
     public function map(){
         //$this->response->sendStatus(200);
         require_once SERVICES . "map.php";
+    }
+    public function graph(){
+        require_once SERVICES . "graph.php";
     }
     
 }

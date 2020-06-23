@@ -12,6 +12,9 @@
     if (isset($_GET['map'])) {
         $this->response->redirect('/terrorism-api/api/home/map');
     }
+    if (isset($_GET['graph'])) {
+        $this->response->redirect('/terrorism-api/api/home/graph');
+    }
     
 ?>
 
@@ -66,7 +69,7 @@
                 {
                     echo "<p>";
                     echo "<label for=".$key.">" .$val[0] . "(" . $val[1]. ":" . $val[2] . ")</label>";
-                    echo "<input type=\"number\" name=\"" .$key . "\" id= \"" .$key. "\" min=\"" .$val[1] ."\" max=\"" .$val[2] ."\" step=\"1\" ";
+                    echo "<input type=\"text\" name=\"" .$key . "\" id= \"" .$key. "\" ";
                     if($key=='count') 
                         echo "value=\"10\" required";
                     echo ">";
@@ -152,7 +155,12 @@
 
         <?php if(!empty($_SESSION['attacks'])) : ?>
         <div class="container">
-            <p><a class="button" href="form?map='1'">Map</a></p>
+            <?php 
+                if($_SESSION['details']['mode']=='map')
+                    echo '<p><a class="button" href="form?map=\'1\'">Map</a></p>';
+                else 
+                    echo '<p><a class="button" href="form?graph=\'1\'">Graph</a></p>'
+            ?>
         </div>
         <?php endif; ?>
 
@@ -162,8 +170,13 @@
 
             <?php foreach($_SESSION['attacks'] as $key => $val) : ?>
                 
-                <p><?php echo json_encode($val); ?></p>
-
+                <?php foreach(array_slice($val,0,10) as $entity) :?>
+                    <p>
+                    <?php foreach($entity as $name=>$value) :?>
+                        <?php echo json_encode(array($name=>$value)); ?>
+                    <?php endforeach;?>
+                    </p>
+                <?php endforeach;?>
             <?php endforeach; ?>
 
         <?php endif; ?>

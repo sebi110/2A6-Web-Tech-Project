@@ -43,3 +43,5 @@ $router->get('/home/admin', 'home@admin');
 $router->get('/home/form', 'home@form');
 
 $router->get('/home/map', 'home@map');
+
+$router->get('/home/graph', 'home@graph');

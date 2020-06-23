@@ -33,13 +33,15 @@
 
 		<?php
 
-            $x = array();
-            foreach($_SESSION['attacks'] as $key => $val){
-                $x[$key] = $val;
+            $arr = array();
+            $auxiliar = $_SESSION['attacks'][0];
+
+            foreach($auxiliar as $key => $val){
+                $arr[$key] = $val;
             }
             $mode = 'map';
 
-            echo "var json_array = " . json_encode($x) . ";\n";
+            echo "var json_array = " . json_encode($arr) . ";\n";
             
             echo "var mode = '" . $mode . "';\n";
         ?>
