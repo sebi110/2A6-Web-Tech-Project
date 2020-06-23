@@ -16,6 +16,9 @@ $router->delete('/user/delete', 'user@delete');
 
 $router->put('/user/update', 'user@update');
 
+$router->post('/user/form', 'user@form');
+
+
 // ATTACK
 
 $router->get('/attack/read', 'attack@read');
@@ -34,6 +37,8 @@ $router->get('/home/register', 'home@register');
 $router->get('/home/index', 'home@index');
 
 $router->get('/home/login', 'home@login');
+
+$router->get('/home/admin', 'home@admin');
 
 $router->get('/home/form', 'home@form');
 

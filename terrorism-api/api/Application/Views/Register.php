@@ -33,6 +33,8 @@
 
         <form method="POST" action="/terrorism-api/api/user/create">
             
+            <input type="hidden" id="form" name="form" value="1">
+            
             <?php echo display_error(); ?>
 
             <h2 class="tag">Register</h2>

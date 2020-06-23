@@ -38,19 +38,9 @@
       <p>Now that you are logged in, you may click the form to check out some attacks.</p>
       
       <p>session: <?php print_r($_SESSION['user']); ?></p>
+      <p>form: <?php print_r($_SESSION['form']); ?></p>
     </div>
-    <!--  
-      <?php if (isset($_SESSION['success'])) : ?>
-        <div class="container">
-          <p>
-            <?php 
-              echo $_SESSION['success']; 
-              unset($_SESSION['success']);
-            ?>
-          </p>
-        </div>
-      <?php endif ?>
-      -->
+    
     <div class="container">
       <h2 class="tag">User Profile</h2>
       <?php  if (isset($_SESSION['user'])) : ?>

@@ -33,6 +33,16 @@ class ControllersHome extends Controller {
         $this->view('login');
     }  
 
+    public function admin() {
+
+        
+        $this->response->sendStatus(200);
+        $this->view('admin', [
+            'meth' => array('GET','POST','DELETE','PUT'),
+            'keys' => array('username', 'email', 'user_type', 'password')
+        ]);
+    } 
+
     public function form() {
 
         $this->response->sendStatus(200);

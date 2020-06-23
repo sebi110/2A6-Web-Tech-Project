@@ -59,15 +59,17 @@ class ModelsUser extends Model{
             unset($params[$key]);
         }
       
-        $query = new MongoDB\Driver\Query($params);        
-
-        $rows = $this->mng->executeQuery(DBU, $query);   
+        $query = new MongoDB\Driver\Query($params);  
         
-        if (isset($rows->database)){
-            return null;
-        }
+        //$params['username'] = 'a';
 
-        return $rows;
+        $rows = $this->mng->executeQuery(DBU, $query);  
+        
+        /*if (isset($rows->database)){
+            return null;
+        }*/
+
+        return $rows;  
     }
 
     function create(){

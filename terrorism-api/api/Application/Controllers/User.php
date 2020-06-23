@@ -35,16 +35,18 @@ class ControllersUser extends Controller {
         }
     }
 
-    public function read_one() {
+    public function read_one($val1 = null) {
 
-        if($this->request->get('username') == null){
+        if($this->request->get('username') == null && $val1 == null){
             $this->send(400, array("message" => "Unable to find user. Data is incomplete, pls specify the username."));
             die();
         }
 
         $user = $this->model('user');
         $user->init();
-        $user->setKey('username', $this->request->get('username'));
+        $user->setKey('username', 
+            ($val1 == null) ? $this->request->get('username') : $val1
+        );
             
         $user->readOne();
         
@@ -66,11 +68,11 @@ class ControllersUser extends Controller {
         $user = $this->model('user');
         $user->init();
         $params = array();
-        $form = false;
+        $form = ($this->request->post('form') != null) ? true : false;
         $_SESSION['errors'] = array();
 
-        if($this->request->getMethod() == 'POST'){
-            $form = true;
+        //POST
+        if($form == true){
             foreach($user->details as $key => $val){
                 $params[$key] = ($this->request->post($key) != null) ? $this->request->post($key) : 'all';
             }
@@ -104,6 +106,7 @@ class ControllersUser extends Controller {
 
             if (session_status() == PHP_SESSION_ACTIVE) {
                 $_SESSION['user'] = $user_info;
+                $_SESSION['form'] = $this->request->post('form');
             }
 
             if($form == true && empty($user_info)){
@@ -112,8 +115,11 @@ class ControllersUser extends Controller {
                 die();
             }
 
-            $form == true ? $this->response->redirect('/terrorism-api/api/home/index') : $this->send(200, $users_arr);
-            //$this->send(200, $users_arr);           
+            //$form == true ? $this->response->redirect('/terrorism-api/api/home/index') : $this->send(200, $users_arr);
+
+            $form == true ? ($_SESSION['user']['user_type'] == 'admin' ? $this->response->redirect('/terrorism-api/api/home/admin')
+                    : $this->response->redirect('/terrorism-api/api/home/index'))
+                    : $this->send(200, $users_arr);
         }
         
         else{
@@ -136,14 +142,15 @@ class ControllersUser extends Controller {
             "password" : "sirens"
         }*/
 
+        $method = $this->request->post('REQUEST_METHOD');
         $user = $this->model('user');
         $user->init();
-        $form = false;
+        $form = ($this->request->post('form') != null || $method != null) ? true : false;
         $_SESSION['errors'] = array();
 
         // from a form
-        if($this->request->postBody() == null){
-            $form = true;
+        if($form == true){
+            
             foreach($user->details as $key => $val){
 
                 if($key == 'user_type'){
@@ -152,19 +159,17 @@ class ControllersUser extends Controller {
                     }
                     else{
                         // to do
+                        $user->setKey($key, ($this->request->post($key) == 'Admin') ? 'admin' : 'user');
                     }
                     continue;
                 }
 
                 if($key == 'password'){
                     if($this->request->post('password_1') != $this->request->post('password_2')){
-                        /*$this->response->setHeader(sprintf('HTTP/1.1 ' . $status . ' %s' , $this->response->getStatusCodeText($status)));
-                        $this->response->setContent($msg);
-                        $this->response->render();*/
-                        //$this->send(400, array("message" => "Unable to create user. Passwords don't match."));
-                        //$this->response->setHeader(sprintf('HTTP/1.1 ' . '400' . ' %s' , $this->response->getStatusCodeText(400)));
+                        
                         array_push($_SESSION['errors'], "The passwords do not match!");
-                        $this->response->redirect('/terrorism-api/api/home/register');
+                        $method == null ? $this->response->redirect('/terrorism-api/api/home/register') 
+                            : $this->send(400, array("message" => "Unable to create user. Passwords dont match."));
                         die();
                     }
                     $user->setKey($key, $this->request->post('password_1'));
@@ -193,24 +198,35 @@ class ControllersUser extends Controller {
         
         // check for another guy with the same username
 
-        $rows = $user->find(['username' => $user->details['username']]);
-
-        echo gettype($rows);
+        $rows = null;//$user->find(['username' => $user->details['username']]);
 
         if(!empty($rows)){
-            array_push($_SESSION['errors'], "Username already taken!" .  gettype($rows));
-            $this->response->redirect('/terrorism-api/api/home/register');
+            array_push($_SESSION['errors'], "Username already taken!");
+            if($method == true || $form == false){
+            $this->send(400, array("message" => "Username already taken."));
+            } 
+            else{
+                $this->response->redirect('/terrorism-api/api/home/register');
+            }
+            //$form == true ? $this->response->redirect('/terrorism-api/api/home/register') : $this->send(400, array("message" => "Username already taken."));
             die();
         }
         
         $user->details['password'] = md5($user->details['password']);
         if($user->create()){
 
-            if (session_status() == PHP_SESSION_ACTIVE) {
+            if (session_status() == PHP_SESSION_ACTIVE && $method == false) {
                 $_SESSION['user'] = $user->details;
             }
 
-            $form == true ? $this->response->redirect('/terrorism-api/api/home/index') : $this->send(201, array("message" => "User was created."));
+            if($method == true || $form == false){
+            $this->send(201, array("message" => "User was created."));
+            } 
+            else{
+                $this->response->redirect('/terrorism-api/api/home/index');
+            }
+
+            //$form == true ? $this->response->redirect('/terrorism-api/api/home/index') : $this->send(201, array("message" => "User was created."));
         }
         else{
         
@@ -218,7 +234,7 @@ class ControllersUser extends Controller {
         }     
     }
 
-    public function delete() {
+    public function delete($val1 = null) {
 
         /*
         {
@@ -230,6 +246,10 @@ class ControllersUser extends Controller {
 
         if($this->request->get('username') != null){
             $user->setKey('username', $this->request->get('username'));
+
+        }
+        else if($val1 != null){
+            $user->setKey('username', $val1);
 
         }
         else {
@@ -254,21 +274,68 @@ class ControllersUser extends Controller {
             "password" : "chime"
         }*/
 
-        if($this->request->get('username') == null){
+        $form = !$this->request->post('REQUEST_METHOD') ? false : true; 
+
+        if($this->request->get('username') == null && $form == false){
             $this->send(400, array("message" => "Unable to find user. Data is incomplete, pls specify the username."));
             die();
         }
 
         $user = $this->model('user');
         $user->init();
-        $user->setKey('username', $this->request->get('username'));
+        $user->setKey('username', $form == false ? $this->request->get('username') : $this->request->post('val1'));
 
-        if($user->update($this->request->postBody())){
+        if($form){
+
+            $params = array(
+                'email' => $this->request->post('email'),
+                'user_type' => $this->request->post('user_type') == 'Admin' ? 'admin' : 'user',
+                'password' => $this->request->post('password')
+            );
+
+            if($user->update($params)){
+                $this->send(200, array("message" => "User was updated.")); 
+                die();
+            }
+        }
+        else if($user->update($this->request->postBody())){
             $this->send(200, array("message" => "User was updated.")); 
+            die();
         }
         
-        else{
-            $this->send(503, array("message" => "Unable to update user.")); 
+        $this->send(503, array("message" => "Unable to update user."));
+        
+    }
+
+    public function form(){
+        // treat case when null
+
+        $method = $this->request->post('REQUEST_METHOD');
+
+        switch( $method ) {
+            case "GET":
+                //$this->read();
+                ($this->request->post('key1') == null) ? $this->read() 
+                : $this->read_one($this->request->post('val1'));
+                break;
+        
+            case "POST":
+                $this->create(); 
+                break;        
+        
+            case "DELETE":
+                ($this->request->post('key1') == null) ? $this->delete() 
+                : $this->delete($this->request->post('val1'));
+                break;
+        
+            case "PUT":
+                $this->update();
+                break;
+        
+            default:
+                $this->response->redirect('/terrorism-api/api/home/login');
+                //$this->send(501, array("message" => "Cannot use this method.")); 
+                die();
         }
     }
 

@@ -20,10 +20,11 @@
 	}
 
 	function isAdmin() {
-        if (isset($_SESSION['user']) && json_decode($_SESSION['user'])->{'user_type'} == 'admin')
-            return true;
-		else
-		    return false;
+        if (isset($_SESSION['user']))
+			if($_SESSION['user']['user_type'] == 'admin')
+            	return true;
+		
+		return false;
         
     }
     
@@ -52,4 +53,3 @@
 			echo '</div>';
 		}
     }
-    

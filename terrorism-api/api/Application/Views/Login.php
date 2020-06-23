@@ -29,11 +29,12 @@
 	<div class="container">
 		<h2 class="tag">Login Page</h2>
 		<p>To access the form, you have to be logged in as a user first.</p>
-		<p>To create another admin/modify the database, you have to be logged in as an admin first.</p>
 	</div>
 		
 	
 	<form method="POST" action="/terrorism-api/api/user/find">
+	
+		<input type="hidden" id="form" name="form" value="1">
 
 		<p><?php echo display_error(); ?></p>
 		<p><?php echo display_msg(); ?></p>
