@@ -85,26 +85,66 @@ class AttackDao {
         }
 
     }
-
+    
     function find($params){
-
+        
+        $countable = array(
+            'iyear'   =>  array('Month',0,12),
+            'imonth'  => array('Month',0,12),
+            'iday'    => array('Day',0,31),
+            'count'   => array('Count',1,1000),
+            'success' => array('Was it a succes?(0=false,1=true)',0,1)
+        );
         require_once 'Attack.php';
 
         global $mng;
         // security
-        
-        foreach($params as $key => $value){
-            $params[$key] = (string)$value;
-        }
-
-        while (($key = array_search('all', $params)) !== false) {
-            unset($params[$key]);
-        }
         if(isset($params['count'])){
             $count = $params['count'];
             unset($params['count']);
         }
         else $count = 1000;
+
+        foreach($params as $key => $value){
+            $params[$key] = (string)$value;
+            if($params[$key]=='all') 
+            {
+                unset($params[$key]);
+                continue;
+            }
+            $str_or = explode(',',$params[$key]);
+            $result = array();
+            foreach($str_or as $val)
+            {
+                //if(isset($countable[$key]))
+                //    echo $key;
+                //else
+                if(isset($countable[$key]))
+                {
+                    $str_int = explode('-',$val);
+                    $first=-1;$last=-1;
+                    foreach($str_int as $val_str)
+                    {
+                        $val_int=(int) $val_str;
+                        if($first==-1)$first=$val_int;
+                        $last=$val_int;
+                    }
+                    for($id=$first;$id<=$last;$id++)
+                    {
+                        $result[]=(string)$id;
+                    }
+                }
+                else
+                    $result[]=$val;
+            }   
+            // echo json_encode($result);
+            $params[$key]=array('$in'=>$result);
+        }
+        // echo json_encode($params);
+        // echo '&*&*&*';
+        // while (($key = array_search('all', $params)) !== false) {
+        //     unset($params[$key]);
+        // }
         $query = new MongoDB\Driver\Query($params);     
 
         $rows = $mng->executeQuery("Terrorism.terror", $query);

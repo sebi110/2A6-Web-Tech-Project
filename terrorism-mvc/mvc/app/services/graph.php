@@ -10,7 +10,8 @@
         'targtype', 'gname', 'motive', 'weaptype', 'weapdetail', 'nkill','count'
         );
         $possibleInputs=array_fill_keys($possibleInputKeys,0);
-
+        
+        $size= array('widht' => 400, 'height' => 300);
         $params=array();
         $out=0;$correct=1;$mode='PieChart';$wichFrequency='imonth';$idmax=0;
         foreach($_GET as $key=>$val)
@@ -98,6 +99,7 @@
         else
             echo "var json_array = " . json_encode(array()) . ";\n";
         echo "var mode = '" . $mode . "';\n";
+        echo "var size = " . json_encode($size) .";\n";
     ?>
         
         var freq = {};
@@ -134,7 +136,10 @@
                 ]);
             }
         var options = {
-            title: mode
+            title : mode,
+            widht : size.widht,
+            height: size.height,
+            backgroundColor: '#FFFFFF'
         };
         var chart;
         if(mode=='BarChart')
@@ -144,13 +149,12 @@
         else 
             chart = new google.visualization.PieChart(document.getElementById('graph_chart'));
 
-        if(modout!="div"){
-            var chart_div = document.getElementById('graph_chart');
-            google.visualization.events.addListener(chart, 'ready', function () {
-            chart_div.innerHTML = '<img src="' + chart.getImageURI() + '">';
-            console.log(chart_div.innerHTML);
-            });
-        }
+        var chart_div = document.getElementById('graph_chart');
+        google.visualization.events.addListener(chart, 'ready', function () {
+        //chart_div.innerHTML = '<img src="' + chart.getImageURI() + '">';
+        console.log(chart_div.innerHTML);
+        document.getElementById('png').outerHTML = '<a href="' + chart.getImageURI() + '" class=\'button\' id=\'png\' download>Printable version</a>';
+        });
 
         chart.draw(data, options);
       }
@@ -159,8 +163,5 @@
 <body>
     <div id="test"></div>
     <div id="graph_chart"></div>
-    <script>
-        // var element = document.getElementById("test");
-        // element.innerHTML = freq[0][0];
-    </script>
+    <div id='png'></div>
 </body>

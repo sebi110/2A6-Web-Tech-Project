@@ -185,6 +185,7 @@
                     echo "<div id=\"chart\">";
                     echo $res;
                     if($_GET['mode']=='map') echo "<a class=\"button\" href=\"".$URL."\">View Full Map</a>";
+                    else                     echo "<a class=\"button\" href=\"".$URL."\">Download</a>";
                 } 
                 else {
                     http_response_code ($codHTTP);
