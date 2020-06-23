@@ -1,0 +1,1350 @@
+<html lang="en-GB">
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="project, infoiasi, web, terrorism">
+    <meta name="viewport" content="width=device-width">
+	<title> TeVi Project Documentation</title>
+</head>
+<body prefix="schema: http://schema.org/ xsd: http://www.w3.org/2001/XMLSchema# sa: https://ns.science.ai/">
+<body>
+	<header>
+		<title>TeVi Project Documentation</title>
+		<subtitle>Grupa 2A6</subtitle>
+	</header>
+	<article resource="#" typeof="schema:ScholarlyArticle">
+	<h1>TeVi Documentation </h1>
+	
+	<section typeof="sa:AuthorsList">
+	<h2>Authors</h2>
+	 <ul>
+    <li typeof="sa:ContributorRole" property="schema:author">
+      <span typeof="schema:Person">
+        <meta property="schema:givenName" content="Sebastian">
+        <meta property="schema:familyName" content="Ciobanu">
+        <span property="schema:name">Sebastian Ciobanu</span>
+      </span>
+    </li>
+	<li typeof="sa:ContributorRole" property="schema:author">
+      <span typeof="schema:Person">
+        <meta property="schema:givenName" content="Daria">
+        <meta property="schema:familyName" content="Popovici">
+        <span property="schema:name">Daria Popovici</span>
+      </span>
+    </li>
+	<li typeof="sa:ContributorRole" property="schema:author">
+      <span typeof="schema:Person">
+        <meta property="schema:givenName" content="Codrin">
+        <meta property="schema:additionalName" content="Mihai">
+        <meta property="schema:familyName" content="Robotă">
+        <span property="schema:name">Mihai-Codrin Robotă</span>
+      </span>
+    </li>
+  </ul>
+	</section>
+	
+	
+	<section typeof="sa:Affiliations">
+	<h2>Affiliations</h2>
+	<ul>
+		<li id="sa">
+		<span typeof="schema:Organization" resource="https://www.info.uaic.ro/">
+			<span property="schema:name">Facultatea de Informatică</span>,
+			<span property="schema:parentOrganization">
+			<span typeof="schema:Organization">
+				<span property="schema:name">Universitatea Alexandru Ioan Cuza</span>
+            —
+				<span property="schema:location" typeof="schema:Place">
+				<span property="schema:address" typeof="schema:PostalAddress">
+					<span property="schema:addressLocality">Iași</span>,
+					<span property="schema:addressRegion">Iași</span>,
+					<span property="schema:addressCountry">România</span>
+				</span>
+				</span>
+			</span>
+			</span>
+		</span>
+		</li>
+	</ul>
+	</section>
+	
+	<section typeof="sa:abstract">
+	<h2>Abstract</h2>
+	<p>
+	This is a detailed documentation page for the TeVi application API. For a more general documentation of the project, please go to the <a href="./documentation.html">Project Documentation</a> instead</p>
+	</section>
+	
+	<section typeof="sa:MaterialsAndMethods">
+	<h2>API</h2>
+	<h3>Register</h3>
+	<p>Function: return the website's register page as html</p>
+	<p>Endpoint: /terrorism-api/api/home/register</p>
+	<p>Method: GET</p>
+	<p>Parameters: none</p>
+	<p>Status Codes: 200 on success, 404 if the controller cannot be found</p>
+	<p>Response Body type: text/html</p>
+	<p>Response Body Example: 
+	<xmp>
+	<div class="page-wrapper">
+
+		<div class="container">
+			<h2 class="tag">Register Page</h2>
+			<p>In order to login, you must create an account first.</p>
+		</div>
+
+		<form method="POST" action="/terrorism-api/api/user/create">
+
+			<input type="hidden" id="form" name="form" value="1">
+
+
+			<h2 class="tag">Register</h2>
+
+			<p>
+				<label>Username</label>
+				<input type="text" name="username" id="username" required>
+				<span></span>
+			</p>
+			<p>
+				<label>Email</label>
+				<input type="email" name="email" id="email" required>
+				<span></span>
+			</p>
+			<p>
+				<label>Password</label>
+				<input type="password" name="password_1" id="password_1" required>
+				<span></span>
+			</p>
+			<p>
+				<label>Confirm password</label>
+				<input type="password" name="password_2" id="password_2" required>
+				<span></span>
+			</p>
+			<p>
+				<button type="submit" name="register_btn">Register</button>
+			</p>
+			<p>
+				Already a member? <a class="button" href="register?signin=1">Sign in</a>
+			</p>
+		</form>
+	</div>
+	</xmp>
+	</p>
+	
+	<h3>Login</h3>
+	<p>Function: return the website's login page as html</p>
+	<p>Endpoint: /terrorism-api/api/home/login</p>
+	<p>Method: GET</p>
+	<p>Parameters: none</p>
+	<p>Status Codes: 200 on success, 404 if the controller cannot be found</p>
+	<p>Response Body type: text/html</p>
+	<p>Request Body Example:
+	<xmp>
+	<div class="page-wrapper">
+
+		<div class="container">
+			<h2 class="tag">Login Page</h2>
+			<p>To access the form, you have to be logged in as a user first.</p>
+		</div>
+
+
+		<form method="POST" action="/terrorism-api/api/user/find">
+
+			<input type="hidden" id="form" name="form" value="1">
+
+			<p></p>
+			<p>
+				<div class="msg">You must log in first<br></div>
+			</p>
+
+			<h2 class="tag">Login</h2>
+
+			<p>
+				<label>Username</label>
+				<input type="text" name="username" required>
+				<span></span>
+			</p>
+			<p>
+				<label>Password</label>
+				<input type="password" name="password" required>
+				<span></span>
+			</p>
+			<p>
+				<button type="submit" name="login_btn">Login</button>
+			</p>
+			<p>
+				Not yet a member? <a class="button" href="login?signup=1">Sign up</a>
+			</p>
+		</form>
+	</div>
+	</xmp>
+	</p>
+	
+	<h3>Index</h3>
+	<p>Function: return the website's index page as html. Requires the user to be authenticated</p>
+	<p>Endpoint: /terrorism-api/api/home/index</p>
+	<p>Method: GET</p>
+	<p>Parameters: none</p>
+	<p>Status Codes: 200 on success, 404 if the controller cannot be found</p>
+	<p>Response Body type: text/html</p>
+	<p>Response Body Example: 
+	<xmp>
+	<div class="page-wrapper">
+
+		<div class="container">
+			<h2 class="tag">Home Page</h2>
+			<p>Now that you are logged in, you may click the form to check out some attacks.</p>
+
+			<p>session: Array
+				(
+				[_id] => MongoDB\BSON\ObjectId Object
+				(
+				[oid] => 5ee21a51f57100004c000724
+				)
+
+				[username] => dio
+				[email] => dio@brando.com
+				[user_type] => user
+				[password] => 959848ca10cc8a60da818ac11523dc63
+				)
+			</p>
+			<p>form: 1</p>
+			qgrmjm3cjp5hjtu2o4200ghk4q
+		</div>
+
+		<div class="container">
+			<h2 class="tag">User Profile</h2>
+
+			<p>Username: dio</p>
+			<p>Email: dio@brando.com</p>
+			<p>User type: user</p>
+
+			<p> <a class="button" href="index?logout='1'">Logout</a></p>
+
+
+			<p><a class="button" href="index?form='1'">Form</a></p>
+
+		</div>
+
+
+	</div>
+	</xmp>
+	</p>
+	
+	<h3>Administration</h3>
+	<p>Function: return the website's administration page as html. Requires the user to be authenticated as admin</p>
+	<p>Endpoint: /terrorism-api/api/home/admin</p>
+	<p>Method: GET</p>
+	<p>Parameters: none</p>
+	<p>Status Codes: 200 on success, 404 if the controller cannot be found</p>
+	<p>Response Body type: text/html</p>
+	<p>Response Body Example: 
+	<xmp>
+	<div class="page-wrapper">
+
+		<div class="container">
+			<h2 class="tag">Admin - Home Page</h2>
+			<p>Now that you are logged in as an admin, you can read(get), create(post), delete(delete) or update(put)
+				users.</p>
+		</div>
+
+		<div class="container">
+			qgrmjm3cjp5hjtu2o4200ghk4q <h2 class="tag">Admin Profile</h2>
+
+			<p>Username: pyro</p>
+			<p>Email: pyro@cynical.com</p>
+			<p>User type: admin</p>
+
+			<p> <a class="button" href="index?logout='1'">Logout</a></p>
+
+		</div>
+
+		<form method="POST" action="/terrorism-api/api/user/form">
+
+			<input type="hidden" name="REQUEST_METHOD" value="GET">
+
+
+			<h2 class="tag">Request method: GET</h2>
+
+			<p>Query Params</p>
+
+			<p>
+				<label for="key1">Key1</label>
+				<input type="text" name="key1" id="key1" list="keyList">
+				<span></span>
+				<datalist id="keyList">
+					<option>username</option>
+					<option>email</option>
+					<option>user_type</option>
+					<option>password</option>
+				</datalist>
+
+			</p>
+
+			<p>
+				<label for="val1">Value1</label>
+				<input type="text" name="val1" id="val1">
+				<span></span>
+
+			</p>
+
+			<p>
+				<button type="submit" name="submit">SEND</button>
+				<button type="reset" name="reset">RESET</button>
+			</p>
+
+		</form>
+
+		<form method="POST" action="/terrorism-api/api/user/form">
+
+			<input type="hidden" name="REQUEST_METHOD" value="POST">
+
+			<h2 class="tag">Request method: POST</h2>
+
+			<p>Query Params</p>
+
+			<p>
+				<label>Username</label>
+				<input type="text" name="username" id="username" required>
+				<span></span>
+			</p>
+			<p>
+				<label>Email</label>
+				<input type="email" name="email" id="email" required>
+				<span></span>
+			</p>
+			<p>
+				<label for="user_type">User type</label>
+				<input type="text" name="user_type" id="user_type" list="utList" value="User" required>
+				<span></span>
+				<datalist id="utList">
+					<option>User</option>
+					<option>Admin</option>
+				</datalist>
+
+			</p>
+			<p>
+				<label>Password</label>
+				<input type="password" name="password_1" id="password_1" required>
+				<span></span>
+			</p>
+			<p>
+				<label>Confirm password</label>
+				<input type="password" name="password_2" id="password_2" required>
+				<span></span>
+			</p>
+
+			<p>
+				<button type="submit" name="submit">SEND</button>
+				<button type="reset" name="reset">RESET</button>
+			</p>
+
+		</form>
+
+		<form method="POST" action="/terrorism-api/api/user/form">
+
+			<input type="hidden" name="REQUEST_METHOD" value="DELETE">
+
+			<h2 class="tag">Request method: DELETE</h2>
+
+			<p>Query Params</p>
+
+			<p>
+				<label for="key1">Key1</label>
+				<input type="text" name="key1" id="key1" list="keyList">
+				<span></span>
+				<datalist id="keyList">
+					<option>username</option>
+					<option>email</option>
+					<option>user_type</option>
+					<option>password</option>
+				</datalist>
+
+			</p>
+
+			<p>
+				<label for="val1">Value1</label>
+				<input type="text" name="val1" id="val1">
+				<span></span>
+
+			</p>
+
+			<p>
+				<button type="submit" name="submit">SEND</button>
+				<button type="reset" name="reset">RESET</button>
+			</p>
+
+		</form>
+
+		<form method="POST" action="/terrorism-api/api/user/form">
+
+			<input type="hidden" name="REQUEST_METHOD" value="PUT">
+
+			<h2 class="tag">Request method: PUT</h2>
+
+			<p>Query Params(for whom I want to updadte)</p>
+
+			<p>
+				<label for="key1">Key1</label>
+				<input type="text" name="key1" id="key1" list="keyList">
+				<span></span>
+				<datalist id="keyList">
+					<option>username</option>
+					<option>email</option>
+					<option>user_type</option>
+					<option>password</option>
+				</datalist>
+
+			</p>
+
+			<p>
+				<label for="val1">Value1</label>
+				<input type="text" name="val1" id="val1">
+				<span></span>
+
+			</p>
+
+			<p>Request RESPONSE BODY(what I want to update)</p>
+
+			<p>
+				<label>Email</label>
+				<input type="email" name="email" id="email">
+				<span></span>
+			</p>
+			<p>
+				<label for="user_type">User type</label>
+				<input type="text" name="user_type" id="user_type" list="utList" value="User">
+				<span></span>
+				<datalist id="utList">
+					<option>User</option>
+					<option>Admin</option>
+				</datalist>
+
+			</p>
+			<p>
+				<label>Password</label>
+				<input type="password" name="password" id="password">
+				<span></span>
+			</p>
+
+			<p>
+				<button type="submit" name="submit">SEND</button>
+				<button type="reset" name="reset">RESET</button>
+			</p>
+
+		</form>
+
+	</div>
+	</xmp>
+	</p>
+	
+	<h3>Form</h3>
+	<p>Function: return the website's form page as html. Requires the user to be authenticated</p>
+	<p>Endpoint: /terrorism-api/api/home/form</p>
+	<p>Method: GET</p>
+	<p>Parameters: none</p>
+	<p>Status Codes: 200 on success, 404 if the controller cannot be found</p>
+	<p>Response Body type: text/html</p>
+	<p>Response Body Example: 
+	<xmp>
+	<div class="page-wrapper">
+		<div class="container">
+			<h2 class="tag">Search for attacks</h2>
+			<p>Choose the filters you want to apply and submit the form below.</p>
+			<p>The "Frequency of" field is used only for PieChart/BarChart.</p>
+		</div>
+
+		<form method="POST" action="/terrorism-api/api/attack/find">
+
+			<input type="hidden" id="form" name="form" value="1">
+
+
+			<h2 class="tag">Filter attacks after:</h2>
+			<p>
+				<label for="mode">Mode</label>
+				<input type="text" name="mode" id="mode" list="modeList" required>
+				<span></span>
+				<datalist id="modeList">
+					<option>map</option>
+					<option>PieChart</option>
+					<option>BarChart</option>
+					<option>LineChart</option>
+				</datalist>
+
+			</p>
+			<p>
+				<label for="frequency">Frequency Of</label>
+				<input type="text" name="frequency" id="frequency" list="frequencyList">
+				<datalist id="frequencyList">
+					<option>year</option>
+					<option>month</option>
+					<option>day</option>
+					<option>country</option>
+					<option>region</option>
+					<option>provstate</option>
+					<option>city</option>
+					<option>latitude</option>
+					<option>longitude</option>
+					<option>success</option>
+					<option>attacktype</option>
+					<option>targtype</option>
+					<option>gname</option>
+					<option>motive</option>
+					<option>weaptype</option>
+					<option>weapdetail</option>
+					<option>nkill</option>
+				</datalist>
+				<span></span>
+			</p>
+			<p><label for=iyear>Year(1970:2017)</label><input type="text" name="iyear" id= "iyear" ><span></span></p>
+			<p><label for=imonth>Month(0:12)</label><input type="text" name="imonth" id= "imonth" ><span></span></p>
+			<p><label for=iday>Day(0:31)</label><input type="text" name="iday" id= "iday" ><span></span></p>
+			<p><label for=count>Count(1:1000)</label><input type="text" name="count" id= "count" value="10" required><span></span>
+			</p>
+			<p><label for=success>Was it a succes?(0=false,1=true)(0:1)</label><input type="text" name="success" id= "success" ><span></span>
+			</p>
+			<p>
+				<!--cant use the value thing with POST cause of 'all'-->
+				<label for="country">Country</label>
+				<input type="text" name="country" id="country" list="countryList">
+				<!--<datalist id="targetList">
+                			        <option>Abortion Related</option>			
+                			        <option>Airports & Aircraft</option>			
+                			        <option>Business</option>			
+                			        <option>Educational Institution</option>			
+                			        <option>Food or Water Supply</option>			
+                			        <option>Government (Diplomatic)</option>			
+                			        <option>Government (General)</option>			
+                			        <option>Journalists & Media</option>			
+                			        <option>Maritime</option>			
+                			        <option>Military</option>			
+                			        <option>NGO</option>			
+                			        <option>Other</option>			
+                			        <option>Police</option>			
+                			        <option>Private Citizens & Property</option>			
+                			        <option>Religious Figures/Institutions</option>			
+                			        <option>Telecommunication</option>			
+                			        <option>Terrorists/Non-State Militia</option>			
+                			        <option>Tourists</option>			
+                			        <option>Transportation</option>			
+                			        <option>Unknown</option>			
+                			        <option>Utilities</option>			
+                			        <option>Violent Political Party</option>			
+                                </datalist>-->
+				<span></span>
+			</p>
+
+			<p>
+				<label for="region">Region</label>
+				<input type="text" name="region" id="region" list="regionList">
+				<!--<datalist id="targetList">
+                			        <option>Abortion Related</option>			
+                			        <option>Airports & Aircraft</option>			
+                			        <option>Business</option>			
+                			        <option>Educational Institution</option>			
+                			        <option>Food or Water Supply</option>			
+                			        <option>Government (Diplomatic)</option>			
+                			        <option>Government (General)</option>			
+                			        <option>Journalists & Media</option>			
+                			        <option>Maritime</option>			
+                			        <option>Military</option>			
+                			        <option>NGO</option>			
+                			        <option>Other</option>			
+                			        <option>Police</option>			
+                			        <option>Private Citizens & Property</option>			
+                			        <option>Religious Figures/Institutions</option>			
+                			        <option>Telecommunication</option>			
+                			        <option>Terrorists/Non-State Militia</option>			
+                			        <option>Tourists</option>			
+                			        <option>Transportation</option>			
+                			        <option>Unknown</option>			
+                			        <option>Utilities</option>			
+                			        <option>Violent Political Party</option>			
+                                </datalist>-->
+				<span></span>
+			</p>
+
+			<p>
+				<label for="provstate">Province/State</label>
+				<input type="text" name="provstate" id="provstate" list="provstateList">
+				<!--<datalist id="targetList">
+                			        <option>Abortion Related</option>			
+                			        <option>Airports & Aircraft</option>			
+                			        <option>Business</option>			
+                			        <option>Educational Institution</option>			
+                			        <option>Food or Water Supply</option>			
+                			        <option>Government (Diplomatic)</option>			
+                			        <option>Government (General)</option>			
+                			        <option>Journalists & Media</option>			
+                			        <option>Maritime</option>			
+                			        <option>Military</option>			
+                			        <option>NGO</option>			
+                			        <option>Other</option>			
+                			        <option>Police</option>			
+                			        <option>Private Citizens & Property</option>			
+                			        <option>Religious Figures/Institutions</option>			
+                			        <option>Telecommunication</option>			
+                			        <option>Terrorists/Non-State Militia</option>			
+                			        <option>Tourists</option>			
+                			        <option>Transportation</option>			
+                			        <option>Unknown</option>			
+                			        <option>Utilities</option>			
+                			        <option>Violent Political Party</option>			
+                                </datalist>-->
+				<span></span>
+			</p>
+			<p>
+				<label for="city">City</label>
+				<input type="text" name="city" id="city" list="cityList">
+				<!--<datalist id="targetList">
+                			        <option>Abortion Related</option>			
+                			        <option>Airports & Aircraft</option>			
+                			        <option>Business</option>			
+                			        <option>Educational Institution</option>			
+                			        <option>Food or Water Supply</option>			
+                			        <option>Government (Diplomatic)</option>			
+                			        <option>Government (General)</option>			
+                			        <option>Journalists & Media</option>			
+                			        <option>Maritime</option>			
+                			        <option>Military</option>			
+                			        <option>NGO</option>			
+                			        <option>Other</option>			
+                			        <option>Police</option>			
+                			        <option>Private Citizens & Property</option>			
+                			        <option>Religious Figures/Institutions</option>			
+                			        <option>Telecommunication</option>			
+                			        <option>Terrorists/Non-State Militia</option>			
+                			        <option>Tourists</option>			
+                			        <option>Transportation</option>			
+                			        <option>Unknown</option>			
+                			        <option>Utilities</option>			
+                			        <option>Violent Political Party</option>			
+                                </datalist>-->
+				<span></span>
+			</p>
+
+			<p>
+				<label for="attacktype">Attack type</label>
+				<input type="text" name="attacktype" id="attacktype" list="attackList">
+				<datalist id="attackList">
+					<option>Armed Assault</option>
+					<option>Assassination</option>
+					<option>Bombing/Explosion</option>
+					<option>Facility/Infrastructure Attack</option>
+					<option>Hijacking</option>
+					<option>Hostage Taking (Barricade Incident)</option>
+					<option>Hostage Taking (Kidnapping)</option>
+					<option>Unarmed Assault</option>
+					<option>Unknown</option>
+				</datalist>
+				<span></span>
+			</p>
+
+			<p>
+				<label for="target">Target</label>
+				<input type="text" name="targtype" id="targtype" list="targetList">
+				<datalist id="targetList">
+					<option>Abortion Related</option>
+					<option>Airports & Aircraft</option>
+					<option>Business</option>
+					<option>Educational Institution</option>
+					<option>Food or Water Supply</option>
+					<option>Government (Diplomatic)</option>
+					<option>Government (General)</option>
+					<option>Journalists & Media</option>
+					<option>Maritime</option>
+					<option>Military</option>
+					<option>NGO</option>
+					<option>Other</option>
+					<option>Police</option>
+					<option>Private Citizens & Property</option>
+					<option>Religious Figures/Institutions</option>
+					<option>Telecommunication</option>
+					<option>Terrorists/Non-State Militia</option>
+					<option>Tourists</option>
+					<option>Transportation</option>
+					<option>Unknown</option>
+					<option>Utilities</option>
+					<option>Violent Political Party</option>
+				</datalist>
+				<span></span>
+			</p>
+			</section>
+
+			<p>
+				<button type="submit" name="submit">SUBMIT</button>
+				<button type="reset" name="reset">RESET</button>
+				<p> <a class="button" href="form?back='1'">BACK</a></p>
+			</p>
+
+		</form>
+
+		<div class="container">
+			<p><a class="button" href="form?graph='1'">Graph</a></p>
+		</div>
+
+		<div class="container">
+
+
+
+			<p>
+				{"_id":{"$oid":"5ee09092495d0000880b8890"}} {"iyear":"1970"} {"imonth":"7"} {"iday":"2"}
+				{"country":"Dominican Republic"} {"region":"Central America & Caribbean"} {"provstate":""}
+				{"city":"Santo Domingo"} {"latitude":"18.456792"} {"longitude":"-69.951164"} {"success":"1"}
+				{"attacktype":"Assassination"} {"targtype":"Private Citizens & Property"} {"gname":"MANO-D"}
+				{"motive":""} {"weaptype":"Unknown"} {"weapdetail":""} {"nkill":"1"} </p>
+			<p>
+				{"_id":{"$oid":"5ee09092495d0000880b8891"}} {"iyear":"1970"} {"imonth":"0"} {"iday":"0"}
+				{"country":"Mexico"} {"region":"North America"} {"provstate":"Federal"} {"city":"Mexico city"}
+				{"latitude":"19.371887"} {"longitude":"-99.086624"} {"success":"1"} {"attacktype":"Hostage Taking
+				(Kidnapping)"} {"targtype":"Government (Diplomatic)"} {"gname":"23rd of September Communist League"}
+				{"motive":""} {"weaptype":"Unknown"} {"weapdetail":""} {"nkill":"0"} </p>
+			<p>
+				{"_id":{"$oid":"5ee09092495d0000880b8892"}} {"iyear":"1970"} {"imonth":"1"} {"iday":"0"}
+				{"country":"Philippines"} {"region":"Southeast Asia"} {"provstate":"Tarlac"} {"city":"Unknown"}
+				{"latitude":"15.478598"} {"longitude":"120.599741"} {"success":"1"} {"attacktype":"Assassination"}
+				{"targtype":"Journalists & Media"} {"gname":"Unknown"} {"motive":""} {"weaptype":"Unknown"}
+				{"weapdetail":""} {"nkill":"1"} </p>
+			<p>
+				{"_id":{"$oid":"5ee09092495d0000880b8893"}} {"iyear":"1970"} {"imonth":"1"} {"iday":"0"}
+				{"country":"Greece"} {"region":"Western Europe"} {"provstate":"Attica"} {"city":"Athens"}
+				{"latitude":"37.99749"} {"longitude":"23.762728"} {"success":"1"} {"attacktype":"Bombing\/Explosion"}
+				{"targtype":"Government (Diplomatic)"} {"gname":"Unknown"} {"motive":""} {"weaptype":"Explosives"}
+				{"weapdetail":"Explosive"} {"nkill":""} </p>
+			<p>
+				{"_id":{"$oid":"5ee09092495d0000880b8894"}} {"iyear":"1970"} {"imonth":"1"} {"iday":"0"}
+				{"country":"Japan"} {"region":"East Asia"} {"provstate":"Fukouka"} {"city":"Fukouka"}
+				{"latitude":"33.580412"} {"longitude":"130.396361"} {"success":"1"}
+				{"attacktype":"Facility\/Infrastructure Attack"} {"targtype":"Government (Diplomatic)"}
+				{"gname":"Unknown"} {"motive":""} {"weaptype":"Incendiary"} {"weapdetail":"Incendiary"} {"nkill":""}
+			</p>
+			<p>
+				{"_id":{"$oid":"5ee09092495d0000880b8895"}} {"iyear":"1970"} {"imonth":"1"} {"iday":"1"}
+				{"country":"United States"} {"region":"North America"} {"provstate":"Illinois"} {"city":"Cairo"}
+				{"latitude":"37.005105"} {"longitude":"-89.176269"} {"success":"1"} {"attacktype":"Armed Assault"}
+				{"targtype":"Police"} {"gname":"Black Nationalists"} {"motive":"To protest the Cairo Illinois Police
+				Deparment"} {"weaptype":"Firearms"} {"weapdetail":"Several gunshots were fired."} {"nkill":"0"} </p>
+			<p>
+				{"_id":{"$oid":"5ee09092495d0000880b8896"}} {"iyear":"1970"} {"imonth":"1"} {"iday":"2"}
+				{"country":"Uruguay"} {"region":"South America"} {"provstate":"Montevideo"} {"city":"Montevideo"}
+				{"latitude":"-34.891151"} {"longitude":"-56.187214"} {"success":"0"} {"attacktype":"Assassination"}
+				{"targtype":"Police"} {"gname":"Tupamaros (Uruguay)"} {"motive":""} {"weaptype":"Firearms"}
+				{"weapdetail":"Automatic firearm"} {"nkill":"0"} </p>
+			<p>
+				{"_id":{"$oid":"5ee09092495d0000880b8897"}} {"iyear":"1970"} {"imonth":"1"} {"iday":"2"}
+				{"country":"United States"} {"region":"North America"} {"provstate":"California"} {"city":"Oakland"}
+				{"latitude":"37.791927"} {"longitude":"-122.225906"} {"success":"1"} {"attacktype":"Bombing\/Explosion"}
+				{"targtype":"Utilities"} {"gname":"Unknown"} {"motive":""} {"weaptype":"Explosives"} {"weapdetail":""}
+				{"nkill":"0"} </p>
+			<p>
+				{"_id":{"$oid":"5ee09092495d0000880b8898"}} {"iyear":"1970"} {"imonth":"1"} {"iday":"2"}
+				{"country":"United States"} {"region":"North America"} {"provstate":"Wisconsin"} {"city":"Madison"}
+				{"latitude":"43.076592"} {"longitude":"-89.412488"} {"success":"1"}
+				{"attacktype":"Facility\/Infrastructure Attack"} {"targtype":"Military"} {"gname":"New Year's Gang"}
+				{"motive":"To protest the War in Vietnam and the draft"} {"weaptype":"Incendiary"}
+				{"weapdetail":"Firebomb consisting of gasoline"} {"nkill":"0"} </p>
+			<p>
+				{"_id":{"$oid":"5ee09092495d0000880b8899"}} {"iyear":"1970"} {"imonth":"1"} {"iday":"3"}
+				{"country":"United States"} {"region":"North America"} {"provstate":"Wisconsin"} {"city":"Madison"}
+				{"latitude":"43.07295"} {"longitude":"-89.386694"} {"success":"1"}
+				{"attacktype":"Facility\/Infrastructure Attack"} {"targtype":"Government (General)"} {"gname":"New
+				Year's Gang"} {"motive":"To protest the War in Vietnam and the draft"} {"weaptype":"Incendiary"}
+				{"weapdetail":"Poured gasoline on the floor and lit it with a match"} {"nkill":"0"} </p>
+
+
+		</div>
+	</div>
+	</xmp>
+	</p>
+	
+	<h3>Map</h3>
+	<p>Function: return the website's map page as html. Requires the user to be authenticated</p>
+	<p>Endpoint: /terrorism-api/api/home/map</p>
+	<p>Method: GET</p>
+	<p>Parameters: none</p>
+	<p>Status Codes: 200 on success, 404 if the controller cannot be found</p>
+	<p>Response Body type: text/html</p>
+	<p>Response Body Example: 
+	<xmp>
+	<div id="mapContainer"
+		style="position:relative; z-index: 0; width:100%; height: 0px; padding-top:80%; margin: auto;"></div>
+	<script src="..\Application\Misc\libraries\leaflet-easyPrint-2\dist\bundle.js"></script>
+	<script>
+		var map = L.map('mapContainer').setView({lon: 0, lat: 0}, 2);
+
+		var tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+			maxZoom: 18,
+			attribution: 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
+		}).addTo(map);
+
+		var json_array = [{"_id":{"$oid":"5ee09092495d0000880b889e"},"iyear":"1970","imonth":"1","iday":"9","country":"United States","region":"North 
+
+America","provstate":"Puerto Rico","city":"Rio Piedras","latitude":"18.386932","longitude":"-66.061127","success":"1","attacktype":"Facility\/Infrastructure 
+
+Attack","targtype":"Business","gname":"Armed Commandos of Liberation","motive":"To protest United States owned businesses in Puerto 
+
+Rico","weaptype":"Incendiary","weapdetail":"Fire set in back of store","nkill":"0"},{"_id":
+
+{"$oid":"5ee09092495d0000880b88a7"},"iyear":"1970","imonth":"1","iday":"19","country":"United States","region":"North 
+
+America","provstate":"Washington","city":"Seattle","latitude":"47.610786","longitude":"-122.331306","success":"0","attacktype":"Bombing
+
+\/Explosion","targtype":"Military","gname":"Student Radicals","motive":"The incident took place during heightened antiwar sentiments in Seattle 
+
+Washington.","weaptype":"Explosives","weapdetail":"","nkill":"0"},{"_id":{"$oid":"5ee09092495d0000880b88cf"},"iyear":"1970","imonth":"2","iday":"13","country":"United 
+
+States","region":"North America","provstate":"California","city":"Berkeley","latitude":"37.874043","longitude":"-122.280022","success":"1","attacktype":"Bombing
+
+\/Explosion","targtype":"Police","gname":"Black Nationalists","motive":"To intimidate the police.","weaptype":"Explosives","weapdetail":"Homemade dynamite time 
+
+bombs","nkill":"0"},{"_id":{"$oid":"5ee09092495d0000880b8891"},"iyear":"1970","imonth":"0","iday":"0","country":"Mexico","region":"North 
+
+America","provstate":"Federal","city":"Mexico city","latitude":"19.371887","longitude":"-99.086624","success":"1","attacktype":"Hostage Taking 
+
+(Kidnapping)","targtype":"Government (Diplomatic)","gname":"23rd of September Communist League","motive":"","weaptype":"Unknown","weapdetail":"","nkill":"0"},{"_id":
+
+{"$oid":"5ee09092495d0000880b8893"},"iyear":"1970","imonth":"1","iday":"0","country":"Greece","region":"Western 
+
+Europe","provstate":"Attica","city":"Athens","latitude":"37.99749","longitude":"23.762728","success":"1","attacktype":"Bombing\/Explosion","targtype":"Government 
+
+(Diplomatic)","gname":"Unknown","motive":"","weaptype":"Explosives","weapdetail":"Explosive","nkill":""},{"_id":
+
+{"$oid":"5ee09092495d0000880b8898"},"iyear":"1970","imonth":"1","iday":"2","country":"United States","region":"North 
+
+America","provstate":"Wisconsin","city":"Madison","latitude":"43.076592","longitude":"-89.412488","success":"1","attacktype":"Facility\/Infrastructure 
+
+Attack","targtype":"Military","gname":"New Year's Gang","motive":"To protest the War in Vietnam and the draft","weaptype":"Incendiary","weapdetail":"Firebomb consisting of 
+
+gasoline","nkill":"0"},{"_id":{"$oid":"5ee09092495d0000880b889f"},"iyear":"1970","imonth":"1","iday":"10","country":"East Germany (GDR)","region":"Eastern 
+
+Europe","provstate":"Berlin","city":"Berlin","latitude":"52.50153","longitude":"13.401851","success":"1","attacktype":"Bombing\/Explosion","targtype":"Government 
+
+(General)","gname":"Commune 1","motive":"","weaptype":"Explosives","weapdetail":"Explosive","nkill":""},{"_id":
+
+{"$oid":"5ee09092495d0000880b88ce"},"iyear":"1970","imonth":"2","iday":"13","country":"West Germany (FRG)","region":"Western 
+
+Europe","provstate":"Bavaria","city":"Munich","latitude":"48.139126","longitude":"11.580186","success":"1","attacktype":"Facility\/Infrastructure Attack","targtype":"Private 
+
+Citizens & Property","gname":"Popular Front for the Liberation of Palestine (PFLP)","motive":"","weaptype":"Incendiary","weapdetail":"Incendiary","nkill":"7"},{"_id":
+
+{"$oid":"5ee09092495d0000880b88a3"},"iyear":"1970","imonth":"1","iday":"13","country":"United States","region":"North 
+
+America","provstate":"Washington","city":"Seattle","latitude":"47.610786","longitude":"-122.331306","success":"1","attacktype":"Facility\/Infrastructure 
+
+Attack","targtype":"Business","gname":"Black Nationalists","motive":"Retaliation for the store owner who shot and killed an African American attempting to commit a robbery at 
+
+his store.","weaptype":"Incendiary","weapdetail":"Firebomb","nkill":"0"},{"_id":
+
+{"$oid":"5ee09092495d0000880b88a9"},"iyear":"1970","imonth":"1","iday":"20","country":"Guatemala","region":"Central America & 
+
+Caribbean","provstate":"Guatemala","city":"Guatemala City","latitude":"14.622869","longitude":"-90.529068","success":"1","attacktype":"Assassination","targtype":"Government 
+
+(Diplomatic)","gname":"Unknown","motive":"","weaptype":"Unknown","weapdetail":"","nkill":"1"}];
+var mode = 'map';
+
+		for(var i=0; i<json_array.length; i++)
+        {
+			var tempAttackInfo = "<ul>" + "<li> Date: " + json_array[i].iyear + "." +json_array[i].imonth + "." +json_array[i].iday + "</li>" + "<li> Type: " + 
+
+json_array[i].attacktype+ "</li>" + "<li> Victims: " + json_array[i].nkill+ "</li>"+"</ul>";
+			L.marker({lon: json_array[i].longitude, lat: json_array[i].latitude}).bindPopup(tempAttackInfo).addTo(map);
+			if(i>10000) break;
+        }
+	
+		var printer = L.easyPrint({
+      		tileLayer: tiles,
+      		sizeModes: ['Current', 'A4Landscape', 'A4Portrait'],
+      		filename: 'myMap',
+      		exportOnly: true,
+      		hideClasses: ['leaflet-control-easyPrint'],
+      		hideControlContainer: false
+		}).addTo(map);
+
+	</script>
+	</xmp>
+	</p>
+	
+	<h3>Graph</h3>
+	<p>Function: return the website's graph page as html. Requires the user to be authenticated</p>
+	<p>Endpoint: /terrorism-api/api/home/graph</p>
+	<p>Method: GET</p>
+	<p>Parameters: none</p>
+	<p>Status Codes: 200 on success, 404 if the controller cannot be found</p>
+	<p>Response Body type: text/html</p>
+	<p>Response Body Example:
+	<xmp>
+	<head>
+	<link href="../css/styles.css" rel="stylesheet">
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<script type="text/javascript">
+		var json_array = [[{"_id":{"$oid":"5ee09092495d0000880b8890"},"iyear":"1970","imonth":"7","iday":"2","country":"Dominican Republic","region":"Central America & 
+
+Caribbean","provstate":"","city":"Santo Domingo","latitude":"18.456792","longitude":"-69.951164","success":"1","attacktype":"Assassination","targtype":"Private Citizens & 
+
+Property","gname":"MANO-D","motive":"","weaptype":"Unknown","weapdetail":"","nkill":"1"},{"_id":
+
+{"$oid":"5ee09092495d0000880b8891"},"iyear":"1970","imonth":"0","iday":"0","country":"Mexico","region":"North America","provstate":"Federal","city":"Mexico 
+
+city","latitude":"19.371887","longitude":"-99.086624","success":"1","attacktype":"Hostage Taking (Kidnapping)","targtype":"Government (Diplomatic)","gname":"23rd of September 
+
+Communist League","motive":"","weaptype":"Unknown","weapdetail":"","nkill":"0"},{"_id":
+
+{"$oid":"5ee09092495d0000880b8892"},"iyear":"1970","imonth":"1","iday":"0","country":"Philippines","region":"Southeast 
+
+Asia","provstate":"Tarlac","city":"Unknown","latitude":"15.478598","longitude":"120.599741","success":"1","attacktype":"Assassination","targtype":"Journalists & 
+
+Media","gname":"Unknown","motive":"","weaptype":"Unknown","weapdetail":"","nkill":"1"},{"_id":
+
+{"$oid":"5ee09092495d0000880b8893"},"iyear":"1970","imonth":"1","iday":"0","country":"Greece","region":"Western 
+
+Europe","provstate":"Attica","city":"Athens","latitude":"37.99749","longitude":"23.762728","success":"1","attacktype":"Bombing\/Explosion","targtype":"Government 
+
+(Diplomatic)","gname":"Unknown","motive":"","weaptype":"Explosives","weapdetail":"Explosive","nkill":""},{"_id":
+
+{"$oid":"5ee09092495d0000880b8894"},"iyear":"1970","imonth":"1","iday":"0","country":"Japan","region":"East 
+
+Asia","provstate":"Fukouka","city":"Fukouka","latitude":"33.580412","longitude":"130.396361","success":"1","attacktype":"Facility\/Infrastructure 
+
+Attack","targtype":"Government (Diplomatic)","gname":"Unknown","motive":"","weaptype":"Incendiary","weapdetail":"Incendiary","nkill":""},{"_id":
+
+{"$oid":"5ee09092495d0000880b8895"},"iyear":"1970","imonth":"1","iday":"1","country":"United States","region":"North 
+
+America","provstate":"Illinois","city":"Cairo","latitude":"37.005105","longitude":"-89.176269","success":"1","attacktype":"Armed Assault","targtype":"Police","gname":"Black 
+
+Nationalists","motive":"To protest the Cairo Illinois Police Deparment","weaptype":"Firearms","weapdetail":"Several gunshots were fired.","nkill":"0"},{"_id":
+
+{"$oid":"5ee09092495d0000880b8896"},"iyear":"1970","imonth":"1","iday":"2","country":"Uruguay","region":"South 
+
+America","provstate":"Montevideo","city":"Montevideo","latitude":"-34.891151","longitude":"-
+
+56.187214","success":"0","attacktype":"Assassination","targtype":"Police","gname":"Tupamaros (Uruguay)","motive":"","weaptype":"Firearms","weapdetail":"Automatic 
+
+firearm","nkill":"0"},{"_id":{"$oid":"5ee09092495d0000880b8897"},"iyear":"1970","imonth":"1","iday":"2","country":"United States","region":"North 
+
+America","provstate":"California","city":"Oakland","latitude":"37.791927","longitude":"-122.225906","success":"1","attacktype":"Bombing
+
+\/Explosion","targtype":"Utilities","gname":"Unknown","motive":"","weaptype":"Explosives","weapdetail":"","nkill":"0"},{"_id":
+
+{"$oid":"5ee09092495d0000880b8898"},"iyear":"1970","imonth":"1","iday":"2","country":"United States","region":"North 
+
+America","provstate":"Wisconsin","city":"Madison","latitude":"43.076592","longitude":"-89.412488","success":"1","attacktype":"Facility\/Infrastructure 
+
+Attack","targtype":"Military","gname":"New Year's Gang","motive":"To protest the War in Vietnam and the draft","weaptype":"Incendiary","weapdetail":"Firebomb consisting of 
+
+gasoline","nkill":"0"},{"_id":{"$oid":"5ee09092495d0000880b8899"},"iyear":"1970","imonth":"1","iday":"3","country":"United States","region":"North 
+
+America","provstate":"Wisconsin","city":"Madison","latitude":"43.07295","longitude":"-89.386694","success":"1","attacktype":"Facility\/Infrastructure 
+
+Attack","targtype":"Government (General)","gname":"New Year's Gang","motive":"To protest the War in Vietnam and the draft","weaptype":"Incendiary","weapdetail":"Poured 
+
+gasoline on the floor and lit it with a match","nkill":"0"}]];
+var mode = 'PieChart';
+        
+        var freq = {};
+        var keysJSON = {};
+        for(var i = 0; i<json_array.length; i++)
+            for(var j = 0; j<json_array[i].length; j++)
+            {
+                var elem = json_array[i][j].imonth;
+                keysJSON[elem] = keysJSON[elem] ? keysJSON[elem] : elem;
+                if(!freq[elem])
+                    freq[elem]= {};
+                freq[elem][i] = freq[elem][i] ? freq[elem][i]+1 : 1;
+            }
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+        
+        function drawChart() {
+            var data = new google.visualization.DataTable();
+            data.addColumn('string','data');
+            data.addColumn('number','set0');
+            var element = document.getElementById("test");
+            for (var i = 0,keys=Object.keys(keysJSON); i < keys.length; i++) {
+                data.addRow([
+                    keys[i]
+                    ,freq[keys[i]][0]    
+                ]);
+            }
+        var options = {
+            title: mode
+        };
+        var chart;
+        if(mode=='BarChart')
+            chart = new google.visualization.BarChart(document.getElementById('graph_chart'));
+        else if(mode=='LineChart')
+            chart = new google.visualization.LineChart(document.getElementById('graph_chart'));
+        else 
+            chart = new google.visualization.PieChart(document.getElementById('graph_chart'));
+
+        var chart_div = document.getElementById('graph_chart');
+        google.visualization.events.addListener(chart, 'ready', function () {
+        //chart_div.innerHTML = '<img src="' + chart.getImageURI() + '">';
+        console.log(chart_div.innerHTML);
+        document.getElementById('png').outerHTML = '<a href="' + chart.getImageURI() + '" class=\'button\' id=\'png\' download>Download png</a>';
+        });
+
+        chart.draw(data, options);
+      }
+	</script>
+</head>
+
+<body>
+	<div id="test"></div>
+	<div id="graph_chart"></div>
+	<div id='png'></div>
+</body>
+	</xmp>
+	</p>
+	
+	<h3>Read Attacks</h3>
+	<p>Function: Returns the first <i>count</i> entires in the attacks database as json.</p>
+	<p>Endpoint: http://localhost/terrorism-api/api/attack/read?count=3</p>
+	<p>Method: GET</p>
+	<p>Parameters: <ul> 
+	<li>"count": denotes the number of entries to be read</li> 
+	</ul></p>
+	<p>Status Codes: 200 on success, 400 if the request parameters are malformed</p>
+	<p>Response Body type: application/json</p>
+	<p>Response Body Example: 
+	<xmp>
+	{
+    "records": [
+        {
+            "_id": {
+                "$oid": "5ee09092495d0000880b889e"
+            },
+            "iyear": "1970",
+            "imonth": "1",
+            "iday": "9",
+            "country": "United States",
+            "region": "North America",
+            "provstate": "Puerto Rico",
+            "city": "Rio Piedras",
+            "latitude": "18.386932",
+            "longitude": "-66.061127",
+            "success": "1",
+            "attacktype": "Facility/Infrastructure Attack",
+            "targtype": "Business",
+            "gname": "Armed Commandos of Liberation",
+            "motive": "To protest United States owned businesses in Puerto Rico",
+            "weaptype": "Incendiary",
+            "weapdetail": "Fire set in back of store",
+            "nkill": "0"
+        },
+        {
+            "_id": {
+                "$oid": "5ee09092495d0000880b88a7"
+            },
+            "iyear": "1970",
+            "imonth": "1",
+            "iday": "19",
+            "country": "United States",
+            "region": "North America",
+            "provstate": "Washington",
+            "city": "Seattle",
+            "latitude": "47.610786",
+            "longitude": "-122.331306",
+            "success": "0",
+            "attacktype": "Bombing/Explosion",
+            "targtype": "Military",
+            "gname": "Student Radicals",
+            "motive": "The incident took place during heightened antiwar sentiments in Seattle Washington.",
+            "weaptype": "Explosives",
+            "weapdetail": "",
+            "nkill": "0"
+        },
+        {
+            "_id": {
+                "$oid": "5ee09092495d0000880b88cf"
+            },
+            "iyear": "1970",
+            "imonth": "2",
+            "iday": "13",
+            "country": "United States",
+            "region": "North America",
+            "provstate": "California",
+            "city": "Berkeley",
+            "latitude": "37.874043",
+            "longitude": "-122.280022",
+            "success": "1",
+            "attacktype": "Bombing/Explosion",
+            "targtype": "Police",
+            "gname": "Black Nationalists",
+            "motive": "To intimidate the police.",
+            "weaptype": "Explosives",
+            "weapdetail": "Homemade dynamite time bombs",
+            "nkill": "0"
+        }
+    ]
+}
+	</xmp>
+	</p>
+	
+	<h3>Find Attacks</h3>
+	<p>Function: Returns the first <i>count</i> entires in the attacks databasethat match the criteria as json</p>
+	<p>Endpoint: http://localhost/terrorism-api/api/attack/find?count=3&iyear=2000</p>
+	<p>Method: GET</p>
+	<p>Parameters:<ul> 
+	<li>'_id': id of the database entry</li>
+	<li>'iyear', 'imonth', 'iday': year, month and day of the attack; together, they comprise the complete date</li>
+	<li>'country': country where the attack took place</li>
+	<li>'region', 'provstate', 'city': the region, province and city where the attack took place; together, they comprise more exact geographical data</li>
+	<li>'latitude', 'longitude': the latitude and longitute of the exact location of the attack</li>
+	<li>'success': whether the attack was successful or not
+	<li>'attacktype': type of the attack</li>
+	<li>'targtype': type of the attack target</li>
+	<li>'gname': name of the organization or individual who made the attack</li>
+	<li>'motive': the suspected or declared motive for the attack</li>
+	<li>'weaptype', 'weapdetail': type and details of the weapon used in the attack</li> 
+	<li>'nkill': number of victims</li> 
+	<li>'count': number of how many entries matching the criteria to return </li>
+			</ul></p>
+	<p>Status Codes: 200 on success, 400 if the request parameters are malformed, 404 if no attacks could be found</p>
+	<p>Response Body type: application/json</p>
+	<p>Response Body Example: 
+	<xmp>
+	{
+    "records": [
+        {
+            "_id": {
+                "$oid": "5ee09094495d0000880c996a"
+            },
+            "iyear": "2000",
+            "imonth": "1",
+            "iday": "1",
+            "country": "Bangladesh",
+            "region": "South Asia",
+            "provstate": "Chittagong",
+            "city": "Chittagong",
+            "latitude": "22.341896",
+            "longitude": "91.815117",
+            "success": "1",
+            "attacktype": "Armed Assault",
+            "targtype": "Police",
+            "gname": "Unknown",
+            "motive": "An attempt to disrupt the local elections on January 3, 2000.",
+            "weaptype": "Explosives",
+            "weapdetail": "",
+            "nkill": "0"
+        },
+        {
+            "_id": {
+                "$oid": "5ee09094495d0000880c998a"
+            },
+            "iyear": "2000",
+            "imonth": "1",
+            "iday": "4",
+            "country": "Nigeria",
+            "region": "Sub-Saharan Africa",
+            "provstate": "Lagos",
+            "city": "Lagos",
+            "latitude": "6.520917",
+            "longitude": "3.379534",
+            "success": "1",
+            "attacktype": "Unarmed Assault",
+            "targtype": "Police",
+            "gname": "Odua Peoples' Congress (OPC)",
+            "motive": "To prevent police from breaking up a fight between members of the Yoruba and Hausa ethnic groups.",
+            "weaptype": "Chemical",
+            "weapdetail": "Acid caustic",
+            "nkill": "0"
+        },
+        {
+            "_id": {
+                "$oid": "5ee09094495d0000880c9990"
+            },
+            "iyear": "2000",
+            "imonth": "1",
+            "iday": "6",
+            "country": "Russia",
+            "region": "Eastern Europe",
+            "provstate": "Chechnya (Republic)",
+            "city": "Chervlennaya",
+            "latitude": "43.4994",
+            "longitude": "45.8832",
+            "success": "1",
+            "attacktype": "Bombing/Explosion",
+            "targtype": "Government (General)",
+            "gname": "Chechen Rebels",
+            "motive": "Unknown",
+            "weaptype": "Explosives",
+            "weapdetail": "A thermal shell was used",
+            "nkill": "0"
+        }
+    ]
+}
+	</xmp>
+	</p>
+	
+	<h3>Read All Users</h3>
+	<p>Function: Returns all entries in the users database as json. Passwords are encrypted.</p>
+	<p>Endpoint: http://localhost/terrorism-api/api/user/read</p>
+	<p>Method: GET</p>
+	<p>Parameters: none</p>
+	<p>Status Codes: 200 on success, 400 if the request is malformed</p>
+	<p>Response Body type: application/json</p>
+	<p>Response Body Example: 
+	<xmp>{
+    "records": [
+        {
+            "_id": {
+                "$oid": "5edff24c0087161d285686da"
+            },
+            "username": "pyro",
+            "email": "pyro@cynical.com",
+            "user_type": "admin",
+            "password": "c81e728d9d4c2f636f067f89cc14862c"
+        },
+        {
+            "_id": {
+                "$oid": "5ee21a51f57100004c000724"
+            },
+            "username": "dio",
+            "email": "dio@brando.com",
+            "user_type": "user",
+            "password": "959848ca10cc8a60da818ac11523dc63"
+        },
+        {
+            "_id": {
+                "$oid": "5eefcbae1d58000012006916"
+            },
+            "username": "panda",
+            "email": "panda@eyes.com",
+            "user_type": "user",
+            "password": "sirens"
+        },
+        {
+            "_id": {
+                "$oid": "5ef0e8c2d95f00005c0052fb"
+            },
+            "username": "x",
+            "email": "x@y.com",
+            "user_type": "user",
+            "password": "c4ca4238a0b923820dcc509a6f75849b"
+        }
+    ]
+}
+	</xmp>
+	</p>
+	
+	<h3>Read One User</h3>
+	<p>Function: Returns the entry in the users database that matches the provided <i>username</i> as json. Password is encrypted.</p>
+	<p>Endpoint: http://localhost/terrorism-api/api/user/read_one?username=pyro</p>
+	<p>Method: GET</p>
+	<p>Parameters: <ul>
+	<li>"username": the desired user's username</li>
+	</ul></p>
+	<p>Status Codes: 200 on success, 400 if the request parameters are malformed</p>
+	<p>Response Body type: application/json</p>
+		<p>Response Body Example:
+	<xmp>{
+    "_id": {
+        "$oid": "5edff24c0087161d285686da"
+    },
+    "username": "pyro",
+    "email": "pyro@cynical.com",
+    "user_type": "admin",
+    "password": "c81e728d9d4c2f636f067f89cc14862c"
+}
+	</xmp>
+	</p>
+	
+	<h3>Find One User</h3>
+	<p>Function: Returns the entry in the users database that matches the provided <i>username</i> and <i>password</i> as json.</p>
+	<p>Endpoint: http://localhost/terrorism-api/api/user/find</p>
+	<p>Method: POST</p>
+	<p>Parameters: none</p>
+	<p>Request Body: <xmp>
+{
+    "username" : "pyro",
+    "password" : "2"
+}</xmp></p>
+	<p>Status Codes: 200 on success, 400 if the request parameters are malformed</p>
+	<p>Response Body type: application/json</p>
+	<p>Response Body Example: 
+	<xmp>{
+    "records": [
+        {
+            "_id": {
+                "$oid": "5edff24c0087161d285686da"
+            },
+            "username": "pyro",
+            "email": "pyro@cynical.com",
+            "user_type": "admin",
+            "password": "c81e728d9d4c2f636f067f89cc14862c"
+        }
+    ]
+}
+	</xmp>
+	</p>
+
+	
+	<h3>Create New User</h3>
+	<p>Function: Creates an entry in the users database with the provided details</p>
+	<p>Endpoint: http://localhost/terrorism-api/api/user/create</p>
+	<p>Method: POST</p>
+	<p>Parameters: none</p>
+	<p>Request Body: <xmp>
+{
+    "username" : "panda",
+    "email" : "panda@eyes.com",
+    "user_type" : "user",
+    "password" : "sirens"
+}
+	</xmp></p>
+	<p>Status Codes: 201 on success, 400 if the request parameters are malformed, 503 if the server cannot create the user</p>
+	<p>Response Body type: application/json</p>
+	<p>Response Body Example: 
+	<xmp>
+{
+    "message": "User was created."
+}
+	</xmp>
+	</p>
+	
+	<h3>Delete User</h3>
+	<p>Function: Deletes the entry in the users database with the provided <i>username</i></p>
+	<p>Endpoint: http://localhost/terrorism-api/api/user/delete</p>
+	<p>Method: DELETE</p>
+	<p>Parameters: none</p>
+	<p>Request Body:
+	<xmp>
+{
+	"username" : "panda"
+}
+	</xmp>
+</p>
+	<p>Status Codes: 201 on success, 400 if the request parameters are malformed, 503 if the server cannot delete the user</p>
+	<p>Response Body type: application/json</p>
+		<p>Response Body Example: 
+	<xmp>
+{
+    "message": "User was deleted."
+}
+	</xmp>
+	</p>
+	
+	<h3>Update User</h3>
+	<p>Function: Updates the entry in the users database with the provided <i>email</i> with the new details</p>
+	<p>Endpoint: http://localhost/terrorism-api/api/user/update</p>
+	<p>Method: PUT</p>
+	<p>Parameters: none</p>
+	<p>Request Body:
+	<xmp>
+{
+    "email" : "panda@eyes.com",
+    "user_type" : "user",
+    "password" : "chime"
+}</xmp>
+</p>
+	<p>Status Codes: 200 on success, 400 if the request parameters are malformed, 503 if the server cannot update the user</p>
+	<p>Response Body type: application/json</p>
+		<p>Response Body Example: 
+	<xmp>
+{
+    "message": "User was updated."
+}
+	</xmp>
+	</p>
+	
+	</section>
+
+	</article>

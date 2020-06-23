@@ -96,26 +96,181 @@
 	<section typeof="sa:MaterialsAndMethods">
 	<h2>Implementation Details</h2>
 	<p>
-	The main functionalities offered by the website are the terrorism charts (implemented by Sebastian Ciobanu) and the terrorism map (implemented by Codrin Robotă), both of which make use of the database connection (implemented by Daria Popovici). The project follows mvc architecture, the implementation of which was primarily overseen by Daria Popovici.
+	The main functionalities offered by the website are the terrorism charts (implemented by Sebastian Ciobanu) and the terrorism map (implemented by Codrin Robotă), both of which make use of the database connection (implemented by Daria Popovici). The project follows mvc and api architecture, the implementation of which was primarily overseen by Daria Popovici.
 	</p>
 	<p>
 	Both charts and map function through the usage of a form detailing what sorting options to apply, and is filled out by the user then sent to the server via GET functionality. GET is used as opposed to POST because the data being sent is not sensitive, and benefits from being turned into link parameters that can be remembered. The server then turns the sent form data into MongoDB query parameters, and fetches the requested entries, handing them to the script that will then deal with the generation of either the map or the charts, using json format. The scripts will then iterate through the json entries and generate the chart or map from them. 
 	</p>
 	<p>
-	Additionaly, the map also has an export functionality that is handled by the EasyPrint library, and allows the user to download a .png version of the map currently rendered with all the markers on it.
+	Additionaly, the map also has an export functionality that is handled by the EasyPrint library, and allows the user to download a .png version of the map currently rendered with all the markers on it. Similarly, the Google Charts library handles printing for the charts.
 	</p>
+	</section>
+	
+	<section typeof="sa:MaterialsAndMethods">
+	<h2> API Details</h2>
+	
+	<p> For a more detailed API Documentation that includes explanations of parameters and required body as well as example response bodies, go to the <a href="./API-documentation.html">API Documentation</a> instead</p>
+	
+	<h3>Register</h3>
+	<p>Function: return the website's register page as html</p>
+	<p>Endpoint: /terrorism-api/api/home/register</p>
+	<p>Method: GET</p>
+	<p>Parameters: none</p>
+	<p>Status Codes: 200 on success, 404 if the controller cannot be found</p>
+	<p>Response Body type: text/html</p>
+	
+	<h3>Login</h3>
+	<p>Function: return the website's login page as html</p>
+	<p>Endpoint: /terrorism-api/api/home/login</p>
+	<p>Method: GET</p>
+	<p>Parameters: none</p>
+	<p>Status Codes: 200 on success, 404 if the controller cannot be found</p>
+	<p>Response Body type: text/html</p>
+	
+	<h3>Index</h3>
+	<p>Function: return the website's index page as html. Requires the user to be authenticated</p>
+	<p>Endpoint: /terrorism-api/api/home/index</p>
+	<p>Method: GET</p>
+	<p>Parameters: none</p>
+	<p>Status Codes: 200 on success, 404 if the controller cannot be found</p>
+	<p>Response Body type: text/html</p>
+	
+	<h3>Administration</h3>
+	<p>Function: return the website's administration page as html. Requires the user to be authenticated as admin</p>
+	<p>Endpoint: /terrorism-api/api/home/admin</p>
+	<p>Method: GET</p>
+	<p>Parameters: none</p>
+	<p>Status Codes: 200 on success, 404 if the controller cannot be found</p>
+	<p>Response Body type: text/html</p>
+	
+	<h3>Form</h3>
+	<p>Function: return the website's form page as html. Requires the user to be authenticated</p>
+	<p>Endpoint: /terrorism-api/api/home/form</p>
+	<p>Method: GET</p>
+	<p>Parameters: none</p>
+	<p>Status Codes: 200 on success, 404 if the controller cannot be found</p>
+	<p>Response Body type: text/html</p>
+	
+	<h3>Map</h3>
+	<p>Function: return the website's map page as html. Requires the user to be authenticated</p>
+	<p>Endpoint: /terrorism-api/api/home/map</p>
+	<p>Method: GET</p>
+	<p>Parameters: none</p>
+	<p>Status Codes: 200 on success, 404 if the controller cannot be found</p>
+	<p>Response Body type: text/html</p>
+	
+	<h3>Graph</h3>
+	<p>Function: return the website's graph page as html. Requires the user to be authenticated</p>
+	<p>Endpoint: /terrorism-api/api/home/graph</p>
+	<p>Method: GET</p>
+	<p>Parameters: none</p>
+	<p>Status Codes: 200 on success, 404 if the controller cannot be found</p>
+	<p>Response Body type: text/html</p>
+	
+	<h3>Read Attacks</h3>
+	<p>Function: Returns the first <i>count</i> entires in the attacks database as json.</p>
+	<p>Endpoint: http://localhost/terrorism-api/api/attack/read?count=3</p>
+	<p>Method: GET</p>
+	<p>Parameters: count</p>
+	<p>Status Codes: 200 on success, 400 if the request parameters are malformed</p>
+	<p>Response Body type: application/json</p>
+	
+	<h3>Find Attacks</h3>
+	<p>Function: Returns the first <i>count</i> entires in the attacks databasethat match the criteria as json.</p>
+	<p>Endpoint: http://localhost/terrorism-api/api/attack/find?count=3&iyear=2000</p>
+	<p>Method: GET</p>
+	<p>Parameters: '_id', 'iyear', 'imonth', 'iday', 'country', 'region', 
+            'provstate', 'city', 'latitude', 'longitude', 'success', 'attacktype',
+            'targtype', 'gname', 'motive', 'weaptype', 'weapdetail', 'nkill', count</p>
+	<p>Status Codes: 200 on success, 400 if the request parameters are malformed, 404 if no attacks could be found</p>
+	<p>Response Body type: application/json</p>
+	
+	<h3>Read All Users</h3>
+	<p>Function: Returns all entries in the users database as json. Passwords are encrypted.</p>
+	<p>Endpoint: http://localhost/terrorism-api/api/user/read</p>
+	<p>Method: GET</p>
+	<p>Parameters: none</p>
+	<p>Status Codes: 200 on success, 400 if the request is malformed</p>
+	<p>Response Body type: application/json</p>
+	
+	<h3>Read One User</h3>
+	<p>Function: Returns the entry in the users database that matches the provided <i>username</i> as json. Password is encrypted.</p>
+	<p>Endpoint: http://localhost/terrorism-api/api/user/read_one?username=pyro</p>
+	<p>Method: GET</p>
+	<p>Parameters: username</p>
+	<p>Status Codes: 200 on success, 400 if the request parameters are malformed</p>
+	<p>Response Body type: application/json</p>
+	
+	<h3>Find One User</h3>
+	<p>Function: Returns the entry in the users database that matches the provided <i>username</i> and <i>password</i> as json.</p>
+	<p>Endpoint: http://localhost/terrorism-api/api/user/find</p>
+	<p>Method: POST</p>
+	<p>Parameters: none</p>
+	<p>Request Body: <code>{
+    "username" : "pyro",
+    "password" : "2"
+}</code></p>
+	<p>Status Codes: 200 on success, 400 if the request parameters are malformed</p>
+	<p>Response Body type: application/json</p>
+	
+	<h3>Create New User</h3>
+	<p>Function: Creates an entry in the users database with the provided details</p>
+	<p>Endpoint: http://localhost/terrorism-api/api/user/create</p>
+	<p>Method: POST</p>
+	<p>Parameters: none</p>
+	<p>Request Body: <code>
+	{
+    "username" : "panda",
+    "email" : "panda@eyes.com",
+    "user_type" : "user",
+    "password" : "sirens"
+	}
+	</code></p>
+	<p>Status Codes: 201 on success, 400 if the request parameters are malformed, 503 if the server cannot create the user</p>
+	<p>Response Body type: application/json</p>
+	
+	<h3>Delete User</h3>
+	<p>Function: Deletes the entry in the users database with the provided <i>username</i></p>
+	<p>Endpoint: http://localhost/terrorism-api/api/user/delete</p>
+	<p>Method: DELETE</p>
+	<p>Parameters: none</p>
+	<p>Request Body: <code>
+	{
+	"username" : "panda"
+	}
+	</code></p>
+	<p>Status Codes: 201 on success, 400 if the request parameters are malformed, 503 if the server cannot delete the user</p>
+	<p>Response Body type: application/json</p>
+	
+	<h3>Update User</h3>
+	<p>Function: Updates the entry in the users database with the provided <i>email</i> with the new details</p>
+	<p>Endpoint: http://localhost/terrorism-api/api/user/update</p>
+	<p>Method: PUT</p>
+	<p>Parameters: none</p>
+	<p>Request Body: <code>
+	{
+    "email" : "panda@eyes.com",
+    "user_type" : "user",
+    "password" : "chime"
+	}
+	</code></p>
+	<p>Status Codes: 200 on success, 400 if the request parameters are malformed, 503 if the server cannot update the user</p>
+	<p>Response Body type: application/json</p>
 	</section>
 	
 	<section typeof="sa:MaterialsAndMethods">
 	<h2> Use Cases</h2>
 	<p>
-	The normal usage case is for a user to access the site (via the homepage, or with a direct link to a subpage), navigate to the map/charts page, fill out the form with the desired data and submit it. Then, the server will return the requested map/chart, populated with the relevant information; this might take some time if the volume requested is particularly large.
+	The normal usage case is for a user to access the site (via the homepage, or with a direct link to a subpage), login (or register), navigate to the map/charts page, fill out the form with the desired data and submit it. Then, the server will return the requested map/chart, populated with the relevant information; this might take some time if the volume requested is particularly large.
 	</p>
 	<p>
-	Another normal usage case is for the user to click the "View Full Map" button in the lower left part of the map to get a full-page view of the map. From the full page view, he can click the export button present in the upper left side of the map, which will prompt the browser to download the .png version of the map.
+	Another normal usage case is for the user to click the download button after having navigated to a map or chart page, in which case a .png version of the map/chart will be provided to the browser for download.
 	</p>
 	<p>
 	The most common abnormal use case would be that in which the form is filled with wrong data, in which case the database query will not find any matching data, and the resulting map or chart will be empty.
+	</p>
+	<p>
+	Another common abnormal use case is when a user tries to access the form, map or graph pages without being authenticated first. In these scenarios, he will be rerouted to the login page.
 	</p>
 	</section>
 	
