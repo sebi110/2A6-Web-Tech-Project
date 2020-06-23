@@ -60,14 +60,12 @@ class ModelsUser extends Model{
         }
       
         $query = new MongoDB\Driver\Query($params);  
-        
-        //$params['username'] = 'a';
 
         $rows = $this->mng->executeQuery(DBU, $query);  
-        
-        /*if (isset($rows->database)){
+
+        if($rows->isDead() == TRUE){
             return null;
-        }*/
+        }
 
         return $rows;  
     }

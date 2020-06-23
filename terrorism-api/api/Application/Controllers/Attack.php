@@ -45,15 +45,12 @@ class ControllersAttack extends Controller {
 
         $form = ($this->request->post('form') != null) ? true : false;
 
-        // find with GET from query, tu nu ai absolut nicio treaba cu asta
         if($form == false){
 
             $attack = $this->model('attack');
             $attack->init();
             $params = array();
-            $form = ($this->request->post('form') != null) ? true : false;
-            //$_SESSION['errors'] = array();
-            //$_SESSION['attacks'] = array();            
+            $form = ($this->request->post('form') != null) ? true : false;           
         
             $count = ($this->request->get('count') != null) ? $this->request->get('count') : 10;
             foreach($attack->details as $key => $val){
@@ -90,6 +87,7 @@ class ControllersAttack extends Controller {
                 $this->send(404, array("message" => "No attacks found."));
             }
         }
+
         else{
             $attack = $this->model('attack');
             $attack->init();
@@ -129,7 +127,7 @@ class ControllersAttack extends Controller {
                                 if($first==-1)$first=$val_int;
                                 $last=$val_int;
                             }
-                            for($ind1=$first;$ind1<=$last;$ind1++)
+                            for($ind1=$first; $ind1<=$last; $ind1++)
                             {
                                 $actual[]=(string)$ind1;
                             }

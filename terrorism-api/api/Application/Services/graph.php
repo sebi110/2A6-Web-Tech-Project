@@ -1,4 +1,13 @@
+<?php
+
+    if(empty($_SESSION['attacks'])){
+        $this->response->redirect('/terrorism-api/api/home/form');
+        die();
+    }
+
+?>
 <head>
+    <link href="../css/styles.css" rel="stylesheet">
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
     <?php

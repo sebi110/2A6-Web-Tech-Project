@@ -6,6 +6,8 @@ class ControllersUser extends Controller {
 
     public function read() {
 
+        // $_GET or $_POST
+
         $user = $this->model('user');
 
         $rows = $user->read();
@@ -35,35 +37,67 @@ class ControllersUser extends Controller {
         }
     }
 
-    public function read_one($val1 = null) {
+    public function read_one() {
 
-        if($this->request->get('username') == null && $val1 == null){
-            $this->send(400, array("message" => "Unable to find user. Data is incomplete, pls specify the username."));
-            die();
-        }
+        // from the admin form => $_POST username
+        // from postman => $_GET username
 
-        $user = $this->model('user');
-        $user->init();
-        $user->setKey('username', 
-            ($val1 == null) ? $this->request->get('username') : $val1
-        );
+        $method = $this->request->post('REQUEST_METHOD');
+
+        if($method == null){
+            if($this->request->get('username') == null){
+                $this->send(400, array("message" => "Unable to find user. Data is incomplete, pls specify the username."));
+                die();
+            }
+    
+            $user = $this->model('user');
+            $user->init();
+            $user->setKey('username',$this->request->get('username'));
+                
+            $user->readOne();
             
-        $user->readOne();
-        
-        if($user->details['password'] != null){
-
-            $this->send(200, $user->details);
+            if($user->details['password'] != null){
+    
+                $this->send(200, $user->details);
+            }
+            
+            else{
+                $this->send(400, array("message" => "User does not exist."));
+            }
         }
-        
         else{
-            $this->send(400, array("message" => "User does not exist."));
+            $val1 = $this->request->post('val1');
+            if($val1 == null){
+                $this->send(400, array("message" => "Unable to find user. Data is incomplete, pls specify the username."));
+                die();
+            }
+    
+            $user = $this->model('user');
+            $user->init();
+            $user->setKey('username', $val1);
+                
+            $user->readOne();
+            
+            if($user->details['password'] != null){
+    
+                $this->send(200, $user->details);
+            }
+            
+            else{
+                $this->send(400, array("message" => "User does not exist."));
+            }
         }
     }
 
     public function find() {
 
-        // from a form => post
-        // else a get
+        // from the register/login form => $_POST username, password
+        // from postman => req body
+         /*
+        {
+            "username" : "panda",
+            "password" : "sirens"
+        }*/
 
         $user = $this->model('user');
         $user->init();
@@ -71,16 +105,16 @@ class ControllersUser extends Controller {
         $form = ($this->request->post('form') != null) ? true : false;
         $_SESSION['errors'] = array();
 
-        //POST
+        //$_POST 
         if($form == true){
             foreach($user->details as $key => $val){
                 $params[$key] = ($this->request->post($key) != null) ? $this->request->post($key) : 'all';
             }
         }
-        // GET
+        //req body
         else{
             foreach($user->details as $key => $val){
-                $params[$key] = ($this->request->get($key) != null) ? $this->request->get($key) : 'all';
+                $params[$key] = ($this->request->input($key) != null) ? $this->request->input($key) : 'all';
             }
         }
 
@@ -104,7 +138,7 @@ class ControllersUser extends Controller {
                 
             }
 
-            if (session_status() == PHP_SESSION_ACTIVE) {
+            if ($form == true) {
                 $_SESSION['user'] = $user_info;
                 $_SESSION['form'] = $this->request->post('form');
             }
@@ -131,8 +165,9 @@ class ControllersUser extends Controller {
 
     public function create() {
 
-        // check if username already exists
-        // 2 cases : from form or postman
+        // from the admin form => $_POST 
+        // from register form => $_POST 
+        // from postman => req body:
 
         /*
         {
@@ -158,7 +193,7 @@ class ControllersUser extends Controller {
                         $user->setKey($key, 'user');
                     }
                     else{
-                        // to do
+                        // admin form
                         $user->setKey($key, ($this->request->post($key) == 'Admin') ? 'admin' : 'user');
                     }
                     continue;
@@ -184,7 +219,7 @@ class ControllersUser extends Controller {
             }
         }
 
-        // from post body
+        // from req body
         else{
             foreach($user->details as $key => $val){
 
@@ -198,7 +233,7 @@ class ControllersUser extends Controller {
         
         // check for another guy with the same username
 
-        $rows = null;//$user->find(['username' => $user->details['username']]);
+        $rows = $user->find(['username' => $user->details['username']]);
 
         if(!empty($rows)){
             array_push($_SESSION['errors'], "Username already taken!");
@@ -220,7 +255,7 @@ class ControllersUser extends Controller {
             }
 
             if($method == true || $form == false){
-            $this->send(201, array("message" => "User was created."));
+                $this->send(201, array("message" => "User was created."));
             } 
             else{
                 $this->response->redirect('/terrorism-api/api/home/index');
@@ -235,6 +270,10 @@ class ControllersUser extends Controller {
     }
 
     public function delete($val1 = null) {
+
+        // from the admin form => $_POST($val1)
+        // from postman : 2 cases : $_GET username
+        // or req body:
 
         /*
         {
@@ -267,6 +306,8 @@ class ControllersUser extends Controller {
 
     public function update() {
 
+        // from the admin form => $_POST
+        // from postman => param = username and req body =
         /*
         {
             "email" : "panda@eyes.com",
@@ -308,7 +349,6 @@ class ControllersUser extends Controller {
     }
 
     public function form(){
-        // treat case when null
 
         $method = $this->request->post('REQUEST_METHOD');
 
@@ -316,7 +356,7 @@ class ControllersUser extends Controller {
             case "GET":
                 //$this->read();
                 ($this->request->post('key1') == null) ? $this->read() 
-                : $this->read_one($this->request->post('val1'));
+                : $this->read_one();
                 break;
         
             case "POST":

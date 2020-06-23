@@ -87,7 +87,7 @@ class ModelsAttack extends Model{
 
         $rows = $this->mng->executeQuery(DBA, $query);   
         
-        if (isset($rows->database)){
+        if($rows->isDead() == TRUE){
             return null;
         }
 

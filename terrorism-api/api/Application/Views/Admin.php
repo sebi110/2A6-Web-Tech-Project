@@ -31,6 +31,7 @@
 	</div>
 
 		<div class="container">
+        <?php echo session_id(); ?>
 		<h2 class="tag">Admin Profile</h2>
 		<?php  if (isset($_SESSION['user'])) : ?>
 			

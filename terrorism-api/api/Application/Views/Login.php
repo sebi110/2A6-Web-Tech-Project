@@ -11,8 +11,6 @@
         session_destroy();
         unset($_SESSION['user']);
         $this->response->redirect('/terrorism-api/api/home/register');
-        //header('Location: ' . str_replace(array('&amp;', "\n", "\r"), array('&','', ''), '/terrorism-api/api/home/register'), true, 302);
-        //header("location: login");
 	}
 
 ?>

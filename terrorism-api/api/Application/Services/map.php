@@ -1,8 +1,6 @@
 <?php
 
-    // for naughty children
     if(empty($_SESSION['attacks'])){
-        // maybe a msg or sth..
         $this->response->redirect('/terrorism-api/api/home/form');
         die();
     }

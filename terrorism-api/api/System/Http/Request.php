@@ -13,7 +13,6 @@ class Request {
     public function __construct() {       
         $this->request = ($_REQUEST);
 
-        // dont know how to use these yet, will delete later
         $this->cookie = $this->clean($_COOKIE);
         $this->files = $this->clean($_FILES);
     }
@@ -34,7 +33,7 @@ class Request {
         return  $this->clean($_POST);
     }
 
-    // POST parameter(Body-raw)
+    // REQUEST BODY 
     public function input(String $key = '') {
         $postdata = file_get_contents("php://input");
         $request = json_decode($postdata, true);

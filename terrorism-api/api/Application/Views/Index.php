@@ -1,6 +1,5 @@
 <?php 
 
-    //session_start();
     if (!isLoggedIn()) {
         $_SESSION['msg'] = "You must log in first";
         $this->response->redirect('/terrorism-api/api/home/login');
@@ -11,8 +10,6 @@
         session_destroy();
         unset($_SESSION['user']);
         $this->response->redirect('/terrorism-api/api/home/login');
-        //header('Location: ' . str_replace(array('&amp;', "\n", "\r"), array('&','', ''), '/terrorism-api/api/home/login'), true, 302);
-        //header("location: login");
     }
     
     if (isset($_GET['form'])) {
@@ -38,7 +35,7 @@
       <p>Now that you are logged in, you may click the form to check out some attacks.</p>
       
       <p>session: <?php print_r($_SESSION['user']); ?></p>
-      <p>form: <?php print_r($_SESSION['form']); ?></p>
+      
     </div>
     
     <div class="container">
