@@ -1,26 +1,11 @@
 <?php
 
     // for naughty children
-    /*if(empty($_SESSION['attacks'])){
+    if(empty($_SESSION['attacks'])){
         // maybe a msg or sth..
         $this->response->redirect('/terrorism-api/api/home/form');
         die();
     }
-    // to check the values:
-
-    session_start();
-
-    foreach($_SESSION['attacks'] as $key => $val){
-        $_SESSION[$key] = json_encode($val);
-    }
-    $mode = 'map';
-
-    //print_r($_SESSION['attacks']);
-                    
-    //echo 'wtf1<br>';
-    echo "var json_array = " . json_encode($_SESSION['attacks']) . ";\n";
-    //echo 'wtf2<br>';
-    //echo "var mode = '" . $mode . "';\n";*/
 
 ?>
 <html>
@@ -37,7 +22,7 @@
 <body>
 
         <div id="mapContainer" style="position:relative; z-index: 0; width:100%; height: 0px; padding-top:80%; margin: auto;"></div>
-		<script src="dist/bundle.js"></script>
+        <script src="..\Application\Misc\libraries\leaflet-easyPrint-2\dist\bundle.js"></script>
 		<script>
 		var map = L.map('mapContainer').setView({lon: 0, lat: 0}, 2);
 
@@ -48,23 +33,17 @@
 
 		<?php
 
-            //session_start();
-
             $x = array();
             foreach($_SESSION['attacks'] as $key => $val){
                 $x[$key] = $val;
             }
             $mode = 'map';
 
-            //print_r($x['attacks']);
             echo "var json_array = " . json_encode($x) . ";\n";
-            //echo 'wtf1<br>';
-            //echo "var json_array = [{\"_id\":{\"$oid\":\"5ee09092495d0000880b8890\"},\"iyear\":\"1970\",\"imonth\":\"7\",\"iday\":\"2\",\"country\":\"Dominican Republic\",\"region\":\"Central America & Caribbean\",\"provstate\":\"\",\"city\":\"Santo Domingo\",\"latitude\":\"18.456792\",\"longitude\":\"-69.951164\",\"success\":\"1\",\"attacktype\":\"Assassination\",\"targtype\":\"Private Citizens & Property\",\"gname\":\"MANO-D\",\"motive\":\"\",\"weaptype\":\"Unknown\",\"weapdetail\":\"\",\"nkill\":\"1\"},{\"_id\":{\"$oid\":\"5ee09092495d0000880b8891\"},\"iyear\":\"1970\",\"imonth\":\"0\",\"iday\":\"0\",\"country\":\"Mexico\",\"region\":\"North America\",\"provstate\":\"Federal\",\"city\":\"Mexico city\",\"latitude\":\"19.371887\",\"longitude\":\"-99.086624\",\"success\":\"1\",\"attacktype\":\"Hostage Taking (Kidnapping)\",\"targtype\":\"Government (Diplomatic)\",\"gname\":\"23rd of September Communist League\",\"motive\":\"\",\"weaptype\":\"Unknown\",\"weapdetail\":\"\",\"nkill\":\"0\"},{\"_id\":{\"$oid\":\"5ee09092495d0000880b8892\"},\"iyear\":\"1970\",\"imonth\":\"1\",\"iday\":\"0\",\"country\":\"Philippines\",\"region\":\"Southeast Asia\",\"provstate\":\"Tarlac\",\"city\":\"Unknown\",\"latitude\":\"15.478598\",\"longitude\":\"120.599741\",\"success\":\"1\",\"attacktype\":\"Assassination\",\"targtype\":\"Journalists & Media\",\"gname\":\"Unknown\",\"motive\":\"\",\"weaptype\":\"Unknown\",\"weapdetail\":\"\",\"nkill\":\"1\"},{\"_id\":{\"$oid\":\"5ee09092495d0000880b8893\"},\"iyear\":\"1970\",\"imonth\":\"1\",\"iday\":\"0\",\"country\":\"Greece\",\"region\":\"Western Europe\",\"provstate\":\"Attica\",\"city\":\"Athens\",\"latitude\":\"37.99749\",\"longitude\":\"23.762728\",\"success\":\"1\",\"attacktype\":\"Bombing\/Explosion\",\"targtype\":\"Government (Diplomatic)\",\"gname\":\"Unknown\",\"motive\":\"\",\"weaptype\":\"Explosives\",\"weapdetail\":\"Explosive\",\"nkill\":\"\"},{\"_id\":{\"$oid\":\"5ee09092495d0000880b8894\"},\"iyear\":\"1970\",\"imonth\":\"1\",\"iday\":\"0\",\"country\":\"Japan\",\"region\":\"East Asia\",\"provstate\":\"Fukouka\",\"city\":\"Fukouka\",\"latitude\":\"33.580412\",\"longitude\":\"130.396361\",\"success\":\"1\",\"attacktype\":\"Facility\/Infrastructure Attack\",\"targtype\":\"Government (Diplomatic)\",\"gname\":\"Unknown\",\"motive\":\"\",\"weaptype\":\"Incendiary\",\"weapdetail\":\"Incendiary\",\"nkill\":\"\"},{\"_id\":{\"$oid\":\"5ee09092495d0000880b8895\"},\"iyear\":\"1970\",\"imonth\":\"1\",\"iday\":\"1\",\"country\":\"United States\",\"region\":\"North America\",\"provstate\":\"Illinois\",\"city\":\"Cairo\",\"latitude\":\"37.005105\",\"longitude\":\"-89.176269\",\"success\":\"1\",\"attacktype\":\"Armed Assault\",\"targtype\":\"Police\",\"gname\":\"Black Nationalists\",\"motive\":\"To protest the Cairo Illinois Police Deparment\",\"weaptype\":\"Firearms\",\"weapdetail\":\"Several gunshots were fired.\",\"nkill\":\"0\"},{\"_id\":{\"$oid\":\"5ee09092495d0000880b8896\"},\"iyear\":\"1970\",\"imonth\":\"1\",\"iday\":\"2\",\"country\":\"Uruguay\",\"region\":\"South America\",\"provstate\":\"Montevideo\",\"city\":\"Montevideo\",\"latitude\":\"-34.891151\",\"longitude\":\"-56.187214\",\"success\":\"0\",\"attacktype\":\"Assassination\",\"targtype\":\"Police\",\"gname\":\"Tupamaros (Uruguay)\",\"motive\":\"\",\"weaptype\":\"Firearms\",\"weapdetail\":\"Automatic firearm\",\"nkill\":\"0\"},{\"_id\":{\"$oid\":\"5ee09092495d0000880b8897\"},\"iyear\":\"1970\",\"imonth\":\"1\",\"iday\":\"2\",\"country\":\"United States\",\"region\":\"North America\",\"provstate\":\"California\",\"city\":\"Oakland\",\"latitude\":\"37.791927\",\"longitude\":\"-122.225906\",\"success\":\"1\",\"attacktype\":\"Bombing\/Explosion\",\"targtype\":\"Utilities\",\"gname\":\"Unknown\",\"motive\":\"\",\"weaptype\":\"Explosives\",\"weapdetail\":\"\",\"nkill\":\"0\"},{\"_id\":{\"$oid\":\"5ee09092495d0000880b8898\"},\"iyear\":\"1970\",\"imonth\":\"1\",\"iday\":\"2\",\"country\":\"United States\",\"region\":\"North America\",\"provstate\":\"Wisconsin\",\"city\":\"Madison\",\"latitude\":\"43.076592\",\"longitude\":\"-89.412488\",\"success\":\"1\",\"attacktype\":\"Facility\/Infrastructure Attack\",\"targtype\":\"Military\",\"gname\":\"New Year's Gang\",\"motive\":\"To protest the War in Vietnam and the draft\",\"weaptype\":\"Incendiary\",\"weapdetail\":\"Firebomb consisting of gasoline\",\"nkill\":\"0\"},{\"_id\":{\"$oid\":\"5ee09092495d0000880b8899\"},\"iyear\":\"1970\",\"imonth\":\"1\",\"iday\":\"3\",\"country\":\"United States\",\"region\":\"North America\",\"provstate\":\"Wisconsin\",\"city\":\"Madison\",\"latitude\":\"43.07295\",\"longitude\":\"-89.386694\",\"success\":\"1\",\"attacktype\":\"Facility\/Infrastructure Attack\",\"targtype\":\"Government (General)\",\"gname\":\"New Year's Gang\",\"motive\":\"To protest the War in Vietnam and the draft\",\"weaptype\":\"Incendiary\",\"weapdetail\":\"Poured gasoline on the floor and lit it with a match\",\"nkill\":\"0\"}];
-//";
-            //echo 'wtf2<br>';
+            
             echo "var mode = '" . $mode . "';\n";
         ?>
-//
+
 		for(var i=0; i<json_array.length; i++)
         {
 			var tempAttackInfo = "<ul>" + "<li> Date: " + json_array[i].iyear + "." +json_array[i].imonth + "." +json_array[i].iday + "</li>" + "<li> Type: " + json_array[i].attacktype+ "</li>" + "<li> Victims: " + json_array[i].nkill+ "</li>"+"</ul>";
