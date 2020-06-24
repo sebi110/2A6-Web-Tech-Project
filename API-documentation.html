@@ -1179,7 +1179,7 @@ var mode = 'PieChart';
 	<p>Endpoint: http://localhost/terrorism-api/api/user/read</p>
 	<p>Method: GET</p>
 	<p>Parameters: none</p>
-	<p>Status Codes: 200 on success, 400 if the request is malformed</p>
+	<p>Status Codes: 200 on success, 400 if the request is malformed, 401 if authorization is missing</p>
 	<p>Response Body type: application/json</p>
 	<p>Response Body Example: 
 	<xmp>{
@@ -1232,7 +1232,7 @@ var mode = 'PieChart';
 	<p>Parameters: <ul>
 	<li>"username": the desired user's username</li>
 	</ul></p>
-	<p>Status Codes: 200 on success, 400 if the request parameters are malformed</p>
+	<p>Status Codes: 200 on success, 400 if the request parameters are malformed, 401 if authorization is missing</p>
 	<p>Response Body type: application/json</p>
 		<p>Response Body Example:
 	<xmp>{
@@ -1290,7 +1290,7 @@ var mode = 'PieChart';
     "password" : "sirens"
 }
 	</xmp></p>
-	<p>Status Codes: 201 on success, 400 if the request parameters are malformed, 503 if the server cannot create the user</p>
+	<p>Status Codes: 201 on success, 400 if the request parameters are malformed, 401 if authorization is missing, 503 if the server cannot create the user</p>
 	<p>Response Body type: application/json</p>
 	<p>Response Body Example: 
 	<xmp>
@@ -1312,7 +1312,7 @@ var mode = 'PieChart';
 }
 	</xmp>
 </p>
-	<p>Status Codes: 201 on success, 400 if the request parameters are malformed, 503 if the server cannot delete the user</p>
+	<p>Status Codes: 201 on success, 400 if the request parameters are malformed, 401 if authorization is missing, 503 if the server cannot delete the user</p>
 	<p>Response Body type: application/json</p>
 		<p>Response Body Example: 
 	<xmp>
@@ -1335,7 +1335,7 @@ var mode = 'PieChart';
     "password" : "chime"
 }</xmp>
 </p>
-	<p>Status Codes: 200 on success, 400 if the request parameters are malformed, 503 if the server cannot update the user</p>
+	<p>Status Codes: 200 on success, 400 if the request parameters are malformed, 401 if authorization is missing, 503 if the server cannot update the user</p>
 	<p>Response Body type: application/json</p>
 		<p>Response Body Example: 
 	<xmp>

@@ -190,7 +190,7 @@
 	<p>Endpoint: http://localhost/terrorism-api/api/user/read</p>
 	<p>Method: GET</p>
 	<p>Parameters: none</p>
-	<p>Status Codes: 200 on success, 400 if the request is malformed</p>
+	<p>Status Codes: 200 on success, 400 if the request is malformed, 401 if authorization is missing</p>
 	<p>Response Body type: application/json</p>
 	
 	<h3>Read One User</h3>
@@ -198,7 +198,7 @@
 	<p>Endpoint: http://localhost/terrorism-api/api/user/read_one?username=pyro</p>
 	<p>Method: GET</p>
 	<p>Parameters: username</p>
-	<p>Status Codes: 200 on success, 400 if the request parameters are malformed</p>
+	<p>Status Codes: 200 on success, 400 if the request parameters are malformed, 401 if authorization is missing</p>
 	<p>Response Body type: application/json</p>
 	
 	<h3>Find One User</h3>
@@ -226,7 +226,7 @@
     "password" : "sirens"
 	}
 	</code></p>
-	<p>Status Codes: 201 on success, 400 if the request parameters are malformed, 503 if the server cannot create the user</p>
+	<p>Status Codes: 201 on success, 400 if the request parameters are malformed, 401 if authorization is missing, 503 if the server cannot create the user</p>
 	<p>Response Body type: application/json</p>
 	
 	<h3>Delete User</h3>
@@ -239,7 +239,7 @@
 	"username" : "panda"
 	}
 	</code></p>
-	<p>Status Codes: 201 on success, 400 if the request parameters are malformed, 503 if the server cannot delete the user</p>
+	<p>Status Codes: 201 on success, 400 if the request parameters are malformed, 401 if authorization is missing, 503 if the server cannot delete the user</p>
 	<p>Response Body type: application/json</p>
 	
 	<h3>Update User</h3>
@@ -254,7 +254,7 @@
     "password" : "chime"
 	}
 	</code></p>
-	<p>Status Codes: 200 on success, 400 if the request parameters are malformed, 503 if the server cannot update the user</p>
+	<p>Status Codes: 200 on success, 400 if the request parameters are malformed, 401 if authorization is missing, 503 if the server cannot update the user</p>
 	<p>Response Body type: application/json</p>
 	</section>
 	
