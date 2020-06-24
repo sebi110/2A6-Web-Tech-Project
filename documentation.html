@@ -257,7 +257,12 @@
 	<p>Status Codes: 200 on success, 400 if the request parameters are malformed, 401 if authorization is missing, 503 if the server cannot update the user</p>
 	<p>Response Body type: application/json</p>
 	</section>
-	
+		
+	<section typeof+"sa:MaterialsAndMethods">
+	<h2>Utilization Guide</h2>
+	<p>Both the map and graph functionalities are accessed via the form, which specifies the details of the data to be displayed, as well as the method for it. All fields can be optional, and for those that require specific syntax (such as Weapon Type), a menu to select from is provided. Also, the fields may have multiple values entered and delimited by ",", and will be taken into account together (for example, a request having "Year: 1970, 1971" will yield all attacks that happened in either of those years). Further, fields with clear numeric values can be filled with intervals, using the character "-" to delimitate the upper and lower bounds; for example, a request like "Year: 1970-1975" will yield all attacks that happened between 1970 and 1975.</p>
+	<p>Multiple sets of data can be requested at once, and will be displayed simultaneously on the graphs so that a comparison is easy to draw. Different sets of data are separated with ";", and empty (null) values will be taken into account for different sets. As such, a request like "Year: 1970 ; ; 1972, 1973" will generate three sets of data, one with the attacks of 1970, one with all attacks independet of year, and one with all attacks that happened in 1972 or 1973.</p>	
+		
 	<section typeof="sa:MaterialsAndMethods">
 	<h2> Use Cases</h2>
 	<p>
