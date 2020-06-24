@@ -8,6 +8,11 @@ class ControllersUser extends Controller {
 
         // $_GET or $_POST
 
+        if (!isAdmin()) {
+            $this->send(401, array("message" => "You have to be logged in as an admin to do that.")); 
+            die();
+        }
+
         $user = $this->model('user');
 
         $rows = $user->read();
@@ -41,6 +46,10 @@ class ControllersUser extends Controller {
 
         // from the admin form => $_POST username
         // from postman => $_GET username
+        if (!isAdmin()) {
+            $this->send(401, array("message" => "You have to be logged in as an admin to do that.")); 
+            die();
+        }
 
         $method = $this->request->post('REQUEST_METHOD');
 
@@ -91,7 +100,7 @@ class ControllersUser extends Controller {
 
     public function find() {
 
-        // from the register/login form => $_POST username, password
+        // from the login form => $_POST username, password
         // from postman => req body
          /*
         {
@@ -104,6 +113,7 @@ class ControllersUser extends Controller {
         $params = array();
         $form = ($this->request->post('form') != null) ? true : false;
         $_SESSION['errors'] = array();
+    
 
         //$_POST 
         if($form == true){
@@ -117,6 +127,12 @@ class ControllersUser extends Controller {
                 $params[$key] = ($this->request->input($key) != null) ? $this->request->input($key) : 'all';
             }
         }
+
+        if($params['password'] == 'all' || $params['username'] == 'all'){
+            $this->send(400, array("message" => "Unable to find user. Data is incomplete(username&password required."));
+        }
+
+        
 
         $params['password'] = md5($params['password']);
         $rows = $user->find($params);
@@ -194,6 +210,10 @@ class ControllersUser extends Controller {
                     }
                     else{
                         // admin form
+                        if (!isAdmin()) {
+                            $this->send(401, array("message" => "You have to be logged in as an admin to do that.")); 
+                            die();
+                        }
                         $user->setKey($key, ($this->request->post($key) == 'Admin') ? 'admin' : 'user');
                     }
                     continue;
@@ -222,6 +242,17 @@ class ControllersUser extends Controller {
         // from req body
         else{
             foreach($user->details as $key => $val){
+
+                if($key == 'user_type' && ($this->request->input($key) == 'admin')){
+                    
+                    if (!isAdmin()) {
+                        $this->send(401, array("message" => "You have to be logged in as an admin to do that.")); 
+                        die();
+                    }
+                    $user->setKey($key, 'admin');
+                    continue;
+                }
+
 
                 if($key != '_id' && $this->request->input($key) == null){
                     $this->send(400, array("message" => "Unable to create user. Data is incomplete."));
@@ -280,6 +311,12 @@ class ControllersUser extends Controller {
             "username" : "panda"
         }*/
 
+        if (/*session_status() == PHP_SESSION_NONE*/!isAdmin()) {
+            //$_SESSION['attacks'][] = $attacks_arr['records'];
+            $this->send(401, array("message" => "You have to be logged in as an admin to do that.")); 
+            die();
+        }
+
         $user = $this->model('user');
         $user->init();
 
@@ -315,6 +352,11 @@ class ControllersUser extends Controller {
             "password" : "chime"
         }*/
 
+        if (!isAdmin()) {
+            $this->send(401, array("message" => "You have to be logged in as an admin to do that.")); 
+            die();
+        }
+
         $form = !$this->request->post('REQUEST_METHOD') ? false : true; 
 
         if($this->request->get('username') == null && $form == false){
@@ -349,6 +391,11 @@ class ControllersUser extends Controller {
     }
 
     public function form(){
+
+        if (!isAdmin()) {
+            $this->send(401, array("message" => "You have to be logged in as an admin to do that.")); 
+            die();
+        }
 
         $method = $this->request->post('REQUEST_METHOD');
 

@@ -114,7 +114,7 @@
             </p>
             <p>
                 <label for="user_type">User type</label>
-                <input type="text" name="user_type" id="user_type" list="utList" value="User" required>
+                <input type="text" name="user_type" id="user_type" list="utList" required>
                 <span></span>
                 <datalist id="utList">
                     <option>User</option>			
@@ -210,7 +210,7 @@
             </p>
             <p>
                 <label for="user_type">User type</label>
-                <input type="text" name="user_type" id="user_type" list="utList" value="User">
+                <input type="text" name="user_type" id="user_type" list="utList" >
                 <span></span>
                 <datalist id="utList">
                     <option>User</option>			

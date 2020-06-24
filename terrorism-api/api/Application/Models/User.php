@@ -109,6 +109,11 @@ class ModelsUser extends Model{
     function update($setParam){
 
         $filters = ["username" => $this->details['username']];
+
+        while (($key = array_search(null, $setParam)) !== false) {
+            unset($setParam[$key]);
+        }
+
         $query = new MongoDB\Driver\Query($filters);        
 
         $rows = $this->mng->executeQuery(DBU, $query);  

@@ -20,7 +20,7 @@ class ControllersHome extends Controller {
         
         $this->view('admin', [
             'meth' => array('GET','POST','DELETE','PUT'),
-            'keys' => array('username', 'email', 'user_type', 'password')
+            'keys' => array('username')
         ]);
     } 
 
